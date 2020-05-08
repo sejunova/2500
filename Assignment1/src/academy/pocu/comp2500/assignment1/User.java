@@ -95,7 +95,9 @@ public final class User {
     }
 
     public void updateComment(Comment comment, String text) {
-        comment.setText(text);
+        if (this == comment.getAuthor()) {
+            comment.setText(text);
+        }
     }
 
     public void addSubComment(Comment comment, String text) {
