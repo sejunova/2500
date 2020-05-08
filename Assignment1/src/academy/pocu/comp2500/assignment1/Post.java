@@ -2,6 +2,7 @@ package academy.pocu.comp2500.assignment1;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.List;
@@ -16,18 +17,19 @@ public final class Post {
     private String body;
     private final OffsetDateTime createdDateTime = OffsetDateTime.now();
     private OffsetDateTime modifiedDateTime;
-    private List<String> tags;
+    private Set<String> tags;
     private List<Comment> comments;
     private EnumMap<Reaction, Set<User>> reactions;
 
-    public Post(User author, String title, String body) {
+    public Post(User author, String title, String body, Collection<String> tag) {
         this.author = author;
         this.title = title;
         this.body = body;
         this.modifiedDateTime = this.createdDateTime;
-        this.tags = new ArrayList<>();
         this.comments = new ArrayList<>();
         this.reactions = new EnumMap<>(Reaction.class);
+        tags = new HashSet<>();
+        this.tags.addAll(tag);
     }
 
     public OffsetDateTime getCreatedDateTime() {
@@ -66,7 +68,7 @@ public final class Post {
         }
     }
 
-    public List<String> getTags() {
+    public Set<String> getTags() {
         return this.tags;
     }
 

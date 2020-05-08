@@ -1,10 +1,13 @@
 package academy.pocu.comp2500.assignment1;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class Blog {
     private final UUID blogId = UUID.randomUUID();
@@ -21,8 +24,11 @@ public final class Blog {
         return owner;
     }
 
-    public void addPost(User author, String title, String body) {
-        this.posts.add(new Post(author, title, body));
+    public void addPost(User author, String title, String body, Collection<String> tag) {
+        if (tag == null) {
+            tag = new HashSet<>();
+        }
+        this.posts.add(new Post(author, title, body, tag));
     }
 
     public List<Post> getPosts(User user) {
@@ -46,11 +52,19 @@ public final class Blog {
             default:
                 throw new RuntimeException("sortingType is wrong");
         }
-        return this.posts
-                .stream()
-                .filter(post -> user.getCompositePostFilter().apply(post))
+        Stream<Post> postStream = this.posts
+                .stream();
+        if (user.getAuthorFilter() != null) {
+            postStream = postStream.filter(post -> post.getAuthor().equals(user.getAuthorFilter()));
+        }
+        if (user.getTagFilters().size() != 0) {
+            postStream = postStream.filter(post -> post.getTags().containsAll(user.getTagFilters()));
+        }
+        List<Post> posts = postStream
                 .sorted(postComparator)
                 .collect(Collectors.toList());
+        user.unSetFilters();
+        return posts;
     }
 
     @Override

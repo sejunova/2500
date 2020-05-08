@@ -1,11 +1,15 @@
 package academy.pocu.comp2500.assignment1;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public final class User {
     private String userId;
     private String firstName;
     private String lastName;
     private String nickname;
-    private CompositePostFilter compositePostFilter;
+    private Set<String> tagFilters;
+    private User authorFilter;
     private SortingType sortingType;
 
     public User(String userId, String firstName, String lastName, String nickname) {
@@ -13,7 +17,8 @@ public final class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.nickname = nickname;
-        this.compositePostFilter = new CompositePostFilter();
+        this.tagFilters = new HashSet<>();
+        this.authorFilter = null;
         this.sortingType = SortingType.CREATED_DATE_TIME_DESC;
     }
 
@@ -41,10 +46,6 @@ public final class User {
         this.sortingType = sortingType;
     }
 
-    public CompositePostFilter getCompositePostFilter() {
-        return this.compositePostFilter;
-    }
-
     public Blog createBlog() {
         return new Blog(this);
     }
@@ -56,13 +57,23 @@ public final class User {
     }
 
     public void addTagFilter(String tag) {
-        IPostFilter tagFilter = new PostTagFilter(tag);
-        this.compositePostFilter.addFilter(tagFilter);
+        this.tagFilters.add(tag);
     }
 
     public void addAuthorFilter(User author) {
-        IPostFilter tagFilter = new PostAuthorFilter(author);
-        this.compositePostFilter.addFilter(tagFilter);
+        this.authorFilter = author;
+    }
+
+    public Set<String> getTagFilters() {
+        return this.tagFilters;
+    }
+    public User getAuthorFilter() {
+        return this.authorFilter;
+    }
+
+    public void unSetFilters(){
+        this.tagFilters.clear();
+        this.authorFilter = null;
     }
 
     public void removeReaction(Post post, Reaction reaction) {
