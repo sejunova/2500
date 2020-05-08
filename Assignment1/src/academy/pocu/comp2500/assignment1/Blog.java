@@ -1,9 +1,7 @@
 package academy.pocu.comp2500.assignment1;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -24,10 +22,7 @@ public final class Blog {
         return owner;
     }
 
-    public void addPost(User author, String title, String body, Collection<String> tag) {
-        if (tag == null) {
-            tag = new HashSet<>();
-        }
+    public void addPost(User author, String title, String body, String tag) {
         this.posts.add(new Post(author, title, body, tag));
     }
 

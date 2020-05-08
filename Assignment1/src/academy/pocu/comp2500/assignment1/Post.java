@@ -21,7 +21,7 @@ public final class Post {
     private List<Comment> comments;
     private EnumMap<Reaction, Set<User>> reactions;
 
-    public Post(User author, String title, String body, Collection<String> tag) {
+    public Post(User author, String title, String body, String tag) {
         this.author = author;
         this.title = title;
         this.body = body;
@@ -29,7 +29,9 @@ public final class Post {
         this.comments = new ArrayList<>();
         this.reactions = new EnumMap<>(Reaction.class);
         tags = new HashSet<>();
-        this.tags.addAll(tag);
+        if (tag != null) {
+            this.tags.add(tag);
+        }
     }
 
     public OffsetDateTime getCreatedDateTime() {
