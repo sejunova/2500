@@ -1,7 +1,4 @@
-package academy.pocu.comp2500.assignment1.filter;
-
-import academy.pocu.comp2500.assignment1.Post;
-import academy.pocu.comp2500.assignment1.User;
+package academy.pocu.comp2500.assignment1;
 
 public final class PostAuthorFilter implements IPostFilter {
     private User author;

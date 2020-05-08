@@ -1,6 +1,4 @@
-package academy.pocu.comp2500.assignment1.filter;
-
-import academy.pocu.comp2500.assignment1.Post;
+package academy.pocu.comp2500.assignment1;
 
 import java.util.ArrayList;
 import java.util.List;

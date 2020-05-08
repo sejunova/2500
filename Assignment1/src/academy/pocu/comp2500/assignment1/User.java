@@ -1,11 +1,5 @@
 package academy.pocu.comp2500.assignment1;
 
-import academy.pocu.comp2500.assignment1.filter.CompositePostFilter;
-import academy.pocu.comp2500.assignment1.filter.IPostFilter;
-import academy.pocu.comp2500.assignment1.filter.PostAuthorFilter;
-import academy.pocu.comp2500.assignment1.filter.PostTagFilter;
-import academy.pocu.comp2500.assignment1.sort.SortByCreatedDateTimeOrderDesc;
-
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;

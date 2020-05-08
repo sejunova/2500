@@ -1,4 +1,4 @@
-package academy.pocu.comp2500.assignment1.sort;
+package academy.pocu.comp2500.assignment1;
 
 import academy.pocu.comp2500.assignment1.Post;
 
