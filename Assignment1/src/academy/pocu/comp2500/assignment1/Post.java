@@ -21,17 +21,14 @@ public final class Post {
     private List<Comment> comments;
     private EnumMap<Reaction, Set<User>> reactions;
 
-    public Post(User author, String title, String body, String tag) {
+    public Post(User author, String title, String body) {
         this.author = author;
         this.title = title;
         this.body = body;
         this.modifiedDateTime = this.createdDateTime;
         this.comments = new ArrayList<>();
         this.reactions = new EnumMap<>(Reaction.class);
-        tags = new HashSet<>();
-        if (tag != null) {
-            this.tags.add(tag);
-        }
+        this.tags = new HashSet<>();
     }
 
     public OffsetDateTime getCreatedDateTime() {
@@ -81,8 +78,14 @@ public final class Post {
     public void addReaction(User user, Reaction reaction) {
         if (!this.reactions.containsKey(reaction)) {
             this.reactions.put(reaction, new HashSet<>());
+            this.reactions.get(reaction).add(user);
+            return;
         }
-        this.reactions.get(reaction).add(user);
+        if (this.reactions.get(reaction).contains(user)) {
+            this.reactions.get(reaction).remove(user);
+        } else {
+            this.reactions.get(reaction).add(user);
+        }
     }
 
     public int getReaction(Reaction reaction) {
