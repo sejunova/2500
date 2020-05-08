@@ -57,13 +57,13 @@ public final class User {
     }
 
     public void updateTitle(Post post, String title) {
-        if (this == post.getAuthor()) {
+        if (this.equals(post.getAuthor())) {
             post.setTitle(title);
         }
     }
 
     public void updateBody(Post post, String body) {
-        if (this == post.getAuthor()) {
+        if (this.equals(post.getAuthor())) {
             post.setBody(body);
         }
     }
@@ -95,14 +95,14 @@ public final class User {
     }
 
     public void updateComment(Comment comment, String text) {
-        if (this == comment.getAuthor()) {
+        if (this.equals(comment.getAuthor())) {
             comment.setText(text);
         }
     }
 
-    public void addSubComment(Comment comment, String text) {
-        Comment subComment = new Comment(this, text);
-        comment.addSubComment(subComment);
+    public void addSubcomment(Comment comment, String text) {
+        Comment subcomment = new Comment(this, text);
+        comment.addSubcomment(subcomment);
     }
 
     public void upvoteComment(Comment comment) {
@@ -117,8 +117,8 @@ public final class User {
         return post.getComments();
     }
 
-    public List<Comment> getSubComments(Comment comment) {
-        return comment.getSubComments();
+    public List<Comment> getSubcomments(Comment comment) {
+        return comment.getSubcomments();
     }
 
     public void addReaction(Post post, Reaction reaction) {

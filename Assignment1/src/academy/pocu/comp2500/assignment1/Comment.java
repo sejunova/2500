@@ -13,14 +13,14 @@ public final class Comment implements Comparable<Comment> {
     private Set<User> upvotedUsers;
     private Set<User> downvotedUsers;
     private String text;
-    private List<Comment> subComments;
+    private List<Comment> subcomments;
 
     public Comment(User author, String text) {
         this.upvotedUsers = new HashSet<>();
         this.downvotedUsers = new HashSet<>();
         this.author = author;
         this.text = text;
-        this.subComments = new ArrayList<>();
+        this.subcomments = new ArrayList<>();
     }
 
     public User getAuthor() {
@@ -35,12 +35,12 @@ public final class Comment implements Comparable<Comment> {
         this.text = text;
     }
 
-    public void addSubComment(Comment comment) {
-        this.subComments.add(comment);
+    public void addSubcomment(Comment comment) {
+        this.subcomments.add(comment);
     }
 
-    public List<Comment> getSubComments() {
-        return this.subComments.stream().sorted().collect(Collectors.toList());
+    public List<Comment> getSubcomments() {
+        return this.subcomments.stream().sorted().collect(Collectors.toList());
     }
 
 

@@ -15,7 +15,7 @@ public class App {
         registry.registerPostBodyUpdater("User", "updateBody");
         registry.registerPostTagAdder("User", "addTag");
         registry.registerCommentAdder("User", "addComment");
-        registry.registerSubcommentAdder("User", "addSubComment");
+        registry.registerSubcommentAdder("User", "addSubcomment");
         registry.registerCommentUpdater("User", "updateComment");
         registry.registerSubcommentUpdater("User", "updateComment");
         registry.registerReactionAdder("User", "addReaction");
@@ -23,7 +23,7 @@ public class App {
         registry.registerCommentUpvoter("User", "upvoteComment");
         registry.registerCommentDownvoter("User", "downvoteComment");
         registry.registerCommentListGetter("User", "getComments");
-        registry.registerSubCommentListGetter("User", "getSubComments");
+        registry.registerSubCommentListGetter("User", "getSubcomments");
         registry.registerSubcommentUpvoter("User", "upvoteComment");
         registry.registerSubcommentDownvoter("User", "downvoteComment");
     }
