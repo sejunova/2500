@@ -51,13 +51,25 @@ public final class Comment implements Comparable<Comment> {
 
 
     public void upvoteByUser(User user) {
-        this.downvotedUsers.remove(user);
-        this.upvotedUsers.add(user);
+        if (this.downvotedUsers.contains(user)) {
+            this.downvotedUsers.remove(user);
+            this.upvotedUsers.add(user);
+        } else if (this.upvotedUsers.contains(user)) {
+            this.upvotedUsers.remove(user);
+        } else {
+            this.upvotedUsers.add(user);
+        }
     }
 
     public void downvoteByUser(User user) {
-        this.upvotedUsers.remove(user);
-        this.downvotedUsers.add(user);
+        if (this.upvotedUsers.contains(user)) {
+            this.upvotedUsers.remove(user);
+            this.downvotedUsers.add(user);
+        } else if (this.downvotedUsers.contains(user)) {
+            this.downvotedUsers.remove(user);
+        } else {
+            this.downvotedUsers.add(user);
+        }
     }
 
     @Override
