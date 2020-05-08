@@ -22,8 +22,8 @@ public final class Blog {
         return owner;
     }
 
-    public void addPost(User author, String title, String body) {
-        this.posts.add(new Post(UUID.randomUUID(), author, title, body));
+    public void addPost(UUID postId, User author, String title, String body) {
+        this.posts.add(new Post(postId, author, title, body));
     }
 
     public List<Post> getPosts(User user) {
