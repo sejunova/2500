@@ -35,21 +35,27 @@ public final class Comment implements Comparable<Comment> {
         this.text = text;
     }
 
-    public void addSubcomment(Comment comment) {
-        this.subcomments.add(comment);
+    public void addSubcomment(User user, String text) {
+        this.subcomments.add(new Comment(user, text));
     }
 
     public List<Comment> getSubcomments() {
         return this.subcomments.stream().sorted().collect(Collectors.toList());
     }
 
+    public void updateComment(User author, String text) {
+        if (this.author.equals(author)) {
+            this.text = text;
+        }
+    }
 
-    public void upvote(User user) {
+
+    public void upvoteByUser(User user) {
         this.downvotedUsers.remove(user);
         this.upvotedUsers.add(user);
     }
 
-    public void downvote(User user) {
+    public void downvoteByUser(User user) {
         this.upvotedUsers.remove(user);
         this.downvotedUsers.add(user);
     }

@@ -50,24 +50,28 @@ public final class Post {
         return this.title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void updateTitle(User author, String title) {
+        if (this.author.equals(author)) {
+            this.title = title;
+        }
     }
 
     public String getBody() {
         return this.body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public void updateBody(User author, String body) {
+        if (this.author.equals(author)) {
+            this.body = body;
+        }
     }
 
     public List<String> getTags() {
         return this.tags;
     }
 
-    public void addComment(Comment comment) {
-        this.comments.add(comment);
+    public void addComment(User user, String text) {
+        this.comments.add(new Comment(user, text));
     }
 
     public void addReaction(User user, Reaction reaction) {
@@ -75,6 +79,10 @@ public final class Post {
             this.reactions.put(reaction, new HashSet<>());
         }
         this.reactions.get(reaction).add(user);
+    }
+
+    public int getReaction(Reaction reaction) {
+        return this.reactions.get(reaction).size();
     }
 
     public void removeReaction(User user, Reaction reaction) {

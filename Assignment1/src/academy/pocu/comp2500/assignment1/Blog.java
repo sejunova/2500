@@ -1,27 +1,56 @@
 package academy.pocu.comp2500.assignment1;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public final class Blog {
     private final UUID blogId = UUID.randomUUID();
-    private User user;
+    private User owner;
     private List<Post> posts;
 
 
     public Blog(User user) {
-        this.user = user;
+        this.owner = user;
         this.posts = new ArrayList<>();
     }
 
-    public void addPost(User user, String title, String body) {
-        Post post = new Post(user, title, body);
-        this.posts.add(post);
+    public User getOwner() {
+        return owner;
     }
 
-    public List<Post> getPosts() {
-        return this.posts;
+    public void addPost(User author, String title, String body) {
+        this.posts.add(new Post(author, title, body));
+    }
+
+    public List<Post> getPosts(User user) {
+       Comparator<Post> postComparator;
+        switch (user.getSortingType()) {
+            case CREATED_DATE_TIME_ASC:
+                postComparator = (post1, post2) -> post1.getCreatedDateTime().compareTo(post2.getCreatedDateTime());
+                break;
+            case CREATED_DATE_TIME_DESC:
+                postComparator = (post1, post2) -> post2.getCreatedDateTime().compareTo(post1.getCreatedDateTime());
+                break;
+            case MODIFIED_DATE_TIME_ASC:
+                postComparator = (post1, post2) -> post1.getModifiedDateTime().compareTo(post2.getModifiedDateTime());
+                break;
+            case MODIFIED_DATE_TIME_DESC:
+                postComparator = (post1, post2) -> post2.getModifiedDateTime().compareTo(post1.getModifiedDateTime());
+                break;
+            case TITLE_ASC:
+                postComparator = (post1, post2) -> post1.getTitle().compareTo(post2.getTitle());
+                break;
+            default:
+                throw new RuntimeException("sortingType is wrong");
+        }
+        return this.posts
+                .stream()
+                .filter(post -> user.getCompositePostFilter().apply(post))
+                .sorted(postComparator)
+                .collect(Collectors.toList());
     }
 
     @Override

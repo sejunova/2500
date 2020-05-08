@@ -10,20 +10,20 @@ public class App {
         registry.registerPostOrderSetter("User", "setSortingType");
         registry.registerPostListGetter("Blog", "getPosts");
         registry.registerPostAdder("Blog", "addPost");
-        registry.registerPostTitleUpdater("User", "updateTitle");
-        registry.registerPostBodyUpdater("User", "updateBody");
+        registry.registerPostTitleUpdater("Post", "updateTitle");
+        registry.registerPostBodyUpdater("Post", "updateBody");
         registry.registerPostTagAdder("User", "addTag");
-        registry.registerCommentAdder("User", "addComment");
-        registry.registerSubcommentAdder("User", "addSubcomment");
-        registry.registerCommentUpdater("User", "updateComment");
-        registry.registerSubcommentUpdater("User", "updateComment");
-        registry.registerReactionAdder("User", "addReaction");
-        registry.registerReactionRemover("User", "removeReaction");
-        registry.registerCommentUpvoter("User", "upvoteComment");
-        registry.registerCommentDownvoter("User", "downvoteComment");
-        registry.registerCommentListGetter("User", "getComments");
-        registry.registerSubCommentListGetter("User", "getSubcomments");
-        registry.registerSubcommentUpvoter("User", "upvoteComment");
-        registry.registerSubcommentDownvoter("User", "downvoteComment");
+        registry.registerCommentAdder("Post", "addComment");
+        registry.registerSubcommentAdder("Comment", "addSubcomment");
+        registry.registerCommentUpdater("Comment", "updateComment");
+        registry.registerSubcommentUpdater("Comment", "updateComment");
+        registry.registerReactionAdder("Post", "addReaction");
+        registry.registerReactionRemover("Post", "removeReaction");
+        registry.registerCommentUpvoter("Comment", "upvoteByUser");
+        registry.registerCommentDownvoter("Comment", "downvoteByUser");
+        registry.registerCommentListGetter("Post", "getComments");
+        registry.registerSubCommentListGetter("Comment", "getSubcomments");
+        registry.registerSubcommentUpvoter("Comment", "upvoteByUser");
+        registry.registerSubcommentDownvoter("Comment", "downvoteByUser");
     }
 }
