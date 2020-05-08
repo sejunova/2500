@@ -10,7 +10,7 @@ public final class User {
     private static Set<String> userIds = new HashSet<>();
     private String userId;
     private CompositePostFilter compositePostFilter;
-    private Comparator<Post> sortingType;
+    private SortingType sortingType;
 
     public User(String userId) {
         if (userIds.contains(userId)) {
@@ -19,7 +19,7 @@ public final class User {
 
         this.userId = userId;
         this.compositePostFilter = new CompositePostFilter();
-        this.sortingType = new SortByCreatedDateTimeOrderDesc();
+        this.sortingType = SortingType.CREATED_DATE_TIME_DESC;
         userIds.add(userId);
     }
 
@@ -31,7 +31,7 @@ public final class User {
         return userIds;
     }
 
-    public void setSortingType(Comparator<Post> sortingType) {
+    public void setSortingType(SortingType sortingType) {
         this.sortingType = sortingType;
     }
 
@@ -63,14 +63,31 @@ public final class User {
     }
 
     public List<Post> getPosts(Blog blog) {
-        List<Post> posts = blog.getPosts()
+        Comparator<Post> postComparator;
+        switch (sortingType) {
+            case CREATED_DATE_TIME_ASC:
+                postComparator = (post1, post2) -> post1.getCreatedDateTime().compareTo(post2.getCreatedDateTime());
+                break;
+            case CREATED_DATE_TIME_DESC:
+                postComparator = (post1, post2) -> post2.getCreatedDateTime().compareTo(post1.getCreatedDateTime());
+                break;
+            case MODIFIED_DATE_TIME_ASC:
+                postComparator = (post1, post2) -> post1.getModifiedDateTime().compareTo(post2.getModifiedDateTime());
+                break;
+            case MODIFIED_DATE_TIME_DESC:
+                postComparator = (post1, post2) -> post2.getModifiedDateTime().compareTo(post1.getModifiedDateTime());
+                break;
+            case TITLE_ASC:
+                postComparator = (post1, post2) -> post1.getTitle().compareTo(post2.getTitle());
+                break;
+            default:
+                throw new RuntimeException("sortingType is wrong");
+        }
+        return blog.getPosts()
                 .stream()
                 .filter(post -> this.compositePostFilter.apply(post))
-                .sorted(this.sortingType)
+                .sorted(postComparator)
                 .collect(Collectors.toList());
-        this.compositePostFilter.clear();
-        this.sortingType = new SortByCreatedDateTimeOrderDesc();
-        return posts;
     }
 
     public void addTagFilter(String tag) {

@@ -5,5 +5,5 @@ public enum Reaction {
     SAD,
     ANGRY,
     FUN,
-    LOVE
+    LOVE;
 }
