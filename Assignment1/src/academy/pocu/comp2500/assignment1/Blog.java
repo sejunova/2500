@@ -23,7 +23,7 @@ public final class Blog {
     }
 
     public void addPost(User author, String title, String body) {
-        this.posts.add(new Post(author, title, body));
+        this.posts.add(new Post(UUID.randomUUID(), author, title, body));
     }
 
     public List<Post> getPosts(User user) {

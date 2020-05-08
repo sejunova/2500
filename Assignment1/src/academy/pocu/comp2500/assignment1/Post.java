@@ -11,7 +11,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public final class Post {
-    private final UUID postId = UUID.randomUUID();
+    private UUID postId;
     private User author;
     private String title;
     private String body;
@@ -21,7 +21,8 @@ public final class Post {
     private List<Comment> comments;
     private EnumMap<Reaction, Set<User>> reactions;
 
-    public Post(User author, String title, String body) {
+    public Post(UUID postId, User author, String title, String body) {
+        this.postId = postId;
         this.author = author;
         this.title = title;
         this.body = body;
