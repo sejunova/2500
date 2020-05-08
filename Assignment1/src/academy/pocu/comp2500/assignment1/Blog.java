@@ -58,7 +58,7 @@ public final class Blog {
         List<Post> posts = postStream
                 .sorted(postComparator)
                 .collect(Collectors.toList());
-        user.unSetFilters();
+        user.unsetFilters();
         return posts;
     }
 

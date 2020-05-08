@@ -71,7 +71,7 @@ public final class User {
         return this.authorFilter;
     }
 
-    public void unSetFilters(){
+    public void unsetFilters(){
         this.tagFilters.clear();
         this.authorFilter = null;
     }
