@@ -6,20 +6,17 @@ import java.util.UUID;
 
 public final class Blog {
     private final UUID blogId = UUID.randomUUID();
-    private User owner;
+    private User user;
     private List<Post> posts;
 
 
     public Blog(User user) {
-        this.owner = user;
+        this.user = user;
         this.posts = new ArrayList<>();
     }
 
-    public User getOwner() {
-        return owner;
-    }
-
-    public void addPost(Post post) {
+    public void addPost(User user, String title, String body) {
+        Post post = new Post(user, title, body);
         this.posts.add(post);
     }
 

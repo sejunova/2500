@@ -1,34 +1,22 @@
 package academy.pocu.comp2500.assignment1;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public final class User {
-    private static Set<String> userIds = new HashSet<>();
     private String userId;
     private CompositePostFilter compositePostFilter;
     private SortingType sortingType;
 
     public User(String userId) {
-        if (userIds.contains(userId)) {
-            return;
-        }
-
         this.userId = userId;
         this.compositePostFilter = new CompositePostFilter();
         this.sortingType = SortingType.CREATED_DATE_TIME_DESC;
-        userIds.add(userId);
     }
 
     public String getUserId() {
         return this.userId;
-    }
-
-    public Set<String> getUserIds() {
-        return userIds;
     }
 
     public void setSortingType(SortingType sortingType) {
@@ -37,11 +25,6 @@ public final class User {
 
     public Blog createBlog() {
         return new Blog(this);
-    }
-
-    public void addPost(Blog blog, String title, String body) {
-        Post post = new Post(this, title, body);
-        blog.addPost(post);
     }
 
     public void addTag(Post post, String tag) {
