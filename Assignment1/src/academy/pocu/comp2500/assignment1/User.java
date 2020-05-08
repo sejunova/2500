@@ -9,7 +9,7 @@ public final class User {
     private String lastName;
     private String nickname;
     private Set<String> tagFilters;
-    private User authorFilter;
+    private Set<User> authorFilter;
     private SortingType sortingType;
 
     public User(String userId, String firstName, String lastName, String nickname) {
@@ -18,7 +18,7 @@ public final class User {
         this.lastName = lastName;
         this.nickname = nickname;
         this.tagFilters = new HashSet<>();
-        this.authorFilter = null;
+        this.authorFilter = new HashSet<>();
         this.sortingType = SortingType.CREATED_DATE_TIME_DESC;
     }
 
@@ -61,19 +61,21 @@ public final class User {
     }
 
     public void addAuthorFilter(User author) {
-        this.authorFilter = author;
+        this.authorFilter.clear();
+        this.authorFilter.add(author);
     }
 
     public Set<String> getTagFilters() {
         return this.tagFilters;
     }
-    public User getAuthorFilter() {
+
+    public Set<User> getAuthorFilter() {
         return this.authorFilter;
     }
 
     public void unsetFilters(){
         this.tagFilters.clear();
-        this.authorFilter = null;
+        this.authorFilter.clear();
     }
 
     public void removeReaction(Post post, Reaction reaction) {

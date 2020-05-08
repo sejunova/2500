@@ -49,8 +49,8 @@ public final class Blog {
         }
         Stream<Post> postStream = this.posts
                 .stream();
-        if (user.getAuthorFilter() != null) {
-            postStream = postStream.filter(post -> post.getAuthor().equals(user.getAuthorFilter()));
+        if (user.getAuthorFilter().size() != 0) {
+            postStream = postStream.filter(post -> user.getAuthorFilter().contains(post.getAuthor()));
         }
         if (user.getTagFilters().size() != 0) {
             postStream = postStream.filter(post -> post.getTags().containsAll(user.getTagFilters()));
