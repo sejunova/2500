@@ -10,8 +10,8 @@ public final class Blog {
     private List<Post> posts;
 
 
-    public Blog(User owner) {
-        this.owner = owner;
+    public Blog(User user) {
+        this.owner = user;
         this.posts = new ArrayList<>();
     }
 
@@ -25,6 +25,25 @@ public final class Blog {
 
     public List<Post> getPosts() {
         return this.posts;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+
+        if (this == o) {
+            return true;
+        }
+
+        // instanceof Check and actual value check
+        return o instanceof Blog && ((Blog) o).blogId.equals(this.blogId);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.blogId.hashCode();
     }
 
 }
