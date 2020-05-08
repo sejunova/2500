@@ -31,8 +31,8 @@ public final class User {
         return userIds;
     }
 
-    public void setSortingType(Comparator<Post> postComparator) {
-        this.sortingType = postComparator;
+    public void setSortingType(Comparator<Post> sortingType) {
+        this.sortingType = sortingType;
     }
 
     public Blog createBlog() {
