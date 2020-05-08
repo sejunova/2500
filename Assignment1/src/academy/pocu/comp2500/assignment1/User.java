@@ -19,7 +19,6 @@ public final class User {
     private Comparator<Post> sortingType;
 
     public User(String userId) {
-        // 동일한 유저아이디로 만들기 방지
         if (userIds.contains(userId)) {
             return;
         }
