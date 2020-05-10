@@ -5,9 +5,9 @@ import academy.pocu.comp2500.assignment1.registry.Registry;
 public class App {
     public App(Registry registry) {
         registry.registerBlogCreator("Blog");
-        registry.registerTagFilterSetter("User", "addTagFilter");
-        registry.registerAuthorFilterSetter("User", "addAuthorFilter");
-        registry.registerPostOrderSetter("User", "setSortingType");
+        registry.registerTagFilterSetter("Blog", "addTagFilter");
+        registry.registerAuthorFilterSetter("Blog", "addAuthorFilter");
+        registry.registerPostOrderSetter("Blog", "setSortingType");
         registry.registerPostListGetter("Blog", "getPosts");
         registry.registerPostAdder("Blog", "addPost");
         registry.registerPostTitleUpdater("Post", "updateTitle");

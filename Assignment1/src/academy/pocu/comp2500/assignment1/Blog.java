@@ -13,11 +13,42 @@ public final class Blog {
     private final UUID blogId = UUID.randomUUID();
     private User owner;
     private List<Post> posts;
-
+    private Set<String> tagFilters;
+    private Set<User> authorFilter;
+    private SortingType sortingType;
 
     public Blog(User user) {
         this.owner = user;
         this.posts = new ArrayList<>();
+
+        this.tagFilters = new HashSet<>();
+        this.authorFilter = new HashSet<>();
+        this.sortingType = SortingType.CREATED_DATE_TIME_DESC;
+    }
+
+    public Set<String> getTagFilters() {
+        return this.tagFilters;
+    }
+
+    public void addTagFilter(String tag) {
+        this.tagFilters.add(tag);
+    }
+
+    public Set<User> getAuthorFilter() {
+        return this.authorFilter;
+    }
+
+    public void addAuthorFilter(User author) {
+        this.authorFilter.clear();
+        this.authorFilter.add(author);
+    }
+
+    public SortingType getSortingType() {
+        return this.sortingType;
+    }
+
+    public void setSortingType(SortingType sortingType) {
+        this.sortingType = sortingType;
     }
 
     public User getOwner() {
