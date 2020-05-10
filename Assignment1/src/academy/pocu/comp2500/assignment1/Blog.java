@@ -14,7 +14,7 @@ public final class Blog {
     private User owner;
     private List<Post> posts;
     private Set<String> tagFilters;
-    private Set<User> authorFilter;
+    private String authorFilter;
     private SortingType sortingType;
 
     public Blog(User user) {
@@ -22,7 +22,7 @@ public final class Blog {
         this.posts = new ArrayList<>();
 
         this.tagFilters = new HashSet<>();
-        this.authorFilter = new HashSet<>();
+        this.authorFilter = "";
         this.sortingType = SortingType.CREATED_DATE_TIME_DESC;
     }
 
@@ -34,13 +34,12 @@ public final class Blog {
         this.tagFilters.add(tag);
     }
 
-    public Set<User> getAuthorFilter() {
+    public String getAuthorFilter() {
         return this.authorFilter;
     }
 
     public void addAuthorFilter(User author) {
-        this.authorFilter.clear();
-        this.authorFilter.add(author);
+        this.authorFilter = author.getUserId();
     }
 
     public SortingType getSortingType() {
@@ -81,10 +80,11 @@ public final class Blog {
                 postComparator = (post1, post2) -> post2.getCreatedDateTime().compareTo(post1.getCreatedDateTime());
                 break;
         }
+
         Stream<Post> postStream = this.posts
                 .stream();
-        if (!this.authorFilter.isEmpty()) {
-            postStream = postStream.filter(post -> this.authorFilter.contains(post.getAuthor()));
+        if (!this.authorFilter.equals("")) {
+            postStream = postStream.filter(post -> this.authorFilter.equals(post.getAuthor().getUserId()));
         }
         if (!this.tagFilters.isEmpty()) {
             postStream = postStream.filter(post -> this.filterByTag(this.tagFilters, post.getTags()));
@@ -95,7 +95,7 @@ public final class Blog {
 
         // unset filter & sorting options
         this.tagFilters.clear();
-        this.authorFilter.clear();
+        this.authorFilter = "";
         this.sortingType = SortingType.CREATED_DATE_TIME_DESC;
         return posts;
     }
@@ -121,10 +121,10 @@ public final class Blog {
 
     private boolean filterByTag(Set<String> tagFilters, Set<String> tags) {
         for (String tagFilter: tagFilters) {
-            if (!tags.contains(tagFilter)) {
-                return false;
+            if (tags.contains(tagFilter)) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 }
