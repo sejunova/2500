@@ -78,14 +78,8 @@ public final class Post {
     public void addReaction(User user, Reaction reaction) {
         if (!this.reactions.containsKey(reaction)) {
             this.reactions.put(reaction, new HashSet<>());
-            this.reactions.get(reaction).add(user);
-            return;
         }
-        if (this.reactions.get(reaction).contains(user)) {
-            this.reactions.get(reaction).remove(user);
-        } else {
-            this.reactions.get(reaction).add(user);
-        }
+        this.reactions.get(reaction).add(user);
     }
 
     public int getReaction(Reaction reaction) {

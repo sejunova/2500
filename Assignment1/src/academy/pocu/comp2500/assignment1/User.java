@@ -78,10 +78,6 @@ public final class User {
         this.authorFilter.clear();
     }
 
-    public void removeReaction(Post post, Reaction reaction) {
-        post.removeReaction(this, reaction);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null) {

@@ -22,12 +22,12 @@ public final class Blog {
         return owner;
     }
 
-    public void addPost(UUID postId, User author, String title, String body) {
-        this.posts.add(new Post(postId, author, title, body));
+    public void addPost(Post post) {
+        this.posts.add(post);
     }
 
     public List<Post> getPosts(User user) {
-       Comparator<Post> postComparator;
+        Comparator<Post> postComparator;
         switch (user.getSortingType()) {
             case CREATED_DATE_TIME_ASC:
                 postComparator = (post1, post2) -> post1.getCreatedDateTime().compareTo(post2.getCreatedDateTime());
