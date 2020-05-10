@@ -8,18 +8,12 @@ public final class User {
     private String firstName;
     private String lastName;
     private String nickname;
-    private Set<String> tagFilters;
-    private Set<User> authorFilter;
-    private SortingType sortingType;
 
     public User(String userId, String firstName, String lastName, String nickname) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.nickname = nickname;
-        this.tagFilters = new HashSet<>();
-        this.authorFilter = new HashSet<>();
-        this.sortingType = SortingType.CREATED_DATE_TIME_DESC;
     }
 
     public String getFirstName() {
@@ -38,38 +32,8 @@ public final class User {
         return this.userId;
     }
 
-    public SortingType getSortingType() {
-        return this.sortingType;
-    }
-
-    public void setSortingType(SortingType sortingType) {
-        this.sortingType = sortingType;
-    }
-
     public Blog createBlog() {
         return new Blog(this);
-    }
-
-    public void addTagFilter(String tag) {
-        this.tagFilters.add(tag);
-    }
-
-    public void addAuthorFilter(User author) {
-        this.authorFilter.clear();
-        this.authorFilter.add(author);
-    }
-
-    public Set<String> getTagFilters() {
-        return this.tagFilters;
-    }
-
-    public Set<User> getAuthorFilter() {
-        return this.authorFilter;
-    }
-
-    public void unsetFilters(){
-        this.tagFilters.clear();
-        this.authorFilter.clear();
     }
 
     @Override
