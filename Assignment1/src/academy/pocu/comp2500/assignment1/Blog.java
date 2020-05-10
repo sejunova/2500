@@ -2,7 +2,9 @@ package academy.pocu.comp2500.assignment1;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -26,7 +28,12 @@ public final class Blog {
         this.posts.add(post);
     }
 
-    public List<Post> getPosts(User user) {
+    public List<Post> getPosts(User userOrNull) {
+        if (userOrNull == null) {
+            return this.posts;
+        }
+
+        User user = userOrNull;
         Comparator<Post> postComparator;
         switch (user.getSortingType()) {
             case CREATED_DATE_TIME_ASC:
@@ -45,14 +52,15 @@ public final class Blog {
                 postComparator = (post1, post2) -> post1.getTitle().compareTo(post2.getTitle());
                 break;
             default:
-                throw new RuntimeException("sortingType is wrong");
+                postComparator = (post1, post2) -> post2.getCreatedDateTime().compareTo(post1.getCreatedDateTime());
+                break;
         }
         Stream<Post> postStream = this.posts
                 .stream();
-        if (user.getAuthorFilter().size() != 0) {
+        if (!user.getAuthorFilter().isEmpty()) {
             postStream = postStream.filter(post -> user.getAuthorFilter().contains(post.getAuthor()));
         }
-        if (user.getTagFilters().size() != 0) {
+        if (!user.getTagFilters().isEmpty()) {
             postStream = postStream.filter(post -> post.getTags().containsAll(user.getTagFilters()));
         }
         List<Post> posts = postStream
