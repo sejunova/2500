@@ -14,7 +14,7 @@ public final class Blog {
     private User owner;
     private List<Post> posts;
     private Set<String> tagFilters;
-    private String authorFilter;
+    private User authorFilterOrNull;
     private SortingType sortingType;
 
     public Blog(User user) {
@@ -22,7 +22,7 @@ public final class Blog {
         this.posts = new ArrayList<>();
 
         this.tagFilters = new HashSet<>();
-        this.authorFilter = "";
+        this.authorFilterOrNull = null;
         this.sortingType = SortingType.CREATED_DATE_TIME_DESC;
     }
 
@@ -31,15 +31,23 @@ public final class Blog {
     }
 
     public void addTagFilter(String tag) {
-        this.tagFilters.add(tag);
+        if (this.tagFilters.contains(tag)) {
+            this.tagFilters.remove(tag);
+        } else {
+            this.tagFilters.add(tag);
+        }
     }
 
-    public String getAuthorFilter() {
-        return this.authorFilter;
+    public User getAuthorFilterOrNull() {
+        return this.authorFilterOrNull;
     }
 
     public void addAuthorFilter(User author) {
-        this.authorFilter = author.getUserId();
+        if (this.authorFilterOrNull == null || !this.authorFilterOrNull.equals(author)) {
+            this.authorFilterOrNull = author;
+        } else {
+            this.authorFilterOrNull = null;
+        }
     }
 
     public SortingType getSortingType() {
@@ -83,8 +91,8 @@ public final class Blog {
 
         Stream<Post> postStream = this.posts
                 .stream();
-        if (!this.authorFilter.equals("")) {
-            postStream = postStream.filter(post -> this.authorFilter.equals(post.getAuthor().getUserId()));
+        if (this.authorFilterOrNull != null) {
+            postStream = postStream.filter(post -> this.authorFilterOrNull.equals(post.getAuthor()));
         }
         if (!this.tagFilters.isEmpty()) {
             postStream = postStream.filter(post -> this.filterByTag(this.tagFilters, post.getTags()));
@@ -95,7 +103,7 @@ public final class Blog {
 
         // unset filter & sorting options
         this.tagFilters.clear();
-        this.authorFilter = "";
+        this.authorFilterOrNull = null;
         this.sortingType = SortingType.CREATED_DATE_TIME_DESC;
         return posts;
     }
