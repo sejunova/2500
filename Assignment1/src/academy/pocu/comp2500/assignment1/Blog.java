@@ -86,8 +86,8 @@ public final class Blog {
         if (!this.authorFilter.isEmpty()) {
             postStream = postStream.filter(post -> this.authorFilter.contains(post.getAuthor()));
         }
-        if (this.tagFilters.isEmpty()) {
-            postStream = postStream.filter(post -> post.getTags().containsAll(this.tagFilters));
+        if (!this.tagFilters.isEmpty()) {
+            postStream = postStream.filter(post -> this.filterByTag(this.tagFilters, post.getTags()));
         }
         List<Post> posts = postStream
                 .sorted(postComparator)
@@ -119,4 +119,12 @@ public final class Blog {
         return this.blogId.hashCode();
     }
 
+    private boolean filterByTag(Set<String> tagFilters, Set<String> tags) {
+        for (String tagFilter: tagFilters) {
+            if (!tags.contains(tagFilter)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
