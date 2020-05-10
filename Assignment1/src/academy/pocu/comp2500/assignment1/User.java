@@ -50,12 +50,6 @@ public final class User {
         return new Blog(this);
     }
 
-    public void addTag(Post post, String tag) {
-        if (this == post.getAuthor()) {
-            post.addTag(tag);
-        }
-    }
-
     public void addTagFilter(String tag) {
         this.tagFilters.add(tag);
     }

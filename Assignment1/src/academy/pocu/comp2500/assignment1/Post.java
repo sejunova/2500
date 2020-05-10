@@ -31,6 +31,10 @@ public final class Post {
         this.tags = new HashSet<>();
     }
 
+    public UUID getPostId() {
+        return postId;
+    }
+
     public OffsetDateTime getCreatedDateTime() {
         return this.createdDateTime;
     }
@@ -39,8 +43,10 @@ public final class Post {
         return this.modifiedDateTime;
     }
 
-    public void addTag(String tag) {
-        this.tags.add(tag);
+    public void addTag(User user, String tag) {
+        if (user.equals(this.author)) {
+            this.tags.add(tag);
+        }
     }
 
     public User getAuthor() {
@@ -71,8 +77,8 @@ public final class Post {
         return this.tags;
     }
 
-    public void addComment(User user, String text) {
-        this.comments.add(new Comment(user, text));
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
     }
 
     public void addReaction(User user, Reaction reaction) {
@@ -119,4 +125,5 @@ public final class Post {
     public int hashCode() {
         return this.postId.hashCode();
     }
+
 }
