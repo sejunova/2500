@@ -28,46 +28,47 @@ public final class Blog {
         this.posts.add(post);
     }
 
-    public List<Post> getPosts(User userOrNull) {
-        if (userOrNull == null) {
-            return this.posts;
-        }
-
-        User user = userOrNull;
-        Comparator<Post> postComparator;
-        switch (user.getSortingType()) {
-            case CREATED_DATE_TIME_ASC:
-                postComparator = (post1, post2) -> post1.getCreatedDateTime().compareTo(post2.getCreatedDateTime());
-                break;
-            case CREATED_DATE_TIME_DESC:
-                postComparator = (post1, post2) -> post2.getCreatedDateTime().compareTo(post1.getCreatedDateTime());
-                break;
-            case MODIFIED_DATE_TIME_ASC:
-                postComparator = (post1, post2) -> post1.getModifiedDateTime().compareTo(post2.getModifiedDateTime());
-                break;
-            case MODIFIED_DATE_TIME_DESC:
-                postComparator = (post1, post2) -> post2.getModifiedDateTime().compareTo(post1.getModifiedDateTime());
-                break;
-            case TITLE_ASC:
-                postComparator = (post1, post2) -> post1.getTitle().compareTo(post2.getTitle());
-                break;
-            default:
-                postComparator = (post1, post2) -> post2.getCreatedDateTime().compareTo(post1.getCreatedDateTime());
-                break;
-        }
-        Stream<Post> postStream = this.posts
-                .stream();
-        if (!user.getAuthorFilter().isEmpty()) {
-            postStream = postStream.filter(post -> user.getAuthorFilter().contains(post.getAuthor()));
-        }
-        if (!user.getTagFilters().isEmpty()) {
-            postStream = postStream.filter(post -> post.getTags().containsAll(user.getTagFilters()));
-        }
-        List<Post> posts = postStream
-                .sorted(postComparator)
-                .collect(Collectors.toList());
-        user.unsetFilters();
-        return posts;
+    public List<Post> getPosts() {
+        return this.posts;
+//        if (userOrNull == null) {
+//            return this.posts;
+//        }
+//
+//        User user = userOrNull;
+//        Comparator<Post> postComparator;
+//        switch (user.getSortingType()) {
+//            case CREATED_DATE_TIME_ASC:
+//                postComparator = (post1, post2) -> post1.getCreatedDateTime().compareTo(post2.getCreatedDateTime());
+//                break;
+//            case CREATED_DATE_TIME_DESC:
+//                postComparator = (post1, post2) -> post2.getCreatedDateTime().compareTo(post1.getCreatedDateTime());
+//                break;
+//            case MODIFIED_DATE_TIME_ASC:
+//                postComparator = (post1, post2) -> post1.getModifiedDateTime().compareTo(post2.getModifiedDateTime());
+//                break;
+//            case MODIFIED_DATE_TIME_DESC:
+//                postComparator = (post1, post2) -> post2.getModifiedDateTime().compareTo(post1.getModifiedDateTime());
+//                break;
+//            case TITLE_ASC:
+//                postComparator = (post1, post2) -> post1.getTitle().compareTo(post2.getTitle());
+//                break;
+//            default:
+//                postComparator = (post1, post2) -> post2.getCreatedDateTime().compareTo(post1.getCreatedDateTime());
+//                break;
+//        }
+//        Stream<Post> postStream = this.posts
+//                .stream();
+//        if (!user.getAuthorFilter().isEmpty()) {
+//            postStream = postStream.filter(post -> user.getAuthorFilter().contains(post.getAuthor()));
+//        }
+//        if (!user.getTagFilters().isEmpty()) {
+//            postStream = postStream.filter(post -> post.getTags().containsAll(user.getTagFilters()));
+//        }
+//        List<Post> posts = postStream
+//                .sorted(postComparator)
+//                .collect(Collectors.toList());
+//        user.unsetFilters();
+//        return posts;
     }
 
     @Override
