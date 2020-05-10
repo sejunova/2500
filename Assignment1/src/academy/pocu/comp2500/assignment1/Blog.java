@@ -14,7 +14,7 @@ public final class Blog {
     private User owner;
     private List<Post> posts;
     private Set<String> tagFilters;
-    private User authorFilterOrNull;
+    private Set<User> authorFilters;
     private SortingType sortingType;
 
     public Blog(User user) {
@@ -22,7 +22,7 @@ public final class Blog {
         this.posts = new ArrayList<>();
 
         this.tagFilters = new HashSet<>();
-        this.authorFilterOrNull = null;
+        this.authorFilters = new HashSet<>();
         this.sortingType = SortingType.CREATED_DATE_TIME_DESC;
     }
 
@@ -38,15 +38,15 @@ public final class Blog {
         }
     }
 
-    public User getAuthorFilterOrNull() {
-        return this.authorFilterOrNull;
+    public Set<User> getAuthorFilters() {
+        return this.authorFilters;
     }
 
     public void addAuthorFilter(User author) {
-        if (this.authorFilterOrNull == null || !this.authorFilterOrNull.equals(author)) {
-            this.authorFilterOrNull = author;
+        if (this.authorFilters.contains(author)) {
+            this.authorFilters.remove(author);
         } else {
-            this.authorFilterOrNull = null;
+            this.authorFilters.add(author);
         }
     }
 
@@ -91,8 +91,8 @@ public final class Blog {
 
         Stream<Post> postStream = this.posts
                 .stream();
-        if (this.authorFilterOrNull != null) {
-            postStream = postStream.filter(post -> this.authorFilterOrNull.equals(post.getAuthor()));
+        if (!this.authorFilters.isEmpty()) {
+            postStream = postStream.filter(post -> this.filterByAuthor(this.authorFilters, post.getAuthor()));
         }
         if (!this.tagFilters.isEmpty()) {
             postStream = postStream.filter(post -> this.filterByTag(this.tagFilters, post.getTags()));
@@ -103,7 +103,7 @@ public final class Blog {
 
         // unset filter & sorting options
         this.tagFilters.clear();
-        this.authorFilterOrNull = null;
+        this.authorFilters.clear();
         this.sortingType = SortingType.CREATED_DATE_TIME_DESC;
         return posts;
     }
@@ -130,6 +130,15 @@ public final class Blog {
     private boolean filterByTag(Set<String> tagFilters, Set<String> tags) {
         for (String tagFilter: tagFilters) {
             if (tags.contains(tagFilter)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean filterByAuthor(Set<User> authorFilters, User author) {
+        for (User authorFilter: authorFilters) {
+            if (author.equals(authorFilter)) {
                 return true;
             }
         }
