@@ -60,6 +60,7 @@ public final class Post {
     public void updateTitle(User author, String title) {
         if (this.author.equals(author)) {
             this.title = title;
+            this.modifiedDateTime = OffsetDateTime.now();
         }
     }
 
@@ -70,6 +71,7 @@ public final class Post {
     public void updateBody(User author, String body) {
         if (this.author.equals(author)) {
             this.body = body;
+            this.modifiedDateTime = OffsetDateTime.now();
         }
     }
 
