@@ -95,7 +95,7 @@ public final class Blog {
             postStream = postStream.filter(post -> this.filterByAuthor(this.authorFilters, post.getAuthor()));
         } else if (this.authorFilters.isEmpty() && !this.tagFilters.isEmpty()) {
             postStream = postStream.filter(post -> this.filterByTag(this.tagFilters, post.getTags()));
-        } else if (this.authorFilters.isEmpty() && this.tagFilters.isEmpty()) {
+        } else if (!this.authorFilters.isEmpty() && !this.tagFilters.isEmpty()) {
             postStream = postStream.filter(post -> this.filterByTag(this.tagFilters, post.getTags()) || this.filterByAuthor(this.authorFilters, post.getAuthor()));
         }
         List<Post> posts = postStream
