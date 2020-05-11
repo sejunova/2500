@@ -27,8 +27,8 @@ public final class Blog {
         this.sortingType = SortingType.CREATED_DATE_TIME_DESC;
     }
 
-    public void setTagFilter(Set<String> tagsOrNull) {
-        this.tagFilters = Objects.requireNonNullElseGet(tagsOrNull, HashSet::new);
+    public void setTagFilter(Set<String> tags) {
+        this.tagFilters = tags;
     }
 
     public void setAuthorFilter(User authorOrNull) {
