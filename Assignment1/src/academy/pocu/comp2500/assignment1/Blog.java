@@ -91,11 +91,12 @@ public final class Blog {
 
         Stream<Post> postStream = this.posts
                 .stream();
-        if (!this.authorFilters.isEmpty()) {
+        if (!this.authorFilters.isEmpty() && this.tagFilters.isEmpty()) {
             postStream = postStream.filter(post -> this.filterByAuthor(this.authorFilters, post.getAuthor()));
-        }
-        if (!this.tagFilters.isEmpty()) {
+        } else if (this.authorFilters.isEmpty() && !this.tagFilters.isEmpty()) {
             postStream = postStream.filter(post -> this.filterByTag(this.tagFilters, post.getTags()));
+        } else if (this.authorFilters.isEmpty() && this.tagFilters.isEmpty()) {
+            postStream = postStream.filter(post -> this.filterByTag(this.tagFilters, post.getTags()) || this.filterByAuthor(this.authorFilters, post.getAuthor()));
         }
         List<Post> posts = postStream
                 .sorted(postComparator)
