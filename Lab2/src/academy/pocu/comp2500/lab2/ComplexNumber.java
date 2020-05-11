@@ -1,8 +1,8 @@
 package academy.pocu.comp2500.lab2;
 
 public class ComplexNumber {
-    private double real;
-    private double imaginary;
+    public final double real;
+    public final double imaginary;
 
     public ComplexNumber() {
         this.real = 0.0;
@@ -17,14 +17,6 @@ public class ComplexNumber {
     public ComplexNumber(double real, double imaginary) {
         this.real = real;
         this.imaginary = imaginary;
-    }
-
-    public double getReal() {
-        return this.real;
-    }
-
-    public double getImaginary() {
-        return this.imaginary;
     }
 
     public boolean isReal() {

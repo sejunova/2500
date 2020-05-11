@@ -9,14 +9,14 @@ public class Program {
         ComplexNumber num3 = new ComplexNumber(2.5, -5.1);
         ComplexNumber num4 = new ComplexNumber(0.0, 0.0012);
 
-        assert (num1.getReal() == 0.0);
-        assert (num1.getImaginary() == 0.0);
+        assert (num1.real == 0.0);
+        assert (num1.imaginary == 0.0);
 
-        assert (num2.getReal() == 10.0);
-        assert (num2.getImaginary() == 0.0);
+        assert (num2.real == 10.0);
+        assert (num2.imaginary == 0.0);
 
-        assert (num3.getReal() == 2.5);
-        assert (num3.getImaginary() == -5.1);
+        assert (num3.real == 2.5);
+        assert (num3.imaginary == -5.1);
 
         assert num2.isReal();
         assert !num3.isReal();
@@ -26,28 +26,28 @@ public class Program {
 
         ComplexNumber num3Conjugate = num3.getConjugate();
 
-        assert num3Conjugate.getReal() == 2.5;
-        assert num3Conjugate.getImaginary() == 5.1;
+        assert num3Conjugate.real == 2.5;
+        assert num3Conjugate.imaginary == 5.1;
 
         ComplexNumber sum = num2.add(num3);
 
-        assert Math.abs(sum.getReal() - 12.5) < DOUBLE_EPSILON;
-        assert Math.abs(sum.getImaginary() - (-5.1)) < DOUBLE_EPSILON;
+        assert Math.abs(sum.real - 12.5) < DOUBLE_EPSILON;
+        assert Math.abs(sum.imaginary - (-5.1)) < DOUBLE_EPSILON;
 
         ComplexNumber diff = num4.subtract(num3);
 
-        assert Math.abs(diff.getReal() - (-2.5)) < DOUBLE_EPSILON;
-        assert Math.abs(diff.getImaginary() - 5.1012) < DOUBLE_EPSILON;
+        assert Math.abs(diff.real - (-2.5)) < DOUBLE_EPSILON;
+        assert Math.abs(diff.imaginary - 5.1012) < DOUBLE_EPSILON;
 
         ComplexNumber product = num3.multiply(num4);
 
-        assert Math.abs(product.getReal() - 0.00612) < DOUBLE_EPSILON;
-        assert Math.abs(product.getImaginary() - 0.003) < DOUBLE_EPSILON;
+        assert Math.abs(product.real - 0.00612) < DOUBLE_EPSILON;
+        assert Math.abs(product.imaginary - 0.003) < DOUBLE_EPSILON;
 
         ComplexNumber quotient = num4.divide(num3);
 
-        assert Math.abs(quotient.getReal() - (-1.89709E-4)) < DOUBLE_EPSILON;
-        assert Math.abs(quotient.getImaginary() - 9.29944E-5) < DOUBLE_EPSILON;
+        assert Math.abs(quotient.real - (-1.89709E-4)) < DOUBLE_EPSILON;
+        assert Math.abs(quotient.imaginary - 9.29944E-5) < DOUBLE_EPSILON;
     }
 }
 
