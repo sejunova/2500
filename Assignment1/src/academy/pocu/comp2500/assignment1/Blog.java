@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -14,7 +15,7 @@ public final class Blog {
     private User owner;
     private List<Post> posts;
     private Set<String> tagFilters;
-    private Set<User> authorFilters;
+    private User authorFilter;
     private SortingType sortingType;
 
     public Blog(User user) {
@@ -22,32 +23,16 @@ public final class Blog {
         this.posts = new ArrayList<>();
 
         this.tagFilters = new HashSet<>();
-        this.authorFilters = new HashSet<>();
+        this.authorFilter = null;
         this.sortingType = SortingType.CREATED_DATE_TIME_DESC;
     }
 
-    public Set<String> getTagFilters() {
-        return this.tagFilters;
+    public void setTagFilter(Set<String> tagsOrNull) {
+        this.tagFilters = Objects.requireNonNullElseGet(tagsOrNull, HashSet::new);
     }
 
-    public void addTagFilter(String tag) {
-        if (this.tagFilters.contains(tag)) {
-            this.tagFilters.remove(tag);
-        } else {
-            this.tagFilters.add(tag);
-        }
-    }
-
-    public Set<User> getAuthorFilters() {
-        return this.authorFilters;
-    }
-
-    public void addAuthorFilter(User author) {
-        if (this.authorFilters.contains(author)) {
-            this.authorFilters.remove(author);
-        } else {
-            this.authorFilters.add(author);
-        }
+    public void setAuthorFilter(User authorOrNull) {
+        this.authorFilter = authorOrNull;
     }
 
     public SortingType getSortingType() {
@@ -91,22 +76,15 @@ public final class Blog {
 
         Stream<Post> postStream = this.posts
                 .stream();
-        if (!this.authorFilters.isEmpty() && this.tagFilters.isEmpty()) {
-            postStream = postStream.filter(post -> this.filterByAuthor(this.authorFilters, post.getAuthor()));
-        } else if (this.authorFilters.isEmpty() && !this.tagFilters.isEmpty()) {
-            postStream = postStream.filter(post -> this.filterByTag(this.tagFilters, post.getTags()));
-        } else if (!this.authorFilters.isEmpty() && !this.tagFilters.isEmpty()) {
-            postStream = postStream.filter(post -> this.filterByTag(this.tagFilters, post.getTags()) || this.filterByAuthor(this.authorFilters, post.getAuthor()));
+        if (this.authorFilter != null) {
+            postStream = postStream.filter(post -> this.authorFilter.equals(post.getAuthor()));
         }
-        List<Post> posts = postStream
+        if (!this.tagFilters.isEmpty()) {
+            postStream = postStream.filter(post -> this.filterByTag(this.tagFilters, post.getTags()));
+        }
+        return postStream
                 .sorted(postComparator)
                 .collect(Collectors.toList());
-
-        // unset filter & sorting options
-        this.tagFilters.clear();
-        this.authorFilters.clear();
-        this.sortingType = SortingType.CREATED_DATE_TIME_DESC;
-        return posts;
     }
 
     @Override
@@ -131,15 +109,6 @@ public final class Blog {
     private boolean filterByTag(Set<String> tagFilters, Set<String> tags) {
         for (String tagFilter: tagFilters) {
             if (tags.contains(tagFilter)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean filterByAuthor(Set<User> authorFilters, User author) {
-        for (User authorFilter: authorFilters) {
-            if (author.equals(authorFilter)) {
                 return true;
             }
         }
