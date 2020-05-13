@@ -43,10 +43,8 @@ public final class Post {
         return this.modifiedDateTime;
     }
 
-    public void addTag(User user, String tag) {
-        if (user.equals(this.author)) {
-            this.tags.add(tag);
-        }
+    public void addTag(String tag) {
+        this.tags.add(tag);
     }
 
     public User getAuthor() {
