@@ -40,8 +40,8 @@ public final class Comment implements Comparable<Comment> {
         this.text = text;
     }
 
-    public void addSubcomment(Comment subcomment) {
-        this.subcomments.add(subcomment);
+    public void addSubcomment(Comment comment) {
+        this.subcomments.add(comment);
     }
 
     public List<Comment> getSubcomments() {
