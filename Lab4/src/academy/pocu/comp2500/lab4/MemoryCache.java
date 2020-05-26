@@ -1,6 +1,8 @@
 package academy.pocu.comp2500.lab4;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MemoryCache {
@@ -12,6 +14,9 @@ public class MemoryCache {
     private Map<String, String> lifo = new LinkedHashMap<>();
     private int maxEntryCount = Integer.MAX_VALUE;
     private EvictionPolicy evictionPolicy = EvictionPolicy.LEAST_RECENTLY_USED;
+
+    private MemoryCache() {
+    }
 
     public static MemoryCache getInstance(String cache) {
         if (MemoryCache.cachePool.containsKey(cache)) {
@@ -84,11 +89,12 @@ public class MemoryCache {
                 this.lruEntries.remove(entryToDelete);
                 break;
             case LAST_IN_FIRST_OUT:
-                Map.Entry<String, String> toDelete = (Map.Entry<String, String>) lifo.entrySet().toArray()[this.lruEntries.size() - 1];
+                List<Map.Entry<String, String>> entryList = new ArrayList<Map.Entry<String, String>>(this.lifo.entrySet());
+                entryToDelete = entryList.get(entryList.size() - 1).getKey();
 
-                this.fifo.remove(toDelete.getKey());
-                this.lifo.remove(toDelete.getKey());
-                this.lruEntries.remove(toDelete.getKey());
+                this.fifo.remove(entryToDelete);
+                this.lifo.remove(entryToDelete);
+                this.lruEntries.remove(entryToDelete);
                 break;
             case LEAST_RECENTLY_USED:
                 entryToDelete = this.lruEntries.entrySet().iterator().next().getKey();
