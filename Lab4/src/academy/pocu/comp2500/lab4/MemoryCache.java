@@ -1,15 +1,15 @@
 package academy.pocu.comp2500.lab4;
 
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.Map;
 
-public final class MemoryCache {
+public class MemoryCache {
     private static Map<String, MemoryCache> cachePool = new LinkedHashMap<>();
     private static int maxInstanceCount = Integer.MAX_VALUE;
 
     private Map<String, String> lruEntries = new LinkedHashMap<>();
-    private LinkedList<String> entries = new LinkedList<>();
+    private Map<String, String> fifo = new LinkedHashMap<>();
+    private Map<String, String> lifo = new LinkedHashMap<>();
     private int maxEntryCount = Integer.MAX_VALUE;
     private EvictionPolicy evictionPolicy = EvictionPolicy.LEAST_RECENTLY_USED;
 
@@ -38,12 +38,18 @@ public final class MemoryCache {
         }
     }
 
+    public static void clear() {
+        MemoryCache.cachePool.clear();
+    }
+
     public void addEntry(String key, String value) {
-        if (this.lruEntries.size() == this.maxEntryCount) {
+        if (!this.lruEntries.containsKey(key) && this.lruEntries.size() == this.maxEntryCount) {
             evictEntry();
         }
+        this.fifo.put(key, value);
+        this.lifo.put(key, value);
+        this.lruEntries.remove(key);
         this.lruEntries.put(key, value);
-        this.entries.add(key);
     }
 
     public void setMaxEntryCount(int maxEntryCount) {
@@ -59,11 +65,8 @@ public final class MemoryCache {
             return null;
         }
 
-        if (this.evictionPolicy.equals(EvictionPolicy.LEAST_RECENTLY_USED)) {
-            String entryToUpdate = this.lruEntries.get(key);
-            this.lruEntries.remove(key);
-            this.lruEntries.put(key, entryToUpdate);
-        }
+        this.lruEntries.remove(key);
+        this.lruEntries.put(key, value);
         return value;
     }
 
@@ -72,14 +75,29 @@ public final class MemoryCache {
     }
 
     private void evictEntry() {
-        if (this.evictionPolicy.equals(EvictionPolicy.LAST_IN_FIRST_OUT)) {
-            String lastEntryKey = this.lruEntries.entrySet().stream().skip(this.lruEntries.size() - 1).findFirst().get().getKey();
-            this.lruEntries.remove(lastEntryKey);
-            this.entries.removeLast();
-        } else {
-            String firstEntryKey = this.lruEntries.entrySet().iterator().next().getKey();
-            this.lruEntries.remove(firstEntryKey);
-            this.entries.removeFirst();
+        String entryToDelete;
+        switch (this.evictionPolicy) {
+            case FIRST_IN_FIRST_OUT:
+                entryToDelete = this.fifo.entrySet().iterator().next().getKey();
+                this.fifo.remove(entryToDelete);
+                this.lifo.remove(entryToDelete);
+                this.lruEntries.remove(entryToDelete);
+                break;
+            case LAST_IN_FIRST_OUT:
+                Map.Entry<String, String> toDelete = (Map.Entry<String, String>) lifo.entrySet().toArray()[this.lruEntries.size() - 1];
+
+                this.fifo.remove(toDelete.getKey());
+                this.lifo.remove(toDelete.getKey());
+                this.lruEntries.remove(toDelete.getKey());
+                break;
+            case LEAST_RECENTLY_USED:
+                entryToDelete = this.lruEntries.entrySet().iterator().next().getKey();
+                this.fifo.remove(entryToDelete);
+                this.lifo.remove(entryToDelete);
+                this.lruEntries.remove(entryToDelete);
+                break;
+            default:
+                throw new RuntimeException("wrong type");
         }
     }
 }
