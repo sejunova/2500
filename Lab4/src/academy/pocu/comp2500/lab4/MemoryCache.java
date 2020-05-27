@@ -10,8 +10,7 @@ public class MemoryCache {
     private static int maxInstanceCount = Integer.MAX_VALUE;
 
     private Map<String, String> lruEntries = new LinkedHashMap<>();
-    private Map<String, String> fifo = new LinkedHashMap<>();
-    private Map<String, String> lifo = new LinkedHashMap<>();
+    private Map<String, String> queueEntries = new LinkedHashMap<>();
     private int maxEntryCount = Integer.MAX_VALUE;
     private EvictionPolicy evictionPolicy = EvictionPolicy.LEAST_RECENTLY_USED;
 
@@ -51,8 +50,7 @@ public class MemoryCache {
         if (!this.lruEntries.containsKey(key) && this.lruEntries.size() == this.maxEntryCount) {
             evictEntry();
         }
-        this.fifo.put(key, value);
-        this.lifo.put(key, value);
+        this.queueEntries.put(key, value);
         this.lruEntries.remove(key);
         this.lruEntries.put(key, value);
     }
@@ -83,23 +81,20 @@ public class MemoryCache {
         String entryToDelete;
         switch (this.evictionPolicy) {
             case FIRST_IN_FIRST_OUT:
-                entryToDelete = this.fifo.entrySet().iterator().next().getKey();
-                this.fifo.remove(entryToDelete);
-                this.lifo.remove(entryToDelete);
+                entryToDelete = this.queueEntries.entrySet().iterator().next().getKey();
+                this.queueEntries.remove(entryToDelete);
                 this.lruEntries.remove(entryToDelete);
                 break;
             case LAST_IN_FIRST_OUT:
-                List<Map.Entry<String, String>> entryList = new ArrayList<Map.Entry<String, String>>(this.lifo.entrySet());
+                List<Map.Entry<String, String>> entryList = new ArrayList<>(this.queueEntries.entrySet());
                 entryToDelete = entryList.get(entryList.size() - 1).getKey();
 
-                this.fifo.remove(entryToDelete);
-                this.lifo.remove(entryToDelete);
+                this.queueEntries.remove(entryToDelete);
                 this.lruEntries.remove(entryToDelete);
                 break;
             case LEAST_RECENTLY_USED:
                 entryToDelete = this.lruEntries.entrySet().iterator().next().getKey();
-                this.fifo.remove(entryToDelete);
-                this.lifo.remove(entryToDelete);
+                this.queueEntries.remove(entryToDelete);
                 this.lruEntries.remove(entryToDelete);
                 break;
             default:
