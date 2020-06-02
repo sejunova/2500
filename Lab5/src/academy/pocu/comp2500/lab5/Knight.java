@@ -12,6 +12,10 @@ public class Knight extends Gladiator {
     }
 
     public void attackTogether(Barbarian enemy) {
+        if (this == enemy) {
+            return;
+        }
+
         if (this.pet == null) {
             return;
         }

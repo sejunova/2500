@@ -21,6 +21,9 @@ public class Barbarian {
     }
 
     public void attack(Barbarian enemy) {
+        if (this == enemy) {
+            return;
+        }
         int damage = Math.max((this.attack - enemy.defense) / 2, 1);
         enemy.currentHp = Math.max(enemy.currentHp - damage, 0);
     }

@@ -12,6 +12,9 @@ public class Gladiator extends Barbarian {
     }
 
     public boolean addMove(Move move) {
+        if (this.moveSet.size() == 4) {
+            return false;
+        }
         if (!this.moveSet.containsKey(move.getMoveName())) {
             this.moveSet.put(move.getMoveName(), move);
             return true;
@@ -28,6 +31,10 @@ public class Gladiator extends Barbarian {
     }
 
     public void attack(String moveName, Barbarian enemy) {
+        if (this == enemy) {
+            return;
+        }
+
         if (!this.moveSet.containsKey(moveName)) {
             return;
         }
