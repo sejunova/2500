@@ -1,6 +1,7 @@
 package academy.pocu.comp2500.assignment2;
 
 public class Calendar extends Product{
+    private CalendarType type;
     public Calendar(CalendarType calendarType) {
         super(0, 0);
         switch (calendarType) {
@@ -23,5 +24,9 @@ public class Calendar extends Product{
                 throw new RuntimeException("Wrong CalendarType given");
         }
         super.color = "#FFFFFF";
+    }
+
+    public CalendarType getType() {
+        return this.type;
     }
 }
