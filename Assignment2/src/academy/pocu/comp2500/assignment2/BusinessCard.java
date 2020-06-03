@@ -2,7 +2,6 @@ package academy.pocu.comp2500.assignment2;
 
 public class BusinessCard extends Product{
     private BusinessCardType businessCardType;
-    private int price;
     private Color color;
     private DeliveryMethod deliveryMethod = DeliveryMethod.PICKUP;
     private TextAperture textAperture = new TextAperture();
@@ -21,8 +20,10 @@ public class BusinessCard extends Product{
                 switch (businessCardSides) {
                     case SINGLE_SIDE:
                         this.price = 110;
+                        break;
                     case DOUBLE_SIDE:
                         this.price = 140;
+                        break;
                     default:
                         throw new RuntimeException("wrong enum BusinessCardSides val");
                 }
@@ -30,8 +31,10 @@ public class BusinessCard extends Product{
                 switch (businessCardSides) {
                     case SINGLE_SIDE:
                         this.price = 120;
+                        break;
                     case DOUBLE_SIDE:
                         this.price = 150;
+                        break;
                     default:
                         throw new RuntimeException("wrong enum BusinessCardSides val");
                 }
@@ -39,8 +42,10 @@ public class BusinessCard extends Product{
                 switch (businessCardSides) {
                     case SINGLE_SIDE:
                         this.price = 100;
+                        break;
                     case DOUBLE_SIDE:
                         this.price = 130;
+                        break;
                     default:
                         throw new RuntimeException("wrong enum BusinessCardSides val");
                 }

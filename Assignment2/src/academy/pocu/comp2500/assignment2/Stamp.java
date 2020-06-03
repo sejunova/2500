@@ -1,7 +1,6 @@
 package academy.pocu.comp2500.assignment2;
 
 public class Stamp extends Product{
-    private StampColor color;
     private String text;
 
     public Stamp(StampColor color, int width, int height, String text) {
@@ -16,14 +15,10 @@ public class Stamp extends Product{
         } else {
             throw new RuntimeException("Wrong width & height given");
         }
-        this.color = color;
+
+        super.color = color.getColor();
         this.text = text;
     }
-
-    public String getColor() {
-        return color.getColor();
-    }
-
     public String getText() {
         return text;
     }
