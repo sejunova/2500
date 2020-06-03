@@ -2,7 +2,6 @@ package academy.pocu.comp2500.assignment2;
 
 public class BusinessCard extends Product{
     private BusinessCardType businessCardType;
-    private Color color;
     private DeliveryMethod deliveryMethod = DeliveryMethod.PICKUP;
     private TextAperture textAperture = new TextAperture();
     private ImageAperture imageAperture = new ImageAperture();
@@ -11,7 +10,7 @@ public class BusinessCard extends Product{
 
     public BusinessCard(BusinessCardType businessCardType, Color color, BusinessCardSides businessCardSides, Orientation orientation) {
         super(90, 50);
-        this.color = color;
+        super.color = color.getColor();
         this.orientation = orientation;
         this.businessCardSides = businessCardSides;
         this.businessCardType = businessCardType;
@@ -56,14 +55,6 @@ public class BusinessCard extends Product{
 
     public BusinessCardType getBusinessCardType() {
         return businessCardType;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public DeliveryMethod getDeliveryMethod() {
-        return deliveryMethod;
     }
 
     public TextAperture getTextAperture() {
