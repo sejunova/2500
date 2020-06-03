@@ -1,16 +1,11 @@
 package academy.pocu.comp2500.assignment2;
 
-public class Calendar {
+public class Calendar extends Product{
     private CalendarType calendarType;
-    private int width;
-    private int height;
-    private int price;
     private DeliveryMethod deliveryMethod = DeliveryMethod.PICKUP;
 
-    //벽걸이(Wall) 달력	40 x 40 cm	흰색	1000
-    //탁상(Desk) 달력	20 x 15 cm	흰색	1000
-    //자석(Magnet) 달력	10 x 20 cm	흰색	1500
     public Calendar(CalendarType calendarType) {
+        super(0, 0);
         switch (calendarType) {
             case WALL_CALENDAR:
                 this.width = 400;
@@ -35,18 +30,6 @@ public class Calendar {
 
     public CalendarType getCalendarType() {
         return calendarType;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public int getPrice() {
-        return price;
     }
 
     public String getColor() {

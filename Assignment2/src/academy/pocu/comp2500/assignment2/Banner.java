@@ -1,9 +1,7 @@
 package academy.pocu.comp2500.assignment2;
 
-public class Banner {
+public class Banner extends Product {
     private BannerType bannerType;
-    private int width;
-    private int height;
     private int price;
     private String color;
     private DeliveryMethod deliveryMethod = DeliveryMethod.PICKUP;
@@ -12,6 +10,7 @@ public class Banner {
     private Orientation orientation;
 
     public Banner(BannerType bannerType, int width, int height, String color, Orientation orientation) {
+        super(0, 0);
         if (width == 1000 && height == 500) {
             switch (bannerType) {
                 case GLOSS:
@@ -63,8 +62,6 @@ public class Banner {
         } else {
             throw new RuntimeException("Wrong width and height given");
         }
-        this.width = width;
-        this.height = height;
         this.color = color;
         this.bannerType = bannerType;
         this.orientation = orientation;
@@ -72,18 +69,6 @@ public class Banner {
 
     public BannerType getBannerType() {
         return bannerType;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public int getPrice() {
-        return price;
     }
 
     public String getColor() {
