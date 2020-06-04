@@ -4,4 +4,8 @@ public enum BusinessCardType {
     LINEN,
     LAID,
     SMOOTH;
+
+    public static BusinessCardType[] all() {
+        return values();
+    }
 }

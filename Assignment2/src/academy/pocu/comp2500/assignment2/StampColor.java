@@ -16,4 +16,8 @@ public enum StampColor {
     {
         return this.color;
     }
+
+    public static StampColor[] all() {
+        return values();
+    }
 }

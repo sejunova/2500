@@ -4,4 +4,9 @@ public enum BannerType {
     GLOSS,
     SCRIM,
     MESH;
+
+    public static BannerType[] all() {
+        return values();
+    }
+
 }

@@ -1,69 +1,59 @@
 package academy.pocu.comp2500.assignment2;
 
+import java.util.Arrays;
+
 public class Banner extends Product {
     private BannerType bannerType;
-    private int price;
     private String color;
-    private DeliveryMethod deliveryMethod = DeliveryMethod.PICKUP;
     private TextAperture textAperture = new TextAperture();
     private ImageAperture imageAperture = new ImageAperture();
     private Orientation orientation;
 
-    public Banner(BannerType bannerType, int width, int height, String color, Orientation orientation) {
+    public Banner(BannerType type, BannerSize size, String color, Orientation orientation) {
         super(0, 0);
-        if (width == 1000 && height == 500) {
-            switch (bannerType) {
-                case GLOSS:
-                    this.price = 5000;
-                    break;
-                case SCRIM:
-                case MESH:
-                    this.price = 5100;
-                    break;
-                default:
-                    throw new RuntimeException("Wrong bannerType");
-            }
-        } else if (width == 1000 && height == 1000) {
-            switch (bannerType) {
-                case GLOSS:
-                    this.price = 5200;
-                    break;
-                case SCRIM:
-                case MESH:
-                    this.price = 5300;
-                    break;
-                default:
-                    throw new RuntimeException("Wrong bannerType");
-            }
-        } else if (width == 2000 && height == 500) {
-            switch (bannerType) {
-                case GLOSS:
-                    this.price = 5300;
-                    break;
-                case SCRIM:
-                case MESH:
-                    this.price = 5400;
-                    break;
-                default:
-                    throw new RuntimeException("Wrong bannerType");
-            }
-        } else if (width == 3000 && height == 1000) {
-            switch (bannerType) {
-                case GLOSS:
-                    this.price = 6000;
-                    break;
-                case SCRIM:
-                case MESH:
-                    this.price = 6100;
-                    break;
-                default:
-                    throw new RuntimeException("Wrong bannerType");
-            }
-        } else {
-            throw new RuntimeException("Wrong width and height given");
+        if (!Arrays.asList(BannerType.all()).contains(type)) {
+            throw new RuntimeException("invalid type given");
         }
+        if (!Arrays.asList(BannerSize.all()).contains(size)) {
+            throw new RuntimeException("invalid size given");
+        }
+
+        switch (size) {
+            case WIDTH_1000_HEIGHT_500:
+                if (type.equals(BannerType.GLOSS)) {
+                    super.price = 5000;
+                } else {
+                    super.price = 5100;
+                }
+                break;
+            case WIDTH_1000_HEIGHT_1000:
+                if (type.equals(BannerType.GLOSS)) {
+                    super.price = 5200;
+                } else {
+                    super.price = 5300;
+                }
+                break;
+            case WIDTH_2000_HEIGHT_500:
+                if (type.equals(BannerType.GLOSS)) {
+                    super.price = 5300;
+                } else {
+                    super.price = 5400;
+                }
+                break;
+            case WIDTH_3000_HEIGHT_1000:
+                if (type.equals(BannerType.GLOSS)) {
+                    super.price = 6000;
+                } else {
+                    super.price = 6100;
+                }
+                break;
+            default:
+                break;
+        }
+        super.width = size.getWidth();
+        super.height = size.getHeight();
         this.color = color;
-        this.bannerType = bannerType;
+        this.bannerType = type;
         this.orientation = orientation;
     }
 
@@ -73,10 +63,6 @@ public class Banner extends Product {
 
     public String getColor() {
         return color;
-    }
-
-    public DeliveryMethod getDeliveryMethod() {
-        return deliveryMethod;
     }
 
     public TextAperture getTextAperture() {

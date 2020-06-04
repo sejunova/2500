@@ -26,4 +26,8 @@ public enum StampSize {
     public int getPrice() {
         return this.price;
     }
+
+    public static StampSize[] all() {
+        return values();
+    }
 }
