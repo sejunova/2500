@@ -28,7 +28,7 @@ public class App {
         registry.registerCartCreator("Cart");
         registry.registerProductAdder("Cart", "addProduct");
         registry.registerProductRemover("Cart", "removeProduct");
-        registry.registerTotalPriceGetter("Cart", "getBusinessCards");
+        registry.registerTotalPriceGetter("Cart", "getTotalPrice");
         registry.registerLandscapeBannerTextApertureAdder("Banner", "addTextAperture");
         registry.registerLandscapeBannerImageApertureAdder("Banner", "addImageAperture");
         registry.registerPortraitBannerTextApertureAdder("Banner", "addTextAperture");
