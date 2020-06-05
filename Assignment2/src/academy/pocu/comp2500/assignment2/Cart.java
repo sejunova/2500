@@ -25,8 +25,7 @@ public class Cart {
         return this.products;
     }
 
-    public Product getProduct(Product product) {
-        int index = this.products.indexOf(product);
+    public Product getProduct(int index) {
         return this.products.get(index);
     }
 }

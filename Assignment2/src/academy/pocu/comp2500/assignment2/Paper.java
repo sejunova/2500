@@ -22,10 +22,10 @@ public class Paper extends Product{
     }
 
     public void addTextAperture(TextAperture textAperture) {
-        if (textAperture.getX() + textAperture.getWidth() > super.width) {
+        if (textAperture.getX() < 0 || textAperture.getX() + textAperture.getWidth() > super.width) {
             return;
         }
-        if (textAperture.getY() + textAperture.getHeight() > super.height) {
+        if (textAperture.getY() < 0 || textAperture.getY() + textAperture.getHeight() > super.height) {
             return;
         }
 
@@ -34,10 +34,10 @@ public class Paper extends Product{
     }
 
     public void addImageAperture(ImageAperture imageAperture) {
-        if (imageAperture.getX() + imageAperture.getWidth() > super.width) {
+        if (imageAperture.getX() < 0 || imageAperture.getX() + imageAperture.getWidth() > super.width) {
             return;
         }
-        if (imageAperture.getY() + imageAperture.getHeight() > super.height) {
+        if (imageAperture.getY() < 0 || imageAperture.getY() + imageAperture.getHeight() > super.height) {
             return;
         }
         this.imageApertures.add(imageAperture);
