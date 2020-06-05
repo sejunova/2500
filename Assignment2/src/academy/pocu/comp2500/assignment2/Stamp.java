@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 public class Stamp extends Product{
     private String text;
+    private StampColor stampColor;
+    private StampSize stampSize;
 
     public Stamp(StampColor color, StampSize size, String text) {
         super(size.getWidth(), size.getHeight());
@@ -16,12 +18,24 @@ public class Stamp extends Product{
         super.price = size.getPrice();
         super.color = color.getColor();
         this.text = text;
+
+        this.stampColor = color;
+        this.stampSize = size;
     }
+
     public String getText() {
         return text;
     }
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public StampColor getStampColor() {
+        return stampColor;
+    }
+
+    public StampSize getStampSize() {
+        return stampSize;
     }
 }

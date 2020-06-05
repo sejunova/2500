@@ -1,18 +1,13 @@
 package academy.pocu.comp2500.assignment2;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-public class BusinessCard extends Product{
+public class BusinessCard extends Paper{
     private BusinessCardType businessCardType;
-    private List<TextAperture> textApertures = new ArrayList<>();
-    private List<ImageAperture> imageApertures = new ArrayList<>();
-    private Orientation orientation;
     private BusinessCardSides businessCardSides;
 
     public BusinessCard(BusinessCardType type, BusinessCardColor color, BusinessCardSides sides, Orientation orientation) {
-        super(90, 50);
+        super(90, 50, orientation);
         if (!Arrays.asList(BusinessCardType.all()).contains(type)) {
             throw new RuntimeException("invalid type given");
         }
@@ -21,7 +16,6 @@ public class BusinessCard extends Product{
         }
 
         super.color = color.getColor();
-        this.orientation = orientation;
         this.businessCardSides = sides;
         this.businessCardType = type;
         switch (type) {
@@ -55,29 +49,7 @@ public class BusinessCard extends Product{
         return businessCardType;
     }
 
-    public List<TextAperture> getTextApertures() {
-        return textApertures;
-    }
-
-    public List<ImageAperture> getImageApertures() {
-        return imageApertures;
-    }
-
-    public Orientation getOrientation() {
-        return orientation;
-    }
-
     public BusinessCardSides getBusinessCardSides() {
         return businessCardSides;
-    }
-
-    public void addTextAperture(TextAperture textAperture) {
-        this.textApertures.add(textAperture);
-        super.price += 5;
-    }
-
-    public void addImageAperture(ImageAperture imageAperture) {
-        this.imageApertures.add(imageAperture);
-        super.price += 5;
     }
 }

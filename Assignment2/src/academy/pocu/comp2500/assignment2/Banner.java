@@ -1,17 +1,12 @@
 package academy.pocu.comp2500.assignment2;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-public class Banner extends Product {
+public class Banner extends Paper {
     private BannerType bannerType;
-    private List<TextAperture> textApertures = new ArrayList<>();
-    private List<ImageAperture> imageApertures = new ArrayList<>();
-    private Orientation orientation;
 
     public Banner(BannerType type, BannerSize size, String color, Orientation orientation) {
-        super(0, 0);
+        super(0, 0, orientation);
         if (!Arrays.asList(BannerType.all()).contains(type)) {
             throw new RuntimeException("invalid type given");
         }
@@ -55,32 +50,9 @@ public class Banner extends Product {
         super.height = size.getHeight();
         super.color = color;
         this.bannerType = type;
-        this.orientation = orientation;
     }
 
     public BannerType getBannerType() {
         return bannerType;
-    }
-
-    public List<TextAperture> getTextApertures() {
-        return textApertures;
-    }
-
-    public List<ImageAperture> getImageApertures() {
-        return imageApertures;
-    }
-
-    public Orientation getOrientation() {
-        return orientation;
-    }
-
-    public void addTextAperture(TextAperture textAperture) {
-        this.textApertures.add(textAperture);
-        super.price += 5;
-    }
-
-    public void addImageAperture(ImageAperture imageAperture) {
-        this.imageApertures.add(imageAperture);
-        super.price += 5;
     }
 }
