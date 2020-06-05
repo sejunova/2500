@@ -2,7 +2,7 @@ package academy.pocu.comp2500.assignment2;
 
 import java.util.Arrays;
 
-public class Banner extends Paper {
+public class Banner extends ProductWithAperture {
     private BannerType bannerType;
 
     public Banner(BannerType type, BannerSize size, String color, Orientation orientation) {

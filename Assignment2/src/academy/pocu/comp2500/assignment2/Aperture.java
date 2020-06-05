@@ -1,8 +1,5 @@
 package academy.pocu.comp2500.assignment2;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Aperture {
     protected int x;
     protected int y;

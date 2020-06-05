@@ -3,12 +3,12 @@ package academy.pocu.comp2500.assignment2;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Paper extends Product{
+public class ProductWithAperture extends Product{
     protected List<TextAperture> textApertures = new ArrayList<>();
     protected List<ImageAperture> imageApertures = new ArrayList<>();
     protected Orientation orientation;
 
-    Paper(int width, int height, Orientation orientation) {
+    ProductWithAperture(int width, int height, Orientation orientation) {
         super(width, height);
         this.orientation = orientation;
     }
@@ -22,6 +22,9 @@ public class Paper extends Product{
     }
 
     public void addTextAperture(TextAperture textAperture) {
+        if (textAperture.getText() == null) {
+            return;
+        }
         if (textAperture.getX() < 0 || textAperture.getX() + textAperture.getWidth() > super.width) {
             return;
         }
@@ -34,6 +37,9 @@ public class Paper extends Product{
     }
 
     public void addImageAperture(ImageAperture imageAperture) {
+        if (imageAperture.getImage() == null) {
+            return;
+        }
         if (imageAperture.getX() < 0 || imageAperture.getX() + imageAperture.getWidth() > super.width) {
             return;
         }
