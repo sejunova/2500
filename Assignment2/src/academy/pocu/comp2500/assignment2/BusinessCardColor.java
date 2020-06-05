@@ -7,7 +7,7 @@ public enum BusinessCardColor {
 
     private String color;
 
-    private BusinessCardColor(String color)
+    BusinessCardColor(String color)
     {
         this.color = color;
     }

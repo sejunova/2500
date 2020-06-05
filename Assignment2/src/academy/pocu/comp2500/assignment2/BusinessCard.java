@@ -5,6 +5,7 @@ import java.util.Arrays;
 public class BusinessCard extends Paper{
     private BusinessCardType businessCardType;
     private BusinessCardSides businessCardSides;
+    private BusinessCardColor businessCardColor;
 
     public BusinessCard(BusinessCardType type, BusinessCardColor color, BusinessCardSides sides, Orientation orientation) {
         super(90, 50, orientation);
@@ -15,9 +16,6 @@ public class BusinessCard extends Paper{
             throw new RuntimeException("invalid color given");
         }
 
-        super.color = color.getColor();
-        this.businessCardSides = sides;
-        this.businessCardType = type;
         switch (type) {
             case LINEN:
                 if (sides.equals(BusinessCardSides.SINGLE_SIDE)) {
@@ -43,13 +41,22 @@ public class BusinessCard extends Paper{
             default:
                 break;
         }
+
+        super.color = color.getColor();
+        this.businessCardSides = sides;
+        this.businessCardType = type;
+        this.businessCardColor = color;
     }
 
     public BusinessCardType getBusinessCardType() {
-        return businessCardType;
+        return this.businessCardType;
     }
 
     public BusinessCardSides getBusinessCardSides() {
-        return businessCardSides;
+        return this.businessCardSides;
+    }
+
+    public BusinessCardColor getBusinessCardColor() {
+        return businessCardColor;
     }
 }
