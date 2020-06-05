@@ -1,6 +1,5 @@
 package academy.pocu.comp2500.assignment2;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
