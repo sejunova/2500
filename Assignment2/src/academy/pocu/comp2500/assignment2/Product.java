@@ -7,7 +7,7 @@ public class Product {
     protected String color;
     protected DeliveryMethod deliveryMethod = DeliveryMethod.PICKUP;
 
-    public Product(int width, int height) {
+    Product(int width, int height) {
         this.width = width;
         this.height = height;
     }

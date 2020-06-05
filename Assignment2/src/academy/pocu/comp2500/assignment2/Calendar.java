@@ -24,6 +24,7 @@ public class Calendar extends Product{
                 throw new RuntimeException("Wrong CalendarType given");
         }
         super.color = "#FFFFFF";
+        this.type = calendarType;
     }
 
     public CalendarType getType() {

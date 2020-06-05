@@ -4,14 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Aperture {
-    List<String> aperture = new ArrayList<>();
+    protected int x;
+    protected int y;
+    protected int width;
+    protected int height;
 
-    public List<String> getAperture() {
-        return this.aperture;
+    Aperture(int x, int y, int width, int height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
     }
 
+    public int getX() {
+        return x;
+    }
 
-    public void addAperture(String aperture) {
-        this.aperture.add(aperture);
+    public int getY() {
+        return y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }

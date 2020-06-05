@@ -1,12 +1,13 @@
 package academy.pocu.comp2500.assignment2;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Banner extends Product {
     private BannerType bannerType;
-    private String color;
-    private TextAperture textAperture = new TextAperture();
-    private ImageAperture imageAperture = new ImageAperture();
+    private List<TextAperture> textApertures = new ArrayList<>();
+    private List<ImageAperture> imageApertures = new ArrayList<>();
     private Orientation orientation;
 
     public Banner(BannerType type, BannerSize size, String color, Orientation orientation) {
@@ -52,7 +53,7 @@ public class Banner extends Product {
         }
         super.width = size.getWidth();
         super.height = size.getHeight();
-        this.color = color;
+        super.color = color;
         this.bannerType = type;
         this.orientation = orientation;
     }
@@ -61,27 +62,25 @@ public class Banner extends Product {
         return bannerType;
     }
 
-    public String getColor() {
-        return color;
+    public List<TextAperture> getTextApertures() {
+        return textApertures;
     }
 
-    public TextAperture getTextAperture() {
-        return textAperture;
-    }
-
-    public ImageAperture getImageAperture() {
-        return imageAperture;
+    public List<ImageAperture> getImageApertures() {
+        return imageApertures;
     }
 
     public Orientation getOrientation() {
         return orientation;
     }
 
-    public void addTextAperture(String text) {
-        this.textAperture.addAperture(text);
+    public void addTextAperture(TextAperture textAperture) {
+        this.textApertures.add(textAperture);
+        super.price += 5;
     }
 
-    public void addImageAperture(String image) {
-        this.imageAperture.addAperture(image);
+    public void addImageAperture(ImageAperture imageAperture) {
+        this.imageApertures.add(imageAperture);
+        super.price += 5;
     }
 }

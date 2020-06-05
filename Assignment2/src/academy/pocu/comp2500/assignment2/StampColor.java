@@ -7,7 +7,7 @@ public enum StampColor {
 
     private String color;
 
-    private StampColor(String color)
+    StampColor(String color)
     {
         this.color = color;
     }

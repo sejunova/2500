@@ -8,5 +8,7 @@ public class Program {
         Registry registry = new Registry();
         App app = new App(registry);
         registry.validate();
+
+        Stamp stamp = new Stamp(StampColor.BLUE, StampSize.WIDTH_40_HEIGHT_30, "dd");
     }
 }
