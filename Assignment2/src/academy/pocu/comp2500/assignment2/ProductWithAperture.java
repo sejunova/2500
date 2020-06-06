@@ -22,8 +22,10 @@ public class ProductWithAperture extends Product{
     }
 
     public void addTextAperture(TextAperture textAperture) {
-        this.textApertures.add(textAperture);
         if (textAperture.getText() == null) {
+            return;
+        }
+        if (this.textApertures.contains(textAperture)) {
             return;
         }
         if (textAperture.getWidth() <= 0 || textAperture.getHeight() <= 0) {
@@ -43,11 +45,14 @@ public class ProductWithAperture extends Product{
         if (textAperture.getY() + textAperture.getHeight() > super.height) {
             return;
         }
+        this.textApertures.add(textAperture);
         super.price += 5;
     }
 
     public void addImageAperture(ImageAperture imageAperture) {
-        this.imageApertures.add(imageAperture);
+        if (this.imageApertures.contains(imageAperture)) {
+            return;
+        }
         if (imageAperture.getImage() == null) {
             return;
         }
@@ -69,6 +74,7 @@ public class ProductWithAperture extends Product{
             return;
         }
 
+        this.imageApertures.add(imageAperture);
         super.price += 5;
     }
 
