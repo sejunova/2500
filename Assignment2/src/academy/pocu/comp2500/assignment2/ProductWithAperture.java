@@ -17,23 +17,23 @@ public class ProductWithAperture extends Product{
     }
 
     public void addAperture(Aperture aperture) {
-//        if (aperture.getWidth() <= 0 || aperture.getHeight() <= 0) {
-//            return;
-//        }
-//        if (!(0 <= aperture.getX() && aperture.getX() < super.width)) {
-//            return;
-//        }
-//        if (!(0 <= aperture.getY() && aperture.getY() < super.height)) {
-//            return;
-//        }
-//
-//        if (aperture.getX() + aperture.getWidth() > super.width) {
-//            return;
-//        }
-//
-//        if (aperture.getY() + aperture.getHeight() > super.height) {
-//            return;
-//        }
+        if (aperture.getWidth() <= 0 || aperture.getHeight() <= 0) {
+            return;
+        }
+        if (!(0 <= aperture.getX() && aperture.getX() < super.width)) {
+            return;
+        }
+        if (!(0 <= aperture.getY() && aperture.getY() < super.height)) {
+            return;
+        }
+
+        if (aperture.getX() + aperture.getWidth() > super.width) {
+            return;
+        }
+
+        if (aperture.getY() + aperture.getHeight() > super.height) {
+            return;
+        }
         this.apertures.add(aperture);
         super.price += 5;
     }
