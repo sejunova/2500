@@ -8,13 +8,17 @@ public class Cart {
     private int totalPrice;
 
     public void addProduct(Product product) {
-        this.products.add(product);
-        this.totalPrice += product.getPrice();
+        if (!this.products.contains(product)) {
+            this.products.add(product);
+            this.totalPrice += product.getPrice();
+        }
     }
 
     public void removeProduct(Product product) {
-        this.products.remove(product);
-        this.totalPrice -= product.getPrice();
+        if (this.products.contains(product)) {
+            this.products.remove(product);
+            this.totalPrice -= product.getPrice();
+        }
     }
 
     public int getTotalPrice() {
