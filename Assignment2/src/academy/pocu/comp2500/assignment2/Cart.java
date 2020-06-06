@@ -8,10 +8,8 @@ public class Cart {
     private int totalPrice;
 
     public void addProduct(Product product) {
-        if (!this.products.contains(product)) {
-            this.products.add(product);
-            this.totalPrice += product.getPrice();
-        }
+        this.products.add(product);
+        this.totalPrice += product.getPrice();
     }
 
     public void removeProduct(Product product) {
