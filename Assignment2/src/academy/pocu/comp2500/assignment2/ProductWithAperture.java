@@ -17,6 +17,7 @@ public class ProductWithAperture extends Product{
     }
 
     public void addAperture(Aperture aperture) {
+        this.apertures.add(aperture);
         if (aperture.getWidth() <= 0 || aperture.getHeight() <= 0) {
             return;
         }
@@ -34,11 +35,10 @@ public class ProductWithAperture extends Product{
         if (aperture.getY() + aperture.getHeight() > super.height) {
             return;
         }
-        this.apertures.add(aperture);
         super.price += 5;
     }
 
     public Orientation getOrientation() {
-        return orientation;
+        return this.orientation;
     }
 }
