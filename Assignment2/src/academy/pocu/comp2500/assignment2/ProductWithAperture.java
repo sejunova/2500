@@ -25,10 +25,23 @@ public class ProductWithAperture extends Product{
         if (textAperture.getText() == null) {
             return;
         }
-        if (textAperture.getX() < 0 || textAperture.getX() + textAperture.getWidth() > super.width) {
+        if (textAperture.getX() < 0 || textAperture.getY() < 0) {
             return;
         }
-        if (textAperture.getY() < 0 || textAperture.getY() + textAperture.getHeight() > super.height) {
+
+        if (textAperture.getX() >= super.width || textAperture.getY() >= super.height) {
+            return;
+        }
+
+        if (textAperture.getWidth() <= 0 || textAperture.getHeight() <= 0) {
+            return;
+        }
+
+        if (textAperture.getX() + textAperture.getWidth() > super.width) {
+            return;
+        }
+
+        if (textAperture.getY() + textAperture.getHeight() > super.height) {
             return;
         }
 
@@ -40,12 +53,26 @@ public class ProductWithAperture extends Product{
         if (imageAperture.getImage() == null) {
             return;
         }
-        if (imageAperture.getX() < 0 || imageAperture.getX() + imageAperture.getWidth() > super.width) {
+        if (imageAperture.getX() < 0 || imageAperture.getY() < 0) {
             return;
         }
-        if (imageAperture.getY() < 0 || imageAperture.getY() + imageAperture.getHeight() > super.height) {
+
+        if (imageAperture.getX() >= super.width || imageAperture.getY() >= super.height) {
             return;
         }
+
+        if (imageAperture.getWidth() <= 0 || imageAperture.getHeight() <= 0) {
+            return;
+        }
+
+        if (imageAperture.getX() + imageAperture.getWidth() > super.width) {
+            return;
+        }
+
+        if (imageAperture.getY() + imageAperture.getHeight() > super.height) {
+            return;
+        }
+
         this.imageApertures.add(imageAperture);
         super.price += 5;
     }
