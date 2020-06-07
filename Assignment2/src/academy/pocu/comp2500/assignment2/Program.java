@@ -81,31 +81,31 @@ public class Program {
         //2 x 0.5 m	5400
         //3 x 1 m	6100
 
-        Banner glossBanner1000_500 = new Banner(BannerType.GLOSS, BannerSize.WIDTH_1000_HEIGHT_500, "#FFFFFF", Orientation.LANDSCAPE);
+        Banner glossBanner1000_500 = new Banner(BannerType.GLOSS, BannerSize.WIDTH_1000_HEIGHT_500, 0xFFFFFF, Orientation.LANDSCAPE);
         assert glossBanner1000_500.getPrice() == 5000;
-        Banner glossBanner1000_1000 = new Banner(BannerType.GLOSS, BannerSize.WIDTH_1000_HEIGHT_1000, "#FFFFFF", Orientation.LANDSCAPE);
+        Banner glossBanner1000_1000 = new Banner(BannerType.GLOSS, BannerSize.WIDTH_1000_HEIGHT_1000, 0xFFFFFF, Orientation.LANDSCAPE);
         assert glossBanner1000_1000.getPrice() == 5200;
-        Banner glossBanner2000_500 = new Banner(BannerType.GLOSS, BannerSize.WIDTH_2000_HEIGHT_500, "#FFFFFF", Orientation.LANDSCAPE);
+        Banner glossBanner2000_500 = new Banner(BannerType.GLOSS, BannerSize.WIDTH_2000_HEIGHT_500, 0xFFFFFF, Orientation.LANDSCAPE);
         assert glossBanner2000_500.getPrice() == 5300;
-        Banner glossBanner3000_1000 = new Banner(BannerType.GLOSS, BannerSize.WIDTH_3000_HEIGHT_1000, "#FFFFFF", Orientation.LANDSCAPE);
+        Banner glossBanner3000_1000 = new Banner(BannerType.GLOSS, BannerSize.WIDTH_3000_HEIGHT_1000, 0xFFFFFF, Orientation.LANDSCAPE);
         assert glossBanner3000_1000.getPrice() == 6000;
 
-        Banner scrimBanner1000_500 = new Banner(BannerType.SCRIM, BannerSize.WIDTH_1000_HEIGHT_500, "#FFFFFF", Orientation.LANDSCAPE);
+        Banner scrimBanner1000_500 = new Banner(BannerType.SCRIM, BannerSize.WIDTH_1000_HEIGHT_500, 0xFFFFFF, Orientation.LANDSCAPE);
         assert scrimBanner1000_500.getPrice() == 5100;
-        Banner scrimBanner1000_1000 = new Banner(BannerType.SCRIM, BannerSize.WIDTH_1000_HEIGHT_1000, "#FFFFFF", Orientation.LANDSCAPE);
+        Banner scrimBanner1000_1000 = new Banner(BannerType.SCRIM, BannerSize.WIDTH_1000_HEIGHT_1000, 0xFFFFFF, Orientation.LANDSCAPE);
         assert scrimBanner1000_1000.getPrice() == 5300;
-        Banner scrimBanner2000_500 = new Banner(BannerType.SCRIM, BannerSize.WIDTH_2000_HEIGHT_500, "#FFFFFF", Orientation.LANDSCAPE);
+        Banner scrimBanner2000_500 = new Banner(BannerType.SCRIM, BannerSize.WIDTH_2000_HEIGHT_500, 0xFFFFFF, Orientation.LANDSCAPE);
         assert scrimBanner2000_500.getPrice() == 5400;
-        Banner scrimBanner3000_1000 = new Banner(BannerType.SCRIM, BannerSize.WIDTH_3000_HEIGHT_1000, "#FFFFFF", Orientation.LANDSCAPE);
+        Banner scrimBanner3000_1000 = new Banner(BannerType.SCRIM, BannerSize.WIDTH_3000_HEIGHT_1000, 0xFFFFFF, Orientation.LANDSCAPE);
         assert scrimBanner3000_1000.getPrice() == 6100;
 
-        Banner meshBanner1000_500 = new Banner(BannerType.MESH, BannerSize.WIDTH_1000_HEIGHT_500, "#FFFFFF", Orientation.LANDSCAPE);
+        Banner meshBanner1000_500 = new Banner(BannerType.MESH, BannerSize.WIDTH_1000_HEIGHT_500, 0xFFFFFF, Orientation.LANDSCAPE);
         assert meshBanner1000_500.getPrice() == 5100;
-        Banner meshBanner1000_1000 = new Banner(BannerType.MESH, BannerSize.WIDTH_1000_HEIGHT_1000, "#FFFFFF", Orientation.LANDSCAPE);
+        Banner meshBanner1000_1000 = new Banner(BannerType.MESH, BannerSize.WIDTH_1000_HEIGHT_1000, 0xFFFFFF, Orientation.LANDSCAPE);
         assert meshBanner1000_1000.getPrice() == 5300;
-        Banner meshBanner2000_500 = new Banner(BannerType.MESH, BannerSize.WIDTH_2000_HEIGHT_500, "#FFFFFF", Orientation.LANDSCAPE);
+        Banner meshBanner2000_500 = new Banner(BannerType.MESH, BannerSize.WIDTH_2000_HEIGHT_500, 0xFFFFFF, Orientation.LANDSCAPE);
         assert meshBanner2000_500.getPrice() == 5400;
-        Banner meshBanner3000_1000 = new Banner(BannerType.MESH, BannerSize.WIDTH_3000_HEIGHT_1000, "#FFFFFF", Orientation.LANDSCAPE);
+        Banner meshBanner3000_1000 = new Banner(BannerType.MESH, BannerSize.WIDTH_3000_HEIGHT_1000, 0xFFFFFF, Orientation.LANDSCAPE);
         assert meshBanner3000_1000.getPrice() == 6100;
 
         //린넨커버(Linen) 명함	단면	110

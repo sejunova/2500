@@ -23,7 +23,7 @@ public class Calendar extends Product{
             default:
                 throw new RuntimeException("Wrong CalendarType given");
         }
-        super.color = "#FFFFFF";
+        super.color = 0xFFFFFF;
         this.type = calendarType;
     }
 

@@ -4,7 +4,7 @@ public class Product {
     protected int width;
     protected int height;
     protected int price;
-    protected String color;
+    protected int color;
     protected DeliveryMethod deliveryMethod = DeliveryMethod.PICKUP;
 
     Product(int width, int height) {
@@ -24,7 +24,7 @@ public class Product {
         return this.price;
     }
 
-    public String getColor() {
+    public int getColor() {
         return this.color;
     }
 
