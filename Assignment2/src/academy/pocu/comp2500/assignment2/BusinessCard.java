@@ -2,7 +2,7 @@ package academy.pocu.comp2500.assignment2;
 
 import java.util.Arrays;
 
-public class BusinessCard extends Paper{
+public class BusinessCard extends ProductWithAperture {
     private BusinessCardType businessCardType;
     private BusinessCardSides businessCardSides;
     private BusinessCardColor businessCardColor;

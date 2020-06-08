@@ -1,18 +1,18 @@
 package academy.pocu.comp2500.assignment2;
 
 public enum StampColor {
-    RED("#FF0000"),
-    BLUE("#0000FF"),
-    GREEN("#008000");
+    RED(0xFF0000),
+    BLUE(0x0000FF),
+    GREEN(0x008000);
 
-    private String color;
+    private int color;
 
-    StampColor(String color)
+    StampColor(int color)
     {
         this.color = color;
     }
 
-    public String getColor()
+    public int getColor()
     {
         return this.color;
     }

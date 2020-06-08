@@ -13,8 +13,10 @@ public class Cart {
     }
 
     public void removeProduct(Product product) {
-        this.products.remove(product);
-        this.totalPrice -= product.getPrice();
+        if (this.products.contains(product)) {
+            this.products.remove(product);
+            this.totalPrice -= product.getPrice();
+        }
     }
 
     public int getTotalPrice() {
@@ -25,8 +27,7 @@ public class Cart {
         return this.products;
     }
 
-    public Product getProduct(Product product) {
-        int index = this.products.indexOf(product);
+    public Product getProduct(int index) {
         return this.products.get(index);
     }
 }

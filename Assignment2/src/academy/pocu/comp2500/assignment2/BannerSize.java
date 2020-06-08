@@ -9,7 +9,7 @@ public enum BannerSize {
     private int width;
     private int height;
 
-    private BannerSize(int width, int height) {
+    BannerSize(int width, int height) {
         this.width = width;
         this.height = height;
     }

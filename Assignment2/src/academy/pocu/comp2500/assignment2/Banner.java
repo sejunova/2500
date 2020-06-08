@@ -2,10 +2,10 @@ package academy.pocu.comp2500.assignment2;
 
 import java.util.Arrays;
 
-public class Banner extends Paper {
+public class Banner extends ProductWithAperture {
     private BannerType bannerType;
 
-    public Banner(BannerType type, BannerSize size, String color, Orientation orientation) {
+    public Banner(BannerType type, BannerSize size, int color, Orientation orientation) {
         super(0, 0, orientation);
         if (!Arrays.asList(BannerType.all()).contains(type)) {
             throw new RuntimeException("invalid type given");
