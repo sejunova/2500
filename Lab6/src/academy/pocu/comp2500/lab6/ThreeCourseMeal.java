@@ -7,10 +7,6 @@ public class ThreeCourseMeal extends ComboMeal{
         super(PRICE);
     }
 
-    private boolean isThreeCourseMealValid() {
-        return this.appetizer.size() == 1 && this.mainCourse != null && this.dessert.size() == 1;
-    }
-
     public void setMainCourse(MainCourse mainCourse) {
         this.mainCourse = mainCourse;
         this.isValid = isThreeCourseMealValid();
@@ -26,5 +22,9 @@ public class ThreeCourseMeal extends ComboMeal{
         this.dessert.clear();
         this.dessert.add(dessert);
         this.isValid = isThreeCourseMealValid();
+    }
+
+    private boolean isThreeCourseMealValid() {
+        return this.appetizer.size() == 1 && this.mainCourse != null && this.dessert.size() == 1;
     }
 }
