@@ -8,23 +8,20 @@ public class ThreeCourseMeal extends ComboMeal{
     }
 
     public void setMainCourse(MainCourse mainCourse) {
-        this.mainCourse = mainCourse;
-        this.isValid = isThreeCourseMealValid();
+        this.mainCourses.clear();
+        this.mainCourses.add(mainCourse);
+        this.isValid = this.appetizers.size() == 1 && this.mainCourses.size() == 1 && this.desserts.size() == 1;
     }
 
     public void setAppetizer(Appetizer appetizer) {
-        this.appetizer.clear();
-        this.appetizer.add(appetizer);
-        this.isValid = isThreeCourseMealValid();
+        this.appetizers.clear();
+        this.appetizers.add(appetizer);
+        this.isValid = this.appetizers.size() == 1 && this.mainCourses.size() == 1 && this.desserts.size() == 1;
     }
 
     public void setDessert(Dessert dessert) {
-        this.dessert.clear();
-        this.dessert.add(dessert);
-        this.isValid = isThreeCourseMealValid();
-    }
-
-    private boolean isThreeCourseMealValid() {
-        return this.appetizer.size() == 1 && this.mainCourse != null && this.dessert.size() == 1;
+        this.desserts.clear();
+        this.desserts.add(dessert);
+        this.isValid = this.appetizers.size() == 1 && this.mainCourses.size() == 1 && this.desserts.size() == 1;
     }
 }

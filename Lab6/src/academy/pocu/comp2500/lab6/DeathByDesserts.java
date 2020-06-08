@@ -8,12 +8,12 @@ public class DeathByDesserts extends ComboMeal{
     }
 
     public void setDesserts(Dessert dessert1, Dessert dessert2, Dessert dessert3, Dessert dessert4) {
-        this.dessert.clear();
+        this.desserts.clear();
 
-        this.dessert.add(dessert1);
-        this.dessert.add(dessert2);
-        this.dessert.add(dessert3);
-        this.dessert.add(dessert4);
+        this.desserts.add(dessert1);
+        this.desserts.add(dessert2);
+        this.desserts.add(dessert3);
+        this.desserts.add(dessert4);
         this.isValid = true;
     }
 }

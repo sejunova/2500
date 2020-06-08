@@ -1,26 +1,25 @@
 package academy.pocu.comp2500.lab6;
 
-
 import java.util.ArrayList;
 
 public class ComboMeal extends Menu {
-    protected ArrayList<Appetizer> appetizer = new ArrayList<>();
-    protected MainCourse mainCourse;
-    protected ArrayList<Dessert> dessert = new ArrayList<>();
+    protected ArrayList<Appetizer> appetizers = new ArrayList<>();
+    protected ArrayList<MainCourse> mainCourses = new ArrayList<>();
+    protected ArrayList<Dessert> desserts = new ArrayList<>();
 
     ComboMeal(int price) {
         super(price);
     }
 
-    public MainCourse getMainCourse() {
-        return this.mainCourse;
+    public ArrayList<MainCourse> getMainCourses() {
+        return this.mainCourses;
     }
 
-    public ArrayList<Appetizer> getAppetizer() {
-        return this.appetizer;
+    public ArrayList<Appetizer> getAppetizers() {
+        return this.appetizers;
     }
 
-    public ArrayList<Dessert> getDessert() {
-        return this.dessert;
+    public ArrayList<Dessert> getDesserts() {
+        return this.desserts;
     }
 }

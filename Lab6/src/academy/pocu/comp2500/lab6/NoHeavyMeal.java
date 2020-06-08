@@ -8,15 +8,15 @@ public class NoHeavyMeal extends ComboMeal{
     }
 
     public void setAppetizers(Appetizer appetizer1, Appetizer appetizer2) {
-        this.appetizer.clear();
-        this.appetizer.add(appetizer1);
-        this.appetizer.add(appetizer2);
-        this.isValid = this.appetizer.size() == 2 && this.dessert.size() == 1;
+        this.appetizers.clear();
+        this.appetizers.add(appetizer1);
+        this.appetizers.add(appetizer2);
+        this.isValid = this.appetizers.size() == 2 && this.desserts.size() == 1;
     }
 
     public void setDessert(Dessert desert) {
-        this.dessert.clear();
-        this.dessert.add(desert);
-        this.isValid = this.appetizer.size() == 2 && this.dessert.size() == 1;
+        this.desserts.clear();
+        this.desserts.add(desert);
+        this.isValid = this.appetizers.size() == 2 && this.desserts.size() == 1;
     }
 }
