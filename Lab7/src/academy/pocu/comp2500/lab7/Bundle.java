@@ -1,13 +1,11 @@
 package academy.pocu.comp2500.lab7;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Bundle {
     private String name;
-    private ArrayList<Book> books = new ArrayList<>();
+    private HashSet<Book> books = new HashSet<>();
 
     public Bundle(String name) {
         this.name = name;
@@ -48,24 +46,19 @@ public class Bundle {
             return false;
         }
 
-        List<Book> myBooks = this.books.stream().sorted().collect(Collectors.toList());
-        List<Book> otherBooks = bundle.books.stream().sorted().collect(Collectors.toList());
-
-        for (int i = 0; i < myBooks.size(); i++) {
-            if (!myBooks.get(i).equals(otherBooks.get(i))) {
+        for (Book book: this.books) {
+            if (!bundle.books.contains(book)) {
                 return false;
             }
         }
-
         return true;
     }
 
     @Override
     public int hashCode() {
-        List<Book> myBooks = this.books.stream().sorted().collect(Collectors.toList());
-        int hash = myBooks.get(0).hashCode();
-        for (int i = 1; i < myBooks.size(); i++) {
-            hash = hash ^ myBooks.get(i).hashCode() << 16;
+        int hash = 0;
+        for (Book book: this.books) {
+            hash = hash ^ book.hashCode() << 16;
         }
         return Objects.hash(this.name, hash);
     }

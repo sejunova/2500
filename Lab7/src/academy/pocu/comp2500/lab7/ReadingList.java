@@ -45,11 +45,8 @@ public class ReadingList {
             return false;
         }
 
-        List<Book> myBooks = this.books.stream().sorted().collect(Collectors.toList());
-        List<Book> otherBooks = readingList.books.stream().sorted().collect(Collectors.toList());
-
-        for (int i = 0; i < myBooks.size(); i++) {
-            if (!myBooks.get(i).equals(otherBooks.get(i))) {
+        for (int i = 0; i < this.books.size(); i++) {
+            if (!this.books.get(i).equals(readingList.books.get(i))) {
                 return false;
             }
         }
@@ -59,10 +56,9 @@ public class ReadingList {
 
     @Override
     public int hashCode() {
-        List<Book> myBooks = this.books.stream().sorted().collect(Collectors.toList());
-        int hash = myBooks.get(0).hashCode();
-        for (int i = 1; i < myBooks.size(); i++) {
-            hash = hash ^ myBooks.get(i).hashCode() << 16;
+        int hash = 0;
+        for (Book book: this.books) {
+            hash = hash ^ book.hashCode() << 16;
         }
         return Objects.hash(this.name, hash);
     }

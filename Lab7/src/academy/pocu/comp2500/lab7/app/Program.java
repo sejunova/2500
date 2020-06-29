@@ -53,7 +53,27 @@ public class Program {
             readingList.add(book1);
             readingList.add(book2);
             readingList.add(book3);
-            System.out.println(readingList.toString());
+        }
+
+        {
+            Book book1 = new Book("C# for dummies", new Author("Jason", "Bourne"), 2005, Genre.ROMANCE);
+            Book book2 = new Book("C# for dummies", new Author("Jason", "Bourne"), 2005, Genre.ROMANCE);
+            Book book3 = new Book("Java for dummies", new Author("James", "Bond"), 2007, Genre.MYSTERY);
+
+            Bundle bundleA = new Bundle("A");
+            Bundle bundleB = new Bundle("A");
+
+            bundleA.add(book1);
+            bundleA.add(book2);
+            bundleA.add(book3);
+
+            bundleB.add(book1);
+            bundleB.add(book2);
+            bundleB.add(book3);
+
+
+            System.out.println(bundleA.equals(bundleB));
+
         }
     }
 }
