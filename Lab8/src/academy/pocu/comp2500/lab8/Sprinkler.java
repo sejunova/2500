@@ -7,9 +7,8 @@ public class Sprinkler extends SmartDevice implements ISprayable {
     private Queue<Schedule> schedules = new ArrayDeque<>();
     private boolean isOn = false;
     private int curTick;
-    private int nextStart = -1;
-    private int remainingActiveTick;
     private int ticksSinceLastUpdate;
+    private int ticksUntilToggle;
 
     public void addSchedule(Schedule schedule) {
         schedules.add(schedule);
@@ -22,37 +21,25 @@ public class Sprinkler extends SmartDevice implements ISprayable {
 
     @Override
     public void onTick() {
-        boolean isOnNext = this.isOn;
-
-        if (this.isOn) {
-            this.remainingActiveTick--;
-        }
-
-        if (this.remainingActiveTick == 0) {
-            isOnNext = false;
-
-            while (!this.schedules.isEmpty()) {
+        if (!this.isOn) {
+            if (!this.schedules.isEmpty()) {
                 Schedule nextSchedule = this.schedules.poll();
                 int nextStart = nextSchedule.getStartTick();
                 if (nextStart >= this.curTick) {
-                    this.nextStart = nextStart;
-                    this.remainingActiveTick = nextSchedule.getActivateUntil();
-                    break;
+                    this.isOn = true;
+                    this.ticksSinceLastUpdate = 0;
+                    this.ticksUntilToggle = nextSchedule.getActivateUntil();
+                } else {
+                    this.ticksUntilToggle = nextStart + nextSchedule.getActivateUntil();
                 }
             }
-        }
-
-        if (this.nextStart == this.curTick) {
-            isOnNext = true;
-        }
-
-        if (this.isOn == isOnNext) {
-            this.ticksSinceLastUpdate++;
         } else {
-            this.isOn = isOnNext;
-            this.ticksSinceLastUpdate = 1;
+            if (this.curTick == this.ticksUntilToggle) {
+                this.isOn = false;
+                this.ticksSinceLastUpdate = 0;
+            }
         }
-
+        this.ticksSinceLastUpdate++;
         this.curTick++;
     }
 
