@@ -22,10 +22,10 @@ public class Sprinkler extends SmartDevice implements ISprayable {
 
     @Override
     public void onTick() {
+        boolean isNextOn = this.isOn;
         if (this.curTick >= this.endTick) {
             if (this.curTick == this.endTick) {
-                this.isOn = false;
-                this.ticksSinceLastUpdate = 0;
+                isNextOn = false;
             }
             while (!this.schedules.isEmpty()) {
                 Schedule nextSchedule = this.schedules.poll();
@@ -43,7 +43,10 @@ public class Sprinkler extends SmartDevice implements ISprayable {
         }
 
         if (this.curTick == this.startTick) {
-            this.isOn = true;
+            isNextOn = true;
+        }
+        if (this.isOn != isNextOn) {
+            this.isOn = isNextOn;
             this.ticksSinceLastUpdate = 0;
         }
         this.ticksSinceLastUpdate++;
