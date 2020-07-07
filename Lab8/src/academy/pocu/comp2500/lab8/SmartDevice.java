@@ -9,7 +9,5 @@ public abstract class SmartDevice {
 
     public abstract int getTicksSinceLastUpdate();
 
-    public void setPlanter(Planter plantter) {
-        this.planter = plantter;
-    }
+    public abstract void onInstalled(Planter planter);
 }

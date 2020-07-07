@@ -55,6 +55,8 @@ public class Program {
                 assert (expectedWaterAmount[i] == planter.getWaterAmount());
                 assert (sprinklerTicksSinceLastUpdate[i] == sprinkler.getTicksSinceLastUpdate());
                 assert (drainerTicksSinceLastUpdate[i] == drainer.getTicksSinceLastUpdate());
+//                System.out.println(String.format("%s, %s", planter.getWaterAmount(), expectedWaterAmount[i]));
+//                System.out.println(String.format("%s %s", drainerTicksSinceLastUpdate[i], drainer.getTicksSinceLastUpdate()));
                 planter.tick();
             }
         }

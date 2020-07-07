@@ -16,9 +16,6 @@ public class Drainer extends SmartDevice implements IDrainable, IWaterDetectable
 
     @Override
     public void onTick() {
-        if (this.planter != null) {
-            this.drain(this.planter);
-        }
     }
 
     @Override
@@ -38,10 +35,16 @@ public class Drainer extends SmartDevice implements IDrainable, IWaterDetectable
     public void detect(int waterLevel) {
         boolean isOn = waterLevel >= this.drainTriggerWaterAmount;
         if (this.isOn != isOn) {
-            this.ticksSinceLastUpdate = 0;
+            this.ticksSinceLastUpdate = 1;
         } else {
             this.ticksSinceLastUpdate++;
         }
         this.isOn = isOn;
+    }
+
+    @Override
+    public void onInstalled(Planter planter) {
+        this.planter = planter;
+        planter.addDrainable(this);
     }
 }
