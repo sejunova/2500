@@ -21,6 +21,9 @@ public class Sprinkler extends SmartDevice implements ISprayable {
 
     @Override
     public void onTick() {
+        if (isOn && this.planter != null) {
+            this.spray(this.planter);
+        }
         if (this.remainingActiveTick == 0 && !this.schedules.isEmpty()) {
             Schedule nextSchedule = this.schedules.poll();
             int startTick = nextSchedule.getStartTick();
@@ -48,5 +51,6 @@ public class Sprinkler extends SmartDevice implements ISprayable {
 
     @Override
     public void spray(Planter planter) {
+        planter.setWaterAmount(planter.getWaterAmount() + 15);
     }
 }

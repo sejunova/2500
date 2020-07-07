@@ -12,6 +12,7 @@ public class Planter {
 
     public void installSmartDevice(SmartDevice smartDevice) {
         this.smartDevices.add(smartDevice);
+        smartDevice.setPlanter(this);
     }
 
     public int getWaterAmount() {
@@ -20,8 +21,6 @@ public class Planter {
 
     public void tick() {
         this.waterAmount = Math.max(0, this.waterAmount - 2);
-
-        for
     }
 
     public void setWaterAmount(int waterAmount) {

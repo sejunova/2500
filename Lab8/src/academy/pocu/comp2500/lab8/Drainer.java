@@ -4,7 +4,6 @@ public class Drainer extends SmartDevice implements IDrainable, IWaterDetectable
     private int drainTriggerWaterAmount;
     private boolean isOn;
     private int ticksSinceLastUpdate;
-    private int curTick;
 
     public Drainer(int drainTriggerWaterAmount) {
         this.drainTriggerWaterAmount = drainTriggerWaterAmount;
@@ -17,7 +16,9 @@ public class Drainer extends SmartDevice implements IDrainable, IWaterDetectable
 
     @Override
     public void onTick() {
-        this.curTick++;
+        if (this.planter != null) {
+            this.drain(this.planter);
+        }
     }
 
     @Override
