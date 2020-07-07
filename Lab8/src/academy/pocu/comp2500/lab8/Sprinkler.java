@@ -8,7 +8,8 @@ public class Sprinkler extends SmartDevice implements ISprayable {
     private boolean isOn = false;
     private int curTick;
     private int ticksSinceLastUpdate;
-    private int ticksUntilToggle;
+    private int startTick = -1;
+    private int endTick;
 
     public void addSchedule(Schedule schedule) {
         schedules.add(schedule);
@@ -21,23 +22,29 @@ public class Sprinkler extends SmartDevice implements ISprayable {
 
     @Override
     public void onTick() {
-        if (!this.isOn) {
-            if (!this.schedules.isEmpty()) {
-                Schedule nextSchedule = this.schedules.poll();
-                int nextStart = nextSchedule.getStartTick();
-                if (nextStart >= this.curTick) {
-                    this.isOn = true;
-                    this.ticksSinceLastUpdate = 0;
-                    this.ticksUntilToggle = nextSchedule.getActivateUntil();
-                } else {
-                    this.ticksUntilToggle = nextStart + nextSchedule.getActivateUntil();
-                }
-            }
-        } else {
-            if (this.curTick == this.ticksUntilToggle) {
+        if (this.curTick >= this.endTick) {
+            if (this.curTick == this.endTick) {
                 this.isOn = false;
                 this.ticksSinceLastUpdate = 0;
             }
+            while (!this.schedules.isEmpty()) {
+                Schedule nextSchedule = this.schedules.poll();
+                int nextStart = nextSchedule.getStartTick();
+                int nextEnd = nextSchedule.getActivateUntil();
+                if (nextStart + nextEnd < this.curTick) {
+                    continue;
+                }
+                if (nextStart >= this.curTick) {
+                    this.startTick = nextStart;
+                }
+                this.endTick = nextStart + nextEnd;
+                break;
+            }
+        }
+
+        if (this.curTick == this.startTick) {
+            this.isOn = true;
+            this.ticksSinceLastUpdate = 0;
         }
         this.ticksSinceLastUpdate++;
         this.curTick++;
