@@ -52,11 +52,10 @@ public class Program {
                     6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 
             for (int i = 0; i < expectedWaterAmount.length; ++i) {
+//                System.out.println(String.format("%s, %s", expectedWaterAmount[i], planter.getWaterAmount()));
                 assert (expectedWaterAmount[i] == planter.getWaterAmount());
                 assert (sprinklerTicksSinceLastUpdate[i] == sprinkler.getTicksSinceLastUpdate());
                 assert (drainerTicksSinceLastUpdate[i] == drainer.getTicksSinceLastUpdate());
-//                System.out.println(String.format("%s, %s", planter.getWaterAmount(), expectedWaterAmount[i]));
-//                System.out.println(String.format("%s %s", drainerTicksSinceLastUpdate[i], drainer.getTicksSinceLastUpdate()));
                 planter.tick();
             }
         }

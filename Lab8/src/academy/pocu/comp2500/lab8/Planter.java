@@ -22,13 +22,13 @@ public class Planter {
     }
 
     public void tick() {
-        for (SmartDevice smartDevice: this.smartDevices) {
+        for (SmartDevice smartDevice : this.smartDevices) {
             smartDevice.onTick();
         }
-        for (IDrainable drainable: this.drainables) {
+        for (IDrainable drainable : this.drainables) {
             drainable.drain(this);
         }
-        for (ISprayable sprayable: this.sprayables) {
+        for (ISprayable sprayable : this.sprayables) {
             sprayable.spray(this);
         }
         this.waterAmount = Math.max(0, this.waterAmount - 2);

@@ -31,11 +31,13 @@ public class Sprinkler extends SmartDevice implements ISprayable {
         if (this.remainingActiveTick == 0) {
             isOnNext = false;
 
-            if (!this.schedules.isEmpty()) {
+            while (!this.schedules.isEmpty()) {
                 Schedule nextSchedule = this.schedules.poll();
-                this.nextStart = nextSchedule.getStartTick();
-                if (this.nextStart >= this.curTick) {
+                int nextStart = nextSchedule.getStartTick();
+                if (nextStart >= this.curTick) {
+                    this.nextStart = nextStart;
                     this.remainingActiveTick = nextSchedule.getActivateUntil();
+                    break;
                 }
             }
         }
