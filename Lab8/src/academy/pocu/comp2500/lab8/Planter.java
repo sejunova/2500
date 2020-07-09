@@ -25,11 +25,11 @@ public class Planter {
         for (SmartDevice smartDevice : this.smartDevices) {
             smartDevice.onTick();
         }
-        for (IDrainable drainable : this.drainables) {
-            drainable.drain(this);
-        }
         for (ISprayable sprayable : this.sprayables) {
             sprayable.spray(this);
+        }
+        for (IDrainable drainable : this.drainables) {
+            drainable.drain(this);
         }
         this.waterAmount = Math.max(0, this.waterAmount - 2);
     }
