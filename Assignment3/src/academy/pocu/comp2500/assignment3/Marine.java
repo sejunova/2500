@@ -107,7 +107,7 @@ public class Marine extends Unit implements Movable, Thinkable {
             }
         }
         if (targetUnit != null) {
-            this.attackIntentOrNull = new AttackIntent(targetUnit.position, super.ap, super.attackableUnitType, super.aoe);
+            this.attackIntentOrNull = new AttackIntent(targetUnit);
             this.movePosition = super.position;
             return;
         }
@@ -138,7 +138,6 @@ public class Marine extends Unit implements Movable, Thinkable {
         this.hp = Math.max(0, this.hp - damage);
         if (this.hp == 0) {
             SimulationManager simulationManager = SimulationManager.getInstance();
-            simulationManager.unregisterUnit(this);
             simulationManager.unregisterThinkable(this);
             simulationManager.unregisterMovable(this);
         }

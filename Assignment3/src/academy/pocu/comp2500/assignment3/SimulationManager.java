@@ -1,6 +1,7 @@
 package academy.pocu.comp2500.assignment3;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public final class SimulationManager {
     private static SimulationManager simulationManager;
@@ -26,10 +27,6 @@ public final class SimulationManager {
 
     public void registerUnit(Unit unit) {
         this.units.add(unit);
-    }
-
-    public void unregisterUnit(Unit unit) {
-        this.units.remove(unit);
     }
 
     public void registerThinkable(Thinkable thinkable) {
@@ -60,11 +57,22 @@ public final class SimulationManager {
             movable.move();
         }
 
+        ArrayList<AttackIntent> attackIntents = new ArrayList<>();
         for (Unit unit: this.units) {
             AttackIntent attackIntentOrNull = unit.attack();
             if (attackIntentOrNull != null) {
-
+                attackIntents.add(attackIntentOrNull);
             }
         }
+
+        for (AttackIntent attackIntent: attackIntents) {
+            this.units.stream()
+                    .filter(x -> x.getPosition().equals(attackIntent.getUnit().getPosition()))
+                    .filter(x -> attackIntent.getUnit().getAttackableUnitType().contains(x.getUnitType()))
+                    .filter(x -> x.equals(attackIntent.getUnit()))
+                    .forEach(x -> x.onAttacked(attackIntent.getUnit().getAp()));
+        }
+
+        this.units = this.units.stream().filter(x -> x.getHp() != 0).collect(Collectors.toCollection(ArrayList::new));
     }
 }

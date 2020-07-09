@@ -36,4 +36,16 @@ public abstract class Unit {
     }
 
     public abstract void onSpawn();
+
+    public UnitType getUnitType() {
+        return unitType;
+    }
+
+    public Set<UnitType> getAttackableUnitType() {
+        return attackableUnitType;
+    }
+
+    public int getAp() {
+        return ap;
+    }
 }
