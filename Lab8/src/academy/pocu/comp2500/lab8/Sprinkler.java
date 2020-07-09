@@ -26,7 +26,7 @@ public class Sprinkler extends SmartDevice implements ISprayable {
         if (this.curSchedule == null) {
             while (!this.schedules.isEmpty()) {
                 Schedule schedule = this.schedules.poll();
-                if (this.curTick > schedule.getStartTick() + schedule.getActivateUntil() - 1) {
+                if (this.curTick > schedule.getStartTick() + schedule.getActivateUntil()) {
                     continue;
                 } else {
                     this.curSchedule = schedule;
@@ -42,12 +42,15 @@ public class Sprinkler extends SmartDevice implements ISprayable {
             isOn = this.curMode && this.curSchedule.getStartTick() <= this.curTick && this.curTick <= this.curSchedule.getStartTick() + this.curSchedule.getActivateUntil() - 1;
         }
 
+        if (this.curSchedule != null && this.curTick == this.curSchedule.getStartTick() + this.curSchedule.getActivateUntil()) {
+            isOn = false;
+            this.curSchedule = null;
+        }
+
         if (this.isOn != isOn) {
             this.ticksSinceLastUpdate = 0;
         }
-        if (this.curSchedule != null && this.curTick == this.curSchedule.getStartTick() + this.curSchedule.getActivateUntil() - 1) {
-            this.curSchedule = null;
-        }
+
         this.isOn = isOn;
         this.ticksSinceLastUpdate++;
         this.curTick++;
