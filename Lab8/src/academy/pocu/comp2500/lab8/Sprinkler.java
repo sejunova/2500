@@ -8,8 +8,8 @@ public class Sprinkler extends SmartDevice implements ISprayable {
     private boolean isOn = false;
     private int curTick;
     private int ticksSinceLastUpdate;
-    private int startTick = -1;
-    private int endTick;
+    private Schedule curSchedule;
+    private boolean curMode;
 
     public void addSchedule(Schedule schedule) {
         schedules.add(schedule);
@@ -22,33 +22,33 @@ public class Sprinkler extends SmartDevice implements ISprayable {
 
     @Override
     public void onTick() {
-        boolean isNextOn = this.isOn;
-        if (this.curTick >= this.endTick) {
-            if (this.curTick == this.endTick) {
-                isNextOn = false;
-            }
+        boolean isOn;
+        if (this.curSchedule == null) {
             while (!this.schedules.isEmpty()) {
-                Schedule nextSchedule = this.schedules.poll();
-                int nextStart = nextSchedule.getStartTick();
-                int nextEnd = nextSchedule.getActivateUntil();
-                if (nextStart + nextEnd < this.curTick) {
+                Schedule schedule = this.schedules.poll();
+                if (this.curTick > schedule.getStartTick() + schedule.getActivateUntil() - 1) {
                     continue;
+                } else {
+                    this.curSchedule = schedule;
+                    this.curMode = this.curTick <= schedule.getStartTick();
+                    break;
                 }
-                if (nextStart >= this.curTick) {
-                    this.startTick = nextStart;
-                }
-                this.endTick = nextStart + nextEnd;
-                break;
             }
         }
 
-        if (this.curTick == this.startTick) {
-            isNextOn = true;
+        if (this.curSchedule == null) {
+            isOn = false;
+        } else {
+            isOn = this.curMode && this.curSchedule.getStartTick() <= this.curTick && this.curTick <= this.curSchedule.getStartTick() + this.curSchedule.getActivateUntil() - 1;
         }
-        if (this.isOn != isNextOn) {
-            this.isOn = isNextOn;
+
+        if (this.isOn != isOn) {
             this.ticksSinceLastUpdate = 0;
         }
+        if (this.curSchedule != null && this.curTick == this.curSchedule.getStartTick() + this.curSchedule.getActivateUntil() - 1) {
+            this.curSchedule = null;
+        }
+        this.isOn = isOn;
         this.ticksSinceLastUpdate++;
         this.curTick++;
     }
