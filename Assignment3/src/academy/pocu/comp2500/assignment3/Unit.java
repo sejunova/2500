@@ -21,23 +21,19 @@ public abstract class Unit {
         return this.position;
     }
 
+    public char getSymbol() {
+        return this.symbol;
+    }
+
     public int getHp() {
         return this.hp;
     }
 
-    public AttackIntent attack() {
-        return null;
-    };
+    public abstract AttackIntent attack();
 
     public void onAttacked(int damage) {
+        this.hp = Math.max(0, this.hp - damage);
+    }
 
-    };
-
-    public void onSpawn() {
-
-    };
-
-    public char getSymbol() {
-        return this.symbol;
-    };
+    public abstract void onSpawn();
 }
