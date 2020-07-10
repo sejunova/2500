@@ -12,6 +12,7 @@ public abstract class Unit {
     protected int ap;
     protected int hp;
     protected Set<UnitType> attackableUnitType;
+    protected AttackIntent attackIntentOrNull;
 
     protected Unit(IntVector2D position) {
         this.position = position;
@@ -28,8 +29,6 @@ public abstract class Unit {
     public int getHp() {
         return this.hp;
     }
-
-    public abstract AttackIntent attack();
 
     public void onAttacked(int damage) {
         this.hp = Math.max(0, this.hp - damage);
@@ -48,4 +47,13 @@ public abstract class Unit {
     public int getAp() {
         return ap;
     }
+
+    public boolean isVisible() {
+        return true;
+    }
+
+    public AttackIntent attack() {
+        return this.attackIntentOrNull;
+    }
+
 }

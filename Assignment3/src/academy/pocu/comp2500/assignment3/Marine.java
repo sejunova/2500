@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 
 public class Marine extends Unit implements Movable, Thinkable {
-    private AttackIntent attackIntentOrNull;
     private IntVector2D movePosition;
 
     public Marine(IntVector2D position) {
@@ -52,16 +51,20 @@ public class Marine extends Unit implements Movable, Thinkable {
             int unitDist = super.position.getDistance(unit.position);
             double unitAtan = super.position.getAtan(unit.position);
             boolean setTarget = false;
+            // 공격범위
             if (unitDist <= 1) {
                 if (targetUnit == null) {
                     setTarget = true;
                 } else {
+                    // 체력 1순위
                     if (unit.hp < targetUnit.hp) {
                         setTarget = true;
                     } else if (unit.hp == targetUnit.hp) {
+                        // 거리 2순위
                         if (unitDist < targetUnitDist) {
                             setTarget = true;
                         } else if (unitDist == targetUnitDist) {
+                            // Atan 3순위
                             if (unitAtan > targetUnitAtan) {
                                 setTarget = true;
                             }
@@ -80,6 +83,7 @@ public class Marine extends Unit implements Movable, Thinkable {
                 continue;
             }
 
+            // 시야 범위
             if (!this.position.isInSight(unit.position, super.sight)) {
                 continue;
             }
@@ -88,12 +92,15 @@ public class Marine extends Unit implements Movable, Thinkable {
             if (unitToMove == null) {
                 setMoveTo = true;
             } else {
+                // 거리 1순위
                 if (unitDist < unitToMoveDist) {
                     setMoveTo = true;
                 } else if (unitDist == unitToMoveDist) {
+                    // hp 2순위
                     if (unit.hp < unitToMove.hp) {
                         setMoveTo = true;
                     } else if (unit.hp == unitToMove.hp) {
+                        // atan 2순위
                         if (unitAtan > unitToMoveAtan) {
                             setMoveTo = true;
                         }
@@ -126,11 +133,6 @@ public class Marine extends Unit implements Movable, Thinkable {
 
         this.attackIntentOrNull = null;
         this.movePosition = super.position;
-    }
-
-    @Override
-    public AttackIntent attack() {
-        return this.attackIntentOrNull;
     }
 
     @Override
