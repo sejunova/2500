@@ -1,6 +1,7 @@
 package academy.pocu.comp2500.assignment3;
 
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public final class SimulationManager {
@@ -9,6 +10,7 @@ public final class SimulationManager {
     private ArrayList<Unit> units = new ArrayList<>();
     private ArrayList<Thinkable> thinkables = new ArrayList<>();
     private ArrayList<Movable> movables = new ArrayList<>();
+    private ArrayList<CollisionEventLister> collisionEventListeners = new ArrayList<>();
 
     public static SimulationManager getInstance() {
         if (simulationManager == null) {
@@ -45,7 +47,12 @@ public final class SimulationManager {
         this.movables.remove(movable);
     }
 
-    public void registerCollisionEventListener(Unit listener) {
+    public void registerCollisionEventListener(CollisionEventLister listener) {
+        this.collisionEventListeners.add(listener);
+    }
+
+    public void unregisterCollisionEventListener(CollisionEventLister listener) {
+        this.collisionEventListeners.remove(listener);
     }
 
     public void update() {
@@ -57,6 +64,10 @@ public final class SimulationManager {
             movable.move();
         }
 
+        for (CollisionEventLister collisionEventLister: this.collisionEventListeners) {
+            collisionEventLister.listenCollisionEvent();
+        }
+
         ArrayList<AttackIntent> attackIntents = new ArrayList<>();
         for (Unit unit: this.units) {
             AttackIntent attackIntentOrNull = unit.attack();
@@ -66,13 +77,26 @@ public final class SimulationManager {
         }
 
         for (AttackIntent attackIntent: attackIntents) {
-            this.units.stream()
-                    .filter(x -> x.getPosition().equals(attackIntent.getUnit().getPosition()))
-                    .filter(x -> attackIntent.getUnit().getAttackableUnitType().contains(x.getUnitType()))
-                    .filter(x -> x.equals(attackIntent.getUnit()))
-                    .forEach(x -> x.onAttacked(attackIntent.getUnit().getAp()));
+            Unit attackUnit = attackIntent.getAttackUnit();
+            Set<UnitType> attackableUnitTypes = attackUnit.getAttackableUnitType();
+            for (Unit unit: this.units) {
+                if (unit == attackUnit) {
+                    continue;
+                }
+                if (!attackableUnitTypes.contains(unit.getUnitType())) {
+                    continue;
+                }
+
+                for (AttackInfo attackInfo: attackIntent.getAttackInfos()) {
+                    if (attackInfo.area.equals(unit.getPosition())) {
+//                        System.out.println(String.format("%s by %s, %s", attackInfo, attackUnit, unit));
+                        unit.onAttacked(attackInfo.ap);
+                    }
+                }
+            }
         }
 
+        this.units.forEach(Unit::beforeUpdate);
         this.units = this.units.stream().filter(x -> x.getHp() != 0).collect(Collectors.toCollection(ArrayList::new));
     }
 }

@@ -56,4 +56,16 @@ public abstract class Unit {
         return this.attackIntentOrNull;
     }
 
+    public abstract void beforeUpdate();
+
+    public int getAoe() {
+        return aoe;
+    }
+
+    @Override
+    public String toString() {
+        return "Unit:" + this.symbol +  ", "+
+                "position=" + position +
+                '}';
+    }
 }

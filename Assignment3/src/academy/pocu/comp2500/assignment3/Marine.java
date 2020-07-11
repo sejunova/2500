@@ -45,9 +45,19 @@ public class Marine extends Unit implements Movable, Thinkable {
         double unitToMoveAtan = Double.MAX_VALUE;
 
         for (Unit unit: units) {
+            // 같은 유닛
             if (this == unit) {
                 continue;
             }
+            // 시야 범위 밖이라면 고려 안함.
+            if (!this.position.isInSight(unit.position, super.sight)) {
+                continue;
+            }
+
+            if (!unit.isVisible()) {
+                continue;
+            }
+
             int unitDist = super.position.getDistance(unit.position);
             double unitAtan = super.position.getAtan(unit.position);
             boolean setTarget = false;
@@ -83,11 +93,6 @@ public class Marine extends Unit implements Movable, Thinkable {
                 continue;
             }
 
-            // 시야 범위
-            if (!this.position.isInSight(unit.position, super.sight)) {
-                continue;
-            }
-
             boolean setMoveTo = false;
             if (unitToMove == null) {
                 setMoveTo = true;
@@ -114,7 +119,7 @@ public class Marine extends Unit implements Movable, Thinkable {
             }
         }
         if (targetUnit != null) {
-            this.attackIntentOrNull = new AttackIntent(targetUnit);
+            this.attackIntentOrNull = new AttackIntent(this, targetUnit.getPosition());
             this.movePosition = super.position;
             return;
         }
@@ -136,8 +141,7 @@ public class Marine extends Unit implements Movable, Thinkable {
     }
 
     @Override
-    public void onAttacked(int damage) {
-        this.hp = Math.max(0, this.hp - damage);
+    public void beforeUpdate() {
         if (this.hp == 0) {
             SimulationManager simulationManager = SimulationManager.getInstance();
             simulationManager.unregisterThinkable(this);
