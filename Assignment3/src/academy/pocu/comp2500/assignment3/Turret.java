@@ -60,14 +60,9 @@ public class Turret extends Unit implements Thinkable {
                 if (unit.hp < targetUnit.hp) {
                     setTarget = true;
                 } else if (unit.hp == targetUnit.hp) {
-                    // 거리 2순위
-                    if (unitDist < targetUnitDist) {
+                    // Atan 3순위
+                    if (unitAtan > targetUnitAtan) {
                         setTarget = true;
-                    } else if (unitDist == targetUnitDist) {
-                        // Atan 3순위
-                        if (unitAtan > targetUnitAtan) {
-                            setTarget = true;
-                        }
                     }
                 }
             }
