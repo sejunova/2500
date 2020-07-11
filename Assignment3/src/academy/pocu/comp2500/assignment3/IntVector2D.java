@@ -35,7 +35,7 @@ public class IntVector2D {
         return Math.atan2(other.x - this.x, other.y - this.y);
     }
 
-    public boolean isInSight(IntVector2D other, int sight) {
+    public boolean isOtherUnitInSight(IntVector2D other, int sight) {
         if (Math.abs(this.x - other.x) > sight) {
             return false;
         }
@@ -49,7 +49,6 @@ public class IntVector2D {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
         IntVector2D that = (IntVector2D) o;
         return x == that.x && y == that.y;
     }

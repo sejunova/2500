@@ -56,38 +56,39 @@ public final class SimulationManager {
     }
 
     public void update() {
-        for (Thinkable thinkable: this.thinkables) {
+        for (Thinkable thinkable : this.thinkables) {
             thinkable.think();
         }
 
-        for (Movable movable: this.movables) {
+        for (Movable movable : this.movables) {
             movable.move();
         }
 
-        for (CollisionEventLister collisionEventLister: this.collisionEventListeners) {
+        for (CollisionEventLister collisionEventLister : this.collisionEventListeners) {
             collisionEventLister.listenCollisionEvent();
         }
 
         ArrayList<AttackIntent> attackIntents = new ArrayList<>();
-        for (Unit unit: this.units) {
+        for (Unit unit : this.units) {
             AttackIntent attackIntentOrNull = unit.attack();
             if (attackIntentOrNull != null) {
                 attackIntents.add(attackIntentOrNull);
             }
         }
 
-        for (AttackIntent attackIntent: attackIntents) {
+        for (AttackIntent attackIntent : attackIntents) {
             Unit attackUnit = attackIntent.getAttackUnit();
             Set<UnitType> attackableUnitTypes = attackUnit.getAttackableUnitType();
-            for (Unit unit: this.units) {
+            for (Unit unit : this.units) {
                 if (unit == attackUnit) {
                     continue;
                 }
                 if (!attackableUnitTypes.contains(unit.getUnitType())) {
+//                    System.out.println(unit);
                     continue;
                 }
 
-                for (AttackInfo attackInfo: attackIntent.getAttackInfos()) {
+                for (AttackInfo attackInfo : attackIntent.getAttackInfos()) {
                     if (attackInfo.area.equals(unit.getPosition())) {
 //                        System.out.println(String.format("%s by %s, %s", attackInfo, attackUnit, unit));
                         unit.onAttacked(attackInfo.ap);

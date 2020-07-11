@@ -1,6 +1,5 @@
 package academy.pocu.comp2500.assignment3;
 
-import java.util.ArrayList;
 import java.util.EnumSet;
 
 public class Destroyer extends Unit implements Thinkable {

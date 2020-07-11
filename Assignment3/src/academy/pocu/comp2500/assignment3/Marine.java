@@ -44,13 +44,13 @@ public class Marine extends Unit implements Movable, Thinkable {
         double unitToMoveDist = Double.MAX_VALUE;
         double unitToMoveAtan = Double.MAX_VALUE;
 
-        for (Unit unit: units) {
+        for (Unit unit : units) {
             // 같은 유닛
             if (this == unit) {
                 continue;
             }
             // 시야 범위 밖이라면 고려 안함.
-            if (!this.position.isInSight(unit.position, super.sight)) {
+            if (!this.position.isOtherUnitInSight(unit.position, super.sight)) {
                 continue;
             }
 

@@ -1,7 +1,6 @@
 package academy.pocu.comp2500.assignment3;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 public class AttackIntent {
     private Unit attackUnit;
@@ -16,7 +15,7 @@ public class AttackIntent {
                     // 피해치(x, y) = (공격 지점에서의 피해치) * (1 - 공격 지점으로부터의 거리 / (공격의 AoE 값 + 1))
                     IntVector2D targetArea = new IntVector2D(x, y);
                     int targetDist = area.getDistance(targetArea);
-                    int ap = (int)(attackUnit.getAp() * (1 - targetDist / (double)(aoe + 1)));
+                    int ap = (int) (attackUnit.getAp() * (1 - targetDist / (double) (aoe + 1)));
                     this.attackInfos.add(new AttackInfo(targetArea, ap));
                 }
             }

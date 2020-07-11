@@ -5,7 +5,7 @@ import java.util.EnumSet;
 
 public class Tank extends Unit implements Movable, Thinkable {
     private boolean isTankMode = true;
-    private boolean isMovingTowardRight = true;
+    private boolean isMovingTowardRight;
     private IntVector2D movePosition;
 
     public Tank(IntVector2D intVector2D) {
@@ -17,6 +17,7 @@ public class Tank extends Unit implements Movable, Thinkable {
         super.ap = 8;
         super.hp = 85;
         super.attackableUnitType = EnumSet.of(UnitType.GROUND);
+        this.isMovingTowardRight = intVector2D.getX() != 15;
     }
 
     @Override
@@ -43,13 +44,13 @@ public class Tank extends Unit implements Movable, Thinkable {
 
 
         boolean findUnit = false;
-        for (Unit unit: units) {
+        for (Unit unit : units) {
             // 같은 유닛
             if (this == unit) {
                 continue;
             }
             // 시야 범위 밖이라면 고려 안함.
-            if (!this.position.isInSight(unit.position, super.sight)) {
+            if (!this.position.isOtherUnitInSight(unit.position, super.sight)) {
                 continue;
             }
 
@@ -97,29 +98,36 @@ public class Tank extends Unit implements Movable, Thinkable {
             }
         }
 
+        // 시즈모드
         if (!this.isTankMode) {
-            this.attackIntentOrNull = (targetUnit != null) ? new AttackIntent(this, targetUnit.getPosition()) : null;
+            // 시야 안에 적이 있다면
+            if (findUnit) {
+                // 공격 대상이 있으면 공격하고 없으면 제자리
+                this.attackIntentOrNull = (targetUnit != null) ? new AttackIntent(this, targetUnit.getPosition()) : null;
+            } else {
+                // 시야 안에 적이 없으면 탱크모드
+                this.isTankMode = true;
+            }
             this.movePosition = super.position;
         } else {
-            if (!findUnit) {
+            // 탱크모드
+            if (findUnit) {
+                // 시야 안에 적이 있으면 시즈모드
                 this.attackIntentOrNull = null;
                 this.movePosition = super.position;
                 this.isTankMode = true;
-                return;
-            }
-            if (this.isMovingTowardRight) {
-                if (this.position.getX() == 15) {
-                    this.isMovingTowardRight = false;
-                    this.movePosition = new IntVector2D(this.position.getX() - 1, this.position.getY());
-                } else {
-                    this.movePosition = new IntVector2D(this.position.getX() + 1, this.position.getY());
-                }
             } else {
-                if (this.position.getX() == 0) {
-                    this.isMovingTowardRight = true;
+                // 시야 안에 적이 없으면 이동
+                if (this.isMovingTowardRight) {
                     this.movePosition = new IntVector2D(this.position.getX() + 1, this.position.getY());
+                    if (this.movePosition.getX() == 15) {
+                        this.isMovingTowardRight = false;
+                    }
                 } else {
                     this.movePosition = new IntVector2D(this.position.getX() - 1, this.position.getY());
+                    if (this.movePosition.getX() == 0) {
+                        this.isMovingTowardRight = true;
+                    }
                 }
             }
         }
@@ -128,7 +136,7 @@ public class Tank extends Unit implements Movable, Thinkable {
     @Override
     public void onAttacked(int damage) {
         if (!this.isTankMode) {
-            damage *= 2;
+            this.hp = Math.max(0, this.hp - damage);
         }
         this.hp = Math.max(0, this.hp - damage);
     }

@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 
 public class SmartMine extends Unit implements CollisionEventLister {
-    private int collisionsBeforeBlowUp;
+    private int minimumCollision;
+    private int minimumDetection;
 
-    public SmartMine(IntVector2D intVector2D, int collisionsBeforeBlowUp) {
+    public SmartMine(IntVector2D intVector2D, int minimumCollision, int minimumDetection) {
         super(intVector2D);
         super.symbol = 'A';
         super.unitType = UnitType.GROUND;
@@ -15,7 +16,8 @@ public class SmartMine extends Unit implements CollisionEventLister {
         super.ap = 15;
         super.hp = 1;
         super.attackableUnitType = EnumSet.of(UnitType.GROUND);
-        this.collisionsBeforeBlowUp = collisionsBeforeBlowUp;
+        this.minimumCollision = minimumCollision;
+        this.minimumDetection = minimumDetection;
     }
 
     @Override
@@ -31,17 +33,31 @@ public class SmartMine extends Unit implements CollisionEventLister {
         SimulationManager simulationManager = SimulationManager.getInstance();
         ArrayList<Unit> units = simulationManager.getUnits();
 
-        int collisionsCount = (int) units.stream()
+        int detectionCount = (int) units.stream()
                 .filter(x -> x.unitType.equals(UnitType.GROUND))
                 .filter(x -> x != this)
-                .filter(x -> this.position.isInSight(x.position, this.sight))
+                .filter(x -> this.position.isOtherUnitInSight(x.position, this.sight))
                 .count();
 
-        if (collisionsCount >= this.collisionsBeforeBlowUp) {
+        if (detectionCount >= this.minimumDetection) {
+            this.hp = 0;
+            this.attackIntentOrNull = new AttackIntent(this, this.getPosition());
+            return;
+        }
+
+        int collisionsCount = (int) units.stream()
+                .filter(x -> x.unitType.equals(UnitType.GROUND))
+                .filter(Unit::isVisible)
+                .filter(x -> x != this)
+                .filter(x -> x.position.equals(this.position))
+                .count();
+
+
+        if (collisionsCount >= this.minimumCollision) {
             this.hp = 0;
             this.attackIntentOrNull = new AttackIntent(this, this.getPosition());
         } else {
-            this.collisionsBeforeBlowUp -= collisionsCount;
+            this.minimumCollision -= collisionsCount;
             this.attackIntentOrNull = null;
         }
     }

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 
 public class Mine extends Unit implements CollisionEventLister {
-    private int collisionsBeforeBlowUp;
+    private int minimumCollision;
 
-    public Mine(IntVector2D intVector2D, int collisionsBeforeBlowUp) {
+    public Mine(IntVector2D intVector2D, int minimumCollision) {
         super(intVector2D);
         super.symbol = 'N';
         super.unitType = UnitType.GROUND;
@@ -15,7 +15,7 @@ public class Mine extends Unit implements CollisionEventLister {
         super.ap = 10;
         super.hp = 1;
         super.attackableUnitType = EnumSet.of(UnitType.GROUND);
-        this.collisionsBeforeBlowUp = collisionsBeforeBlowUp;
+        this.minimumCollision = minimumCollision;
     }
 
     @Override
@@ -37,11 +37,11 @@ public class Mine extends Unit implements CollisionEventLister {
                 .filter(x -> x.position.equals(this.position))
                 .count();
 
-        if (collisionsCount >= this.collisionsBeforeBlowUp) {
+        if (collisionsCount >= this.minimumCollision) {
             this.hp = 0;
             this.attackIntentOrNull = new AttackIntent(this, this.getPosition());
         } else {
-            this.collisionsBeforeBlowUp -= collisionsCount;
+            this.minimumCollision -= collisionsCount;
             this.attackIntentOrNull = null;
         }
     }

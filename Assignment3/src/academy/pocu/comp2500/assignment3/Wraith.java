@@ -48,13 +48,13 @@ public class Wraith extends Unit implements Movable, Thinkable {
         double unitToMoveAtan = Double.MAX_VALUE;
         int unitToMoveTypePriority = 0;
 
-        for (Unit unit: units) {
+        for (Unit unit : units) {
             // 같은 유닛
             if (this == unit) {
                 continue;
             }
             // 시야 범위 밖이라면 고려 안함.
-            if (!this.position.isInSight(unit.position, super.sight)) {
+            if (!this.position.isOtherUnitInSight(unit.position, super.sight)) {
                 continue;
             }
 
@@ -97,7 +97,7 @@ public class Wraith extends Unit implements Movable, Thinkable {
                 targetUnit = unit;
                 targetUnitDist = unitDist;
                 targetUnitAtan = unitAtan;
-                targetUnitTypePriority  = unitTypePriority;
+                targetUnitTypePriority = unitTypePriority;
             }
 
             if (targetUnit != null) {

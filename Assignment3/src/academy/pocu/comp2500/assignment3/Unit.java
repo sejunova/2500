@@ -64,7 +64,7 @@ public abstract class Unit {
 
     @Override
     public String toString() {
-        return "Unit:" + this.symbol +  ", "+
+        return "Unit:" + this.symbol + ", " +
                 "position=" + position +
                 '}';
     }

@@ -31,7 +31,7 @@ public class Turret extends Unit implements Thinkable {
         double targetUnitDist = Double.MAX_VALUE;
         double targetUnitAtan = Double.MAX_VALUE;
 
-        for (Unit unit: units) {
+        for (Unit unit : units) {
             // 같은 유닛
             if (this == unit) {
                 continue;
