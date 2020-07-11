@@ -60,12 +60,12 @@ public final class SimulationManager {
             thinkable.think();
         }
 
-        for (Movable movable : this.movables) {
-            movable.move();
-        }
-
         for (CollisionEventLister collisionEventLister : this.collisionEventListeners) {
             collisionEventLister.listenCollisionEvent();
+        }
+
+        for (Movable movable : this.movables) {
+            movable.move();
         }
 
         ArrayList<AttackIntent> attackIntents = new ArrayList<>();
