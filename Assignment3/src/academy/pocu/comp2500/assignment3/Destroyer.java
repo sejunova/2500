@@ -9,8 +9,8 @@ public class Destroyer extends Unit implements Thinkable {
         super.unitType = UnitType.GROUND;
         super.sight = 0;
         super.aoe = 15;
-        super.ap = Integer.MAX_VALUE;
-        super.hp = Integer.MAX_VALUE;
+        super.ap = 10000000;
+        super.hp = 1;
         super.attackableUnitType = EnumSet.allOf(UnitType.class);
     }
 

@@ -7,6 +7,7 @@ public class Wraith extends Unit implements Movable, Thinkable {
     private boolean shieldOn = true;
     private boolean isAttacked = false;
     private IntVector2D movePosition;
+    private IntVector2D startPosition;
 
     public Wraith(IntVector2D intVector2D) {
         super(intVector2D);
@@ -17,6 +18,7 @@ public class Wraith extends Unit implements Movable, Thinkable {
         super.ap = 6;
         super.hp = 80;
         super.attackableUnitType = EnumSet.allOf(UnitType.class);
+        this.startPosition = intVector2D;
     }
 
     @Override
@@ -141,20 +143,24 @@ public class Wraith extends Unit implements Movable, Thinkable {
             return;
         }
 
+        IntVector2D toward;
         if (unitToMove != null) {
-            this.attackIntentOrNull = null;
-            if (unitToMove.position.getY() != super.position.getY()) {
-                int nextY = (unitToMove.position.getY() > super.position.getY()) ? super.position.getY() + 1 : super.position.getY() - 1;
+            toward = unitToMove.position;
+        } else {
+            toward = this.startPosition;
+        }
+        this.attackIntentOrNull = null;
+        if (toward.equals(super.position)) {
+            this.movePosition = toward;
+        } else {
+            if (toward.getY() != super.position.getY()) {
+                int nextY = (toward.getY() > super.position.getY()) ? super.position.getY() + 1 : super.position.getY() - 1;
                 this.movePosition = new IntVector2D(super.position.getX(), nextY);
             } else {
-                int nextX = (unitToMove.position.getX() > super.position.getX()) ? super.position.getX() + 1 : super.position.getX() - 1;
+                int nextX = (toward.getX() > super.position.getX()) ? super.position.getX() + 1 : super.position.getX() - 1;
                 this.movePosition = new IntVector2D(nextX, super.position.getY());
             }
-            return;
         }
-
-        this.attackIntentOrNull = null;
-        this.movePosition = super.position;
     }
 
 
