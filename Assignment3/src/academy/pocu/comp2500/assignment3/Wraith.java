@@ -73,6 +73,9 @@ public class Wraith extends Unit implements Movable, Thinkable {
                 if (targetUnit == null) {
                     setTarget = true;
                 } else {
+                    if (targetUnit.unitType.equals(UnitType.AIR) && unit.unitType.equals(UnitType.GROUND)) {
+                        continue;
+                    }
                     // 1순위 공중유닛
                     if (unitTypePriority > targetUnitTypePriority) {
                         setTarget = true;
@@ -110,6 +113,9 @@ public class Wraith extends Unit implements Movable, Thinkable {
             if (unitToMove == null) {
                 setMoveTo = true;
             } else {
+                if (unitToMove.unitType.equals(UnitType.AIR) && unit.unitType.equals(UnitType.GROUND)) {
+                    continue;
+                }
                 if (unitTypePriority > unitToMoveTypePriority) {
                     setMoveTo = true;
                 } else if (unitTypePriority == unitToMoveTypePriority) {
