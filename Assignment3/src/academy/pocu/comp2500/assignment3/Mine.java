@@ -32,7 +32,6 @@ public class Mine extends Unit implements CollisionEventLister {
 
         int collisionsCount = (int) units.stream()
                 .filter(x -> x.unitType.equals(UnitType.GROUND))
-                .filter(Unit::isVisible)
                 .filter(x -> x != this)
                 .filter(x -> x.position.equals(this.position))
                 .count();
