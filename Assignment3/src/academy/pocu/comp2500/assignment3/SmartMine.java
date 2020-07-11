@@ -58,7 +58,6 @@ public class SmartMine extends Unit implements CollisionEventLister, Thinkable {
 
         int collisionsCount = (int) units.stream()
                 .filter(x -> x.unitType.equals(UnitType.GROUND))
-                .filter(Unit::isVisible)
                 .filter(x -> x != this)
                 .filter(x -> x.position.equals(this.position))
                 .count();
