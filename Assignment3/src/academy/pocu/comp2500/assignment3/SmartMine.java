@@ -3,7 +3,7 @@ package academy.pocu.comp2500.assignment3;
 import java.util.ArrayList;
 import java.util.EnumSet;
 
-public class SmartMine extends Unit implements CollisionEventLister {
+public class SmartMine extends Unit implements CollisionEventLister, Thinkable {
     private int minimumCollision;
     private int minimumDetection;
 
@@ -24,12 +24,13 @@ public class SmartMine extends Unit implements CollisionEventLister {
     public void onSpawn() {
         SimulationManager simulationManager = SimulationManager.getInstance();
         simulationManager.registerUnit(this);
+        simulationManager.registerThinkable(this);
         simulationManager.registerCollisionEventListener(this);
 
     }
 
     @Override
-    public void listenCollisionEvent() {
+    public void think() {
         SimulationManager simulationManager = SimulationManager.getInstance();
         ArrayList<Unit> units = simulationManager.getUnits();
 
@@ -40,10 +41,20 @@ public class SmartMine extends Unit implements CollisionEventLister {
                 .count();
 
         if (detectionCount >= this.minimumDetection) {
-            this.hp = 0;
             this.attackIntentOrNull = new AttackIntent(this, this.getPosition());
+        } else {
+            this.attackIntentOrNull = null;
+        }
+    }
+
+    @Override
+    public void listenCollisionEvent() {
+        if (this.attackIntentOrNull != null) {
+            this.hp = 0;
             return;
         }
+        SimulationManager simulationManager = SimulationManager.getInstance();
+        ArrayList<Unit> units = simulationManager.getUnits();
 
         int collisionsCount = (int) units.stream()
                 .filter(x -> x.unitType.equals(UnitType.GROUND))
@@ -67,6 +78,7 @@ public class SmartMine extends Unit implements CollisionEventLister {
         if (this.hp == 0) {
             SimulationManager simulationManager = SimulationManager.getInstance();
             simulationManager.unregisterCollisionEventListener(this);
+            simulationManager.unregisterThinkable(this);
         }
     }
 
