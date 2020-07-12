@@ -62,7 +62,7 @@ public class Turret extends Unit implements Thinkable {
                 } else if (unit.hp == targetUnit.hp) {
                     if (this.position.equals(unit.position)) {
                         setTarget = true;
-                    } else if (unitDist == targetUnitDist && unitAtan > targetUnitAtan) {
+                    } else if (targetUnitDist != 0 && unitAtan > targetUnitAtan) {
                         setTarget = true;
                     }
                 }
