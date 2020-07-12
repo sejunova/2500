@@ -9,7 +9,7 @@ public class Sprinkler extends SmartDevice implements ISprayable {
     private int curTick;
     private int ticksSinceLastUpdate;
     private Schedule curSchedule;
-    private boolean curMode;
+    private boolean isCurScheduleEffective;
 
     public void addSchedule(Schedule schedule) {
         schedules.add(schedule);
@@ -23,28 +23,28 @@ public class Sprinkler extends SmartDevice implements ISprayable {
     @Override
     public void onTick() {
         boolean isOn;
+        // 스케줄이 없으면 뽑기
         if (this.curSchedule == null) {
             while (!this.schedules.isEmpty()) {
                 Schedule schedule = this.schedules.poll();
-                if (this.curTick > schedule.getStartTick() + schedule.getActivateUntil()) {
-                    continue;
-                } else {
+                if (this.curTick <= schedule.getStartTick() + schedule.getActivateUntil()) {
                     this.curSchedule = schedule;
-                    this.curMode = this.curTick <= schedule.getStartTick();
+                    this.isCurScheduleEffective = this.curTick <= schedule.getStartTick();
                     break;
                 }
             }
         }
 
+        // 뽑을 스케줄이 없거나 유효한 스케줄이 없을때
         if (this.curSchedule == null) {
             isOn = false;
         } else {
-            isOn = this.curMode && this.curSchedule.getStartTick() <= this.curTick && this.curTick <= this.curSchedule.getStartTick() + this.curSchedule.getActivateUntil() - 1;
-        }
-
-        if (this.curSchedule != null && this.curTick == this.curSchedule.getStartTick() + this.curSchedule.getActivateUntil()) {
-            isOn = false;
-            this.curSchedule = null;
+            // 현재 유효한 스케쥴인 상태인 경우 + 현재 tick이 해당 스케쥴의 범위 안쪽인 경우에만 스위치 On
+            isOn = this.isCurScheduleEffective && this.curSchedule.getStartTick() <= this.curTick && this.curTick <= this.curSchedule.getStartTick() + this.curSchedule.getActivateUntil() - 1;
+            // 마지막 스케쥴 사용한 다음 턴
+            if (this.curTick == this.curSchedule.getStartTick() + this.curSchedule.getActivateUntil()) {
+                this.curSchedule = null;
+            }
         }
 
         if (this.isOn != isOn) {
