@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.UUID;
 
-public class BuyOneGetOneFree {
+public class BuyOneGetOneFree extends PricingPolicy {
     private Map<UUID, Integer> skus;
 
     public BuyOneGetOneFree(HashSet<UUID> skus) {
@@ -17,6 +17,9 @@ public class BuyOneGetOneFree {
     }
 
     public int getTotalPrice(Collection<Book> books) {
+        if (books.isEmpty()) {
+            return 0;
+        }
         int price = 0;
         HashMap<UUID, Integer> booksPrice = new HashMap<>();
         for (Book book : books) {

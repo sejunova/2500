@@ -42,19 +42,7 @@ public final class Cart {
         return true;
     }
 
-    public int getTotalPrice(SimplePricing pricingPolicy) {
-        return pricingPolicy.getTotalPrice(this.books);
-    }
-
-    public int getTotalPrice(BuyOneGetOneFree pricingPolicy) {
-        return pricingPolicy.getTotalPrice(this.books);
-    }
-
-    public int getTotalPrice(DecadeMadness pricingPolicy) {
-        return pricingPolicy.getTotalPrice(this.books);
-    }
-
-    public int getTotalPrice(SkyIsTheLimit pricingPolicy) {
+    public int getTotalPrice(PricingPolicy pricingPolicy) {
         return pricingPolicy.getTotalPrice(this.books);
     }
 }

@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
-public class SkyIsTheLimit {
+public class SkyIsTheLimit extends PricingPolicy {
     int discountThreshold;
 
     public SkyIsTheLimit(int discountThreshold) {
@@ -13,6 +13,9 @@ public class SkyIsTheLimit {
     }
 
     public int getTotalPrice(Collection<Book> books) {
+        if (books.isEmpty()) {
+            return 0;
+        }
         ArrayList<Double> booksPrice = books.stream().map(b -> (double) b.getPrice()).collect(Collectors.toCollection(ArrayList::new));
         int originalSum = (int) booksPrice.stream().mapToDouble(p -> p).sum();
         if (booksPrice.size() >= 5 && originalSum >= this.discountThreshold) {
