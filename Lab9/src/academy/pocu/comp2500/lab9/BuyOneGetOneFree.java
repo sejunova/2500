@@ -23,8 +23,12 @@ public class BuyOneGetOneFree extends PricingPolicy {
         int price = 0;
         HashMap<UUID, Integer> booksPrice = new HashMap<>();
         for (Book book : books) {
-            this.skus.merge(book.getSku(), 1, Integer::sum);
-            booksPrice.put(book.getSku(), book.getPrice());
+            if (this.skus.containsKey(book.getSku())) {
+                this.skus.merge(book.getSku(), 1, Integer::sum);
+                booksPrice.put(book.getSku(), book.getPrice());
+            } else {
+                price += book.getPrice();
+            }
         }
         for (Map.Entry<UUID, Integer> entry : this.skus.entrySet()) {
             UUID sku = entry.getKey();
