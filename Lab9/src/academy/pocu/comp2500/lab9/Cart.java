@@ -18,15 +18,8 @@ public final class Cart {
         return this.books.size();
     }
 
-    public boolean addBooks(Book[] books) {
-        for (Book book : books) {
-            if (book == null) {
-                return false;
-            }
-        }
-
+    public void addBooks(Book[] books) {
         this.books.addAll(Arrays.asList(books));
-        return true;
     }
 
     public void addBook(Book book) {
