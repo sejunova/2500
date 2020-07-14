@@ -7,13 +7,10 @@ import java.util.Map;
 import java.util.UUID;
 
 public class BuyOneGetOneFree extends PricingPolicy {
-    private Map<UUID, Integer> skus;
+    private HashSet<UUID> skus;
 
     public BuyOneGetOneFree(HashSet<UUID> skus) {
-        this.skus = new HashMap<>();
-        for (UUID sku : skus) {
-            this.skus.put(sku, 0);
-        }
+        this.skus = skus;
     }
 
     public int getTotalPrice(Collection<Book> books) {
@@ -21,16 +18,17 @@ public class BuyOneGetOneFree extends PricingPolicy {
             return 0;
         }
         int price = 0;
+        HashMap<UUID, Integer> booksCountOnDiscount = new HashMap<>();
         HashMap<UUID, Integer> booksPrice = new HashMap<>();
         for (Book book : books) {
-            if (this.skus.containsKey(book.getSku())) {
-                this.skus.merge(book.getSku(), 1, Integer::sum);
+            if (this.skus.contains(book.getSku())) {
+                booksCountOnDiscount.merge(book.getSku(), 1, Integer::sum);
                 booksPrice.put(book.getSku(), book.getPrice());
             } else {
                 price += book.getPrice();
             }
         }
-        for (Map.Entry<UUID, Integer> entry : this.skus.entrySet()) {
+        for (Map.Entry<UUID, Integer> entry : booksCountOnDiscount.entrySet()) {
             UUID sku = entry.getKey();
             int count = entry.getValue();
             int bookPrice = booksPrice.get(sku);
