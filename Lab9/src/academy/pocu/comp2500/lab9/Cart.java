@@ -1,7 +1,7 @@
 package academy.pocu.comp2500.lab9;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 
 public final class Cart {
     private ArrayList<Book> books = new ArrayList<>();
@@ -18,14 +18,8 @@ public final class Cart {
         return this.books.size();
     }
 
-    public boolean addBooks(Collection<Book> books) {
-        for (Book book : books) {
-            if (book == null) {
-                return false;
-            }
-        }
-        this.books.addAll(books);
-        return true;
+    public void addBooks(Book[] books) {
+        this.books.addAll(Arrays.asList(books));
     }
 
     public void addBook(Book book) {
