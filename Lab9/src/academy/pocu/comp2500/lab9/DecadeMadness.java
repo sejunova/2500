@@ -21,7 +21,7 @@ public class DecadeMadness extends PricingPolicy {
 
         for (ArrayList<Integer> prices : generationBooksMap.values()) {
             double priceToAdd = (prices.size() == 1) ? prices.get(0) : prices.stream().mapToDouble(p -> p).sum() * 0.8;
-            price += (int)priceToAdd;
+            price += (int) priceToAdd;
         }
         return price;
     }
