@@ -18,16 +18,15 @@ public class Canvas {
         this.height = height;
     }
 
-    public void drawPixel(int x, int y, char pixelValue) {
-        if (LOWER_BOUND <= pixelValue && pixelValue <= UPPER_BOUND) {
-            this.canvas[y][x] = pixelValue;
+    public void drawPixel(int x, int y, char pixel) {
+        if (LOWER_BOUND <= pixel && pixel <= UPPER_BOUND) {
+            this.canvas[y][x] = pixel;
         }
     }
 
     public char getPixel(int x, int y) {
         return this.canvas[y][x];
     }
-    //32부터 126입니다. [32, 126]
 
     public boolean increasePixel(int x, int y) {
         if (this.canvas[y][x] != UPPER_BOUND) {
@@ -53,18 +52,18 @@ public class Canvas {
         this.canvas[y][x] = Character.toLowerCase(this.canvas[y][x]);
     }
 
-    public void fillHorizontalLine(int y, char pixelValue) {
-        if (LOWER_BOUND <= pixelValue && pixelValue <= UPPER_BOUND) {
+    public void fillHorizontalLine(int y, char pixel) {
+        if (LOWER_BOUND <= pixel && pixel <= UPPER_BOUND) {
             for (int i = 0; i < this.width; i++) {
-                this.canvas[y][i] = pixelValue;
+                this.canvas[y][i] = pixel;
             }
         }
     }
 
-    public void fillVerticalLine(int x, char pixelValue) {
-        if (LOWER_BOUND <= pixelValue && pixelValue <= UPPER_BOUND) {
+    public void fillVerticalLine(int x, char pixel) {
+        if (LOWER_BOUND <= pixel && pixel <= UPPER_BOUND) {
             for (int i = 0; i < this.height; i++) {
-                this.canvas[i][x] = pixelValue;
+                this.canvas[i][x] = pixel;
             }
         }
     }
