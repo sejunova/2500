@@ -76,19 +76,6 @@ public class Canvas {
         }
     }
 
-    //+----------+
-    //|*         |
-    //|&         |
-    //| $        |
-    //|          |
-    //|          |
-    //|          |
-    //|          |
-    //|          |
-    //|          |
-    //|          |
-    //+----------+
-
     public String getDrawing() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append('+').append("-".repeat(this.width)).append('+').append(System.lineSeparator());
@@ -101,5 +88,13 @@ public class Canvas {
         }
         stringBuilder.append('+').append("-".repeat(this.width)).append('+').append(System.lineSeparator());
         return stringBuilder.toString();
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }
