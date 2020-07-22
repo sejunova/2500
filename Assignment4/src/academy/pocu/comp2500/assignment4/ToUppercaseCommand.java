@@ -1,6 +1,6 @@
 package academy.pocu.comp2500.assignment4;
 
-public class ToLowercaseCommandd implements ICommand {
+public class ToUppercaseCommand implements ICommand {
     private int x;
     private int y;
     private Canvas canvas;
@@ -8,7 +8,7 @@ public class ToLowercaseCommandd implements ICommand {
     private boolean canUndo = false;
     private boolean canRedo = false;
 
-    public ToLowercaseCommandd(int x, int y) {
+    public ToUppercaseCommand(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -20,7 +20,7 @@ public class ToLowercaseCommandd implements ICommand {
         }
         this.canvas = canvas;
         this.existingPixel = canvas.getPixel(this.x, this.y);
-        canvas.toLower(this.x, this.y);
+        canvas.toUpper(this.x, this.y);
         this.canUndo = true;
         return true;
     }
@@ -41,7 +41,7 @@ public class ToLowercaseCommandd implements ICommand {
         if (!this.canRedo) {
             return false;
         }
-        this.canvas.toLower(this.x, this.y);
+        this.canvas.toUpper(this.x, this.y);
         this.canUndo = true;
         this.canRedo = false;
         return true;
