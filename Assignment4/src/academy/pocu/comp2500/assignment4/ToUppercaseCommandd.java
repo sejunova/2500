@@ -1,13 +1,14 @@
 package academy.pocu.comp2500.assignment4;
 
-public class DecreasePixelCommand implements ICommand {
+public class ToUppercaseCommandd implements ICommand {
     private int x;
     private int y;
     private Canvas canvas;
+    private char existingPixel;
     private boolean canUndo = false;
     private boolean canRedo = false;
 
-    public DecreasePixelCommand(int x, int y) {
+    public ToUppercaseCommandd(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -18,9 +19,10 @@ public class DecreasePixelCommand implements ICommand {
             return false;
         }
         this.canvas = canvas;
-        boolean isExecuted = canvas.decreasePixel(this.x, this.y);
-        this.canUndo = isExecuted;
-        return isExecuted;
+        this.existingPixel = canvas.getPixel(this.x, this.y);
+        canvas.toUpper(this.x, this.y);
+        this.canUndo = true;
+        return true;
     }
 
     @Override
@@ -28,7 +30,7 @@ public class DecreasePixelCommand implements ICommand {
         if (!this.canUndo) {
             return false;
         }
-        this.canvas.increasePixel(this.x, this.y);
+        this.canvas.drawPixel(this.x, this.y, this.existingPixel);
         this.canUndo = false;
         this.canRedo = true;
         return true;
@@ -39,7 +41,7 @@ public class DecreasePixelCommand implements ICommand {
         if (!this.canRedo) {
             return false;
         }
-        this.canvas.decreasePixel(this.x, this.y);
+        this.canvas.toUpper(this.x, this.y);
         this.canUndo = true;
         this.canRedo = false;
         return true;
