@@ -4,13 +4,13 @@ public class FillVerticalLineCommand implements ICommand {
     private int x;
     private char[] beforeVertical;
     private Canvas canvas;
-    private char pixel;
+    private char c;
     private boolean canUndo = false;
     private boolean canRedo = false;
 
-    public FillVerticalLineCommand(int x, char pixel) {
+    public FillVerticalLineCommand(int x, char c) {
         this.x = x;
-        this.pixel = pixel;
+        this.c = c;
     }
 
     @Override
@@ -22,7 +22,7 @@ public class FillVerticalLineCommand implements ICommand {
         for (int i = 0; i < canvas.getHeight(); i++) {
             this.beforeVertical[i] = canvas.getPixel(this.x, i);
         }
-        canvas.fillVerticalLine(this.x, this.pixel);
+        canvas.fillVerticalLine(this.x, this.c);
         this.canvas = canvas;
         this.canUndo = true;
         return true;
@@ -46,7 +46,7 @@ public class FillVerticalLineCommand implements ICommand {
         if (!this.canRedo) {
             return false;
         }
-        this.canvas.fillVerticalLine(this.x, this.pixel);
+        this.canvas.fillVerticalLine(this.x, this.c);
         this.canUndo = true;
         this.canRedo = false;
         return true;

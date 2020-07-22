@@ -3,16 +3,16 @@ package academy.pocu.comp2500.assignment4;
 public class DrawPixelCommand implements ICommand {
     private int x;
     private int y;
-    private char pixel;
+    private char c;
     private char existingPixel;
     private Canvas canvas;
     private boolean canUndo = false;
     private boolean canRedo = false;
 
-    public DrawPixelCommand(int x, int y, char pixel) {
+    public DrawPixelCommand(int x, int y, char c) {
         this.x = x;
         this.y = y;
-        this.pixel = pixel;
+        this.c = c;
     }
 
     @Override
@@ -21,7 +21,7 @@ public class DrawPixelCommand implements ICommand {
             return false;
         }
         this.existingPixel = canvas.getPixel(this.x, this.y);
-        canvas.drawPixel(this.x, this.y, this.pixel);
+        canvas.drawPixel(this.x, this.y, this.c);
         this.canvas = canvas;
         this.canUndo = true;
         return true;
@@ -43,7 +43,7 @@ public class DrawPixelCommand implements ICommand {
         if (!this.canRedo) {
             return false;
         }
-        this.canvas.drawPixel(this.x, this.y, this.pixel);
+        this.canvas.drawPixel(this.x, this.y, this.c);
         this.canUndo = true;
         this.canRedo = false;
         return true;

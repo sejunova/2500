@@ -18,9 +18,9 @@ public class Canvas {
         this.height = height;
     }
 
-    public void drawPixel(int x, int y, char pixel) {
-        if (LOWER_BOUND <= pixel && pixel <= UPPER_BOUND) {
-            this.canvas[y][x] = pixel;
+    public void drawPixel(int x, int y, char c) {
+        if (LOWER_BOUND <= c && c <= UPPER_BOUND) {
+            this.canvas[y][x] = c;
         }
     }
 
@@ -52,18 +52,18 @@ public class Canvas {
         this.canvas[y][x] = Character.toLowerCase(this.canvas[y][x]);
     }
 
-    public void fillHorizontalLine(int y, char pixel) {
-        if (LOWER_BOUND <= pixel && pixel <= UPPER_BOUND) {
+    public void fillHorizontalLine(int y, char c) {
+        if (LOWER_BOUND <= c && c <= UPPER_BOUND) {
             for (int i = 0; i < this.width; i++) {
-                this.canvas[y][i] = pixel;
+                this.canvas[y][i] = c;
             }
         }
     }
 
-    public void fillVerticalLine(int x, char pixel) {
-        if (LOWER_BOUND <= pixel && pixel <= UPPER_BOUND) {
+    public void fillVerticalLine(int x, char c) {
+        if (LOWER_BOUND <= c && c <= UPPER_BOUND) {
             for (int i = 0; i < this.height; i++) {
-                this.canvas[i][x] = pixel;
+                this.canvas[i][x] = c;
             }
         }
     }
