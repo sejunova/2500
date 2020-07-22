@@ -4,11 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public class OverdrawAnalyzer extends Canvas {
-    private static final int LOWER_BOUND = 32;
-    private static final int UPPER_BOUND = 126;
-
     private HashMap<String, LinkedList<Character>> pixelsHistory;
-//    private int[][] pixelsOverdrawCount;
 
     public OverdrawAnalyzer(int width, int height) {
         super(width, height);
@@ -18,16 +14,24 @@ public class OverdrawAnalyzer extends Canvas {
                 this.pixelsHistory.put(String.format("%d,%d", x, y), new LinkedList<>());
             }
         }
-//        this.pixelsOverdrawCount = new int[height][width];
     }
 
     public LinkedList<Character> getPixelHistory(int x, int y) {
         return this.pixelsHistory.get(String.format("%d,%d", x, y));
     }
 
+    public int getOverdrawCount() {
+        int count = 0;
+        for (int x = 0; x < this.getWidth(); x++) {
+            for (int y = 0; y < this.getHeight(); y++) {
+                count += this.pixelsHistory.get(String.format("%d,%d", x, y)).size();
+            }
+        }
+        return count;
+    }
+
     public int getOverdrawCount(int x, int y) {
         return this.pixelsHistory.get(String.format("%d,%d", x, y)).size();
-//        return this.pixelsOverdrawCount[y][x];
     }
 
     @Override
@@ -36,14 +40,12 @@ public class OverdrawAnalyzer extends Canvas {
         super.drawPixel(x, y, pixel);
         if (this.getPixel(x, y) != prevChar) {
             this.pixelsHistory.get(String.format("%d,%d", x, y)).add(pixel);
-//            this.pixelsOverdrawCount[y][x]++;
         }
     }
 
     @Override
     public boolean increasePixel(int x, int y) {
         if (super.increasePixel(x, y)) {
-//            this.pixelsOverdrawCount[y][x]++;
             this.pixelsHistory.get(String.format("%d,%d", x, y)).add(this.getPixel(x, y));
             return true;
         }
@@ -53,7 +55,6 @@ public class OverdrawAnalyzer extends Canvas {
     @Override
     public boolean decreasePixel(int x, int y) {
         if (super.decreasePixel(x, y)) {
-//            this.pixelsOverdrawCount[y][x]++;
             this.pixelsHistory.get(String.format("%d,%d", x, y)).add(this.getPixel(x, y));
             return true;
         }
@@ -65,7 +66,6 @@ public class OverdrawAnalyzer extends Canvas {
         char prevChar = this.getPixel(x, y);
         super.toUpper(x, y);
         if (this.getPixel(x, y) != prevChar) {
-//            this.pixelsOverdrawCount[y][x]++;
             this.pixelsHistory.get(String.format("%d,%d", x, y)).add(this.getPixel(x, y));
         }
     }
@@ -75,7 +75,6 @@ public class OverdrawAnalyzer extends Canvas {
         char prevChar = this.getPixel(x, y);
         super.toLower(x, y);
         if (this.getPixel(x, y) != prevChar) {
-//            this.pixelsOverdrawCount[y][x]++;
             this.pixelsHistory.get(String.format("%d,%d", x, y)).add(this.getPixel(x, y));
         }
     }
@@ -89,7 +88,6 @@ public class OverdrawAnalyzer extends Canvas {
         super.fillHorizontalLine(y, pixel);
         for (int i = 0; i < this.getWidth(); i++) {
             if (prevChar[i] != this.getPixel(i, y)) {
-//                this.pixelsOverdrawCount[y][i]++;
                 this.pixelsHistory.get(String.format("%d,%d", i, y)).add(this.getPixel(i, y));
             }
         }
@@ -104,7 +102,6 @@ public class OverdrawAnalyzer extends Canvas {
         super.fillVerticalLine(x, pixel);
         for (int i = 0; i < this.getHeight(); i++) {
             if (prevChar[i] != this.getPixel(x, i)) {
-//                this.pixelsOverdrawCount[i][x]++;
                 this.pixelsHistory.get(String.format("%d,%d", x, i)).add(this.getPixel(x, i));
             }
         }
@@ -124,7 +121,6 @@ public class OverdrawAnalyzer extends Canvas {
         for (int x = 0; x < this.getWidth(); x++) {
             for (int y = 0; y < this.getHeight(); y++) {
                 if (prevChars[x][y] != this.getPixel(x, y)) {
-//                    this.pixelsOverdrawCount[i][j]++;
                     this.pixelsHistory.get(String.format("%d,%d", x, y)).add(this.getPixel(x, y));
                 }
             }
