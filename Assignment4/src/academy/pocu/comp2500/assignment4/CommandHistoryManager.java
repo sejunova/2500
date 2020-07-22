@@ -1,7 +1,6 @@
 package academy.pocu.comp2500.assignment4;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class CommandHistoryManager {
     private Canvas canvas;

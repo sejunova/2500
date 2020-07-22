@@ -1,6 +1,6 @@
 package academy.pocu.comp2500.assignment4;
 
-public class ToLowerCaseCommand implements ICommand{
+public class ToLowercaseCommand implements ICommand {
     private int x;
     private int y;
     private Canvas canvas;
@@ -8,10 +8,11 @@ public class ToLowerCaseCommand implements ICommand{
     private boolean canUndo = false;
     private boolean canRedo = false;
 
-    public ToLowerCaseCommand(int x, int y) {
+    public ToLowercaseCommand(int x, int y) {
         this.x = x;
         this.y = y;
     }
+
     @Override
     public boolean execute(Canvas canvas) {
         if (this.canvas != null) {

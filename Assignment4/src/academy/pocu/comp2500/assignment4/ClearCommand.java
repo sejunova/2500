@@ -1,6 +1,6 @@
 package academy.pocu.comp2500.assignment4;
 
-public class ClearCommand implements ICommand{
+public class ClearCommand implements ICommand {
     private char[][] beforeClear;
     private Canvas canvas;
     private boolean canUndo = false;

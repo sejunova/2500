@@ -1,6 +1,6 @@
 package academy.pocu.comp2500.assignment4;
 
-public class DrawPixelCommand implements ICommand{
+public class DrawPixelCommand implements ICommand {
     private int x;
     private int y;
     private char pixel;
@@ -14,6 +14,7 @@ public class DrawPixelCommand implements ICommand{
         this.y = y;
         this.pixel = pixel;
     }
+
     @Override
     public boolean execute(Canvas canvas) {
         if (this.canvas != null) {

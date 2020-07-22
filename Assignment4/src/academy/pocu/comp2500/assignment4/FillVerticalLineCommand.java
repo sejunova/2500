@@ -1,6 +1,6 @@
 package academy.pocu.comp2500.assignment4;
 
-public class FillVerticalLineCommand implements ICommand{
+public class FillVerticalLineCommand implements ICommand {
     private int x;
     private char[] beforeVertical;
     private Canvas canvas;

@@ -1,6 +1,6 @@
 package academy.pocu.comp2500.assignment4;
 
-public class DecreasePixelCommand implements ICommand{
+public class DecreasePixelCommand implements ICommand {
     private int x;
     private int y;
     private Canvas canvas;
@@ -11,6 +11,7 @@ public class DecreasePixelCommand implements ICommand{
         this.x = x;
         this.y = y;
     }
+
     @Override
     public boolean execute(Canvas canvas) {
         if (this.canvas != null) {
