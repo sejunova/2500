@@ -8,7 +8,6 @@ public class ClearCommand implements ICommand {
     @Override
     public boolean execute(Canvas canvas) {
         if (!this.commandStatus.equals(CommandStatus.EXECUTABLE)) {
-            this.commandStatus = CommandStatus.FAILED;
             return false;
         }
         this.beforeClear = new char[canvas.getHeight()][canvas.getWidth()];

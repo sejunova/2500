@@ -32,11 +32,19 @@ public class CommandHistoryManager {
     }
 
     public boolean undo() {
-        return this.commands.get(this.curCommandIndex--).undo();
+        boolean isExecuted = this.commands.get(this.curCommandIndex).undo();
+        if (isExecuted) {
+            this.curCommandIndex--;
+        }
+        return isExecuted;
     }
 
     public boolean redo() {
-        return this.commands.get(++this.curCommandIndex).redo();
+        boolean isExecuted = this.commands.get(this.curCommandIndex + 1).redo();
+        if (isExecuted) {
+            this.curCommandIndex++;
+        }
+        return isExecuted;
     }
 
 }

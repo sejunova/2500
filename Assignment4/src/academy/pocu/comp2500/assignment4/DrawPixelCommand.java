@@ -17,7 +17,6 @@ public class DrawPixelCommand implements ICommand {
     @Override
     public boolean execute(Canvas canvas) {
         if (!this.commandStatus.equals(CommandStatus.EXECUTABLE)) {
-            this.commandStatus = CommandStatus.FAILED;
             return false;
         }
         this.existingPixel = canvas.getPixel(this.x, this.y);

@@ -14,12 +14,11 @@ public class IncreasePixelCommand implements ICommand {
     @Override
     public boolean execute(Canvas canvas) {
         if (!this.commandStatus.equals(CommandStatus.EXECUTABLE)) {
-            this.commandStatus = CommandStatus.FAILED;
             return false;
         }
         this.canvas = canvas;
         boolean isExecuted = canvas.increasePixel(this.x, this.y);
-        this.commandStatus = CommandStatus.UNDOABLE;
+        this.commandStatus = (isExecuted) ? CommandStatus.UNDOABLE : CommandStatus.FAILED;
         return isExecuted;
     }
 

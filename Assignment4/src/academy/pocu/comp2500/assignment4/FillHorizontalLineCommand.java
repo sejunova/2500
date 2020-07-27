@@ -15,7 +15,6 @@ public class FillHorizontalLineCommand implements ICommand {
     @Override
     public boolean execute(Canvas canvas) {
         if (!this.commandStatus.equals(CommandStatus.EXECUTABLE)) {
-            this.commandStatus = CommandStatus.FAILED;
             return false;
         }
         this.beforeHorizon = new char[canvas.getWidth()];
