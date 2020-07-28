@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class CommandHistoryManager {
     private Canvas canvas;
     private ArrayList<ICommand> commands = new ArrayList<>();
-    private int curCommandIndex;
+    private int curCommandIndex = -2;
 
     public CommandHistoryManager(Canvas canvas) {
         this.canvas = canvas;
@@ -32,11 +32,25 @@ public class CommandHistoryManager {
     }
 
     public boolean undo() {
-        return this.commands.get(this.curCommandIndex--).undo();
+        if (!canUndo()) {
+            return false;
+        }
+        boolean isExecuted = this.commands.get(this.curCommandIndex).undo();
+        if (isExecuted) {
+            this.curCommandIndex--;
+        }
+        return isExecuted;
     }
 
     public boolean redo() {
-        return this.commands.get(++this.curCommandIndex).redo();
+        if (!canRedo()) {
+            return false;
+        }
+        boolean isExecuted = this.commands.get(this.curCommandIndex + 1).redo();
+        if (isExecuted) {
+            this.curCommandIndex++;
+        }
+        return isExecuted;
     }
 
 }

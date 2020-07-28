@@ -5,8 +5,7 @@ public class FillHorizontalLineCommand implements ICommand {
     private char[] beforeHorizon;
     private Canvas canvas;
     private char c;
-    private boolean canUndo = false;
-    private boolean canRedo = false;
+    private CommandStatus commandStatus = CommandStatus.EXECUTABLE;
 
     public FillHorizontalLineCommand(int y, char c) {
         this.y = y;
@@ -15,7 +14,7 @@ public class FillHorizontalLineCommand implements ICommand {
 
     @Override
     public boolean execute(Canvas canvas) {
-        if (this.canvas != null) {
+        if (!this.commandStatus.equals(CommandStatus.EXECUTABLE)) {
             return false;
         }
         this.beforeHorizon = new char[canvas.getWidth()];
@@ -24,31 +23,29 @@ public class FillHorizontalLineCommand implements ICommand {
         }
         canvas.fillHorizontalLine(this.y, this.c);
         this.canvas = canvas;
-        this.canUndo = true;
+        this.commandStatus = CommandStatus.UNDOABLE;
         return true;
     }
 
     @Override
     public boolean undo() {
-        if (!this.canUndo) {
+        if (!this.commandStatus.equals(CommandStatus.UNDOABLE)) {
             return false;
         }
         for (int i = 0; i < this.canvas.getWidth(); i++) {
             this.canvas.drawPixel(i, this.y, this.beforeHorizon[i]);
         }
-        this.canUndo = false;
-        this.canRedo = true;
+        this.commandStatus = CommandStatus.REDOABLE;
         return true;
     }
 
     @Override
     public boolean redo() {
-        if (!this.canRedo) {
+        if (!this.commandStatus.equals(CommandStatus.REDOABLE)) {
             return false;
         }
         this.canvas.fillHorizontalLine(this.y, this.c);
-        this.canUndo = true;
-        this.canRedo = false;
+        this.commandStatus = CommandStatus.UNDOABLE;
         return true;
     }
 }

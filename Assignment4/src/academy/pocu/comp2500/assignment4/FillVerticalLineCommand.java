@@ -5,8 +5,7 @@ public class FillVerticalLineCommand implements ICommand {
     private char[] beforeVertical;
     private Canvas canvas;
     private char c;
-    private boolean canUndo = false;
-    private boolean canRedo = false;
+    private CommandStatus commandStatus = CommandStatus.EXECUTABLE;
 
     public FillVerticalLineCommand(int x, char c) {
         this.x = x;
@@ -15,7 +14,7 @@ public class FillVerticalLineCommand implements ICommand {
 
     @Override
     public boolean execute(Canvas canvas) {
-        if (this.canvas != null) {
+        if (!this.commandStatus.equals(CommandStatus.EXECUTABLE)) {
             return false;
         }
         this.beforeVertical = new char[canvas.getHeight()];
@@ -24,31 +23,29 @@ public class FillVerticalLineCommand implements ICommand {
         }
         canvas.fillVerticalLine(this.x, this.c);
         this.canvas = canvas;
-        this.canUndo = true;
+        this.commandStatus = CommandStatus.UNDOABLE;
         return true;
     }
 
     @Override
     public boolean undo() {
-        if (!this.canUndo) {
+        if (!this.commandStatus.equals(CommandStatus.UNDOABLE)) {
             return false;
         }
         for (int i = 0; i < this.canvas.getHeight(); i++) {
             this.canvas.drawPixel(this.x, i, this.beforeVertical[i]);
         }
-        this.canUndo = false;
-        this.canRedo = true;
+        this.commandStatus = CommandStatus.REDOABLE;
         return true;
     }
 
     @Override
     public boolean redo() {
-        if (!this.canRedo) {
+        if (!this.commandStatus.equals(CommandStatus.REDOABLE)) {
             return false;
         }
         this.canvas.fillVerticalLine(this.x, this.c);
-        this.canUndo = true;
-        this.canRedo = false;
+        this.commandStatus = CommandStatus.UNDOABLE;
         return true;
     }
 

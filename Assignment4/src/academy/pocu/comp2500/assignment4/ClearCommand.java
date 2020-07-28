@@ -3,12 +3,11 @@ package academy.pocu.comp2500.assignment4;
 public class ClearCommand implements ICommand {
     private char[][] beforeClear;
     private Canvas canvas;
-    private boolean canUndo = false;
-    private boolean canRedo = false;
+    private CommandStatus commandStatus = CommandStatus.EXECUTABLE;
 
     @Override
     public boolean execute(Canvas canvas) {
-        if (this.canvas != null) {
+        if (!this.commandStatus.equals(CommandStatus.EXECUTABLE)) {
             return false;
         }
         this.beforeClear = new char[canvas.getHeight()][canvas.getWidth()];
@@ -19,13 +18,13 @@ public class ClearCommand implements ICommand {
         }
         canvas.clear();
         this.canvas = canvas;
-        this.canUndo = true;
+        this.commandStatus = CommandStatus.UNDOABLE;
         return true;
     }
 
     @Override
     public boolean undo() {
-        if (!this.canUndo) {
+        if (!this.commandStatus.equals(CommandStatus.UNDOABLE)) {
             return false;
         }
         for (int i = 0; i < this.canvas.getHeight(); i++) {
@@ -33,19 +32,17 @@ public class ClearCommand implements ICommand {
                 this.canvas.drawPixel(j, i, this.beforeClear[i][j]);
             }
         }
-        this.canUndo = false;
-        this.canRedo = true;
+        this.commandStatus = CommandStatus.REDOABLE;
         return true;
     }
 
     @Override
     public boolean redo() {
-        if (!this.canRedo) {
+        if (!this.commandStatus.equals(CommandStatus.REDOABLE)) {
             return false;
         }
         this.canvas.clear();
-        this.canUndo = true;
-        this.canRedo = false;
+        this.commandStatus = CommandStatus.UNDOABLE;
         return true;
     }
 }
