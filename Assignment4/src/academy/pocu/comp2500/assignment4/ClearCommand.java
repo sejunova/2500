@@ -2,7 +2,6 @@ package academy.pocu.comp2500.assignment4;
 
 public class ClearCommand implements ICommand {
     private Canvas canvas;
-    private boolean canRedo = false;
     private char[][] beforeExecute;
 
     @Override
@@ -47,7 +46,6 @@ public class ClearCommand implements ICommand {
                 this.canvas.drawPixel(j, i, this.beforeExecute[i][j]);
             }
         }
-        this.canRedo = true;
         return true;
     }
 
@@ -56,11 +54,22 @@ public class ClearCommand implements ICommand {
         if (this.canvas == null) {
             return false;
         }
-        if (!this.canRedo) {
+        boolean canRedo = false;
+
+        checkIfCanRedo:
+        for (int i = 0; i < canvas.getHeight(); i++) {
+            for (int j = 0; j < canvas.getWidth(); j++) {
+                if (' ' != canvas.getPixel(j, i)) {
+                    canRedo = true;
+                    break checkIfCanRedo;
+                }
+            }
+        }
+
+        if (!canRedo) {
             return false;
         }
         this.canvas.clear();
-        this.canRedo = false;
         return true;
     }
 }

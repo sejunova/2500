@@ -3,9 +3,9 @@ package academy.pocu.comp2500.assignment4;
 public class FillHorizontalLineCommand implements ICommand {
     private int y;
     private char[] beforeExecute;
+    private char[] afterExecute;
     private Canvas canvas;
     private char c;
-    private boolean canRedo = false;
 
     public FillHorizontalLineCommand(int y, char c) {
         this.y = y;
@@ -22,6 +22,10 @@ public class FillHorizontalLineCommand implements ICommand {
             this.beforeExecute[i] = canvas.getPixel(i, this.y);
         }
         canvas.fillHorizontalLine(this.y, this.c);
+        this.afterExecute = new char[canvas.getWidth()];
+        for (int i = 0; i < canvas.getWidth(); i++) {
+            this.afterExecute[i] = canvas.getPixel(i, this.y);
+        }
         this.canvas = canvas;
         return true;
     }
@@ -46,7 +50,6 @@ public class FillHorizontalLineCommand implements ICommand {
         for (int i = 0; i < this.canvas.getWidth(); i++) {
             this.canvas.drawPixel(i, this.y, this.beforeExecute[i]);
         }
-        this.canRedo = true;
         return true;
     }
 
@@ -55,11 +58,17 @@ public class FillHorizontalLineCommand implements ICommand {
         if (this.canvas == null) {
             return false;
         }
-        if (!this.canRedo) {
+        boolean canRedo = false;
+        for (int i = 0; i < canvas.getWidth(); i++) {
+            if (this.afterExecute[i] != canvas.getPixel(i, this.y)) {
+                canRedo = true;
+                break;
+            }
+        }
+        if (!canRedo) {
             return false;
         }
         this.canvas.fillHorizontalLine(this.y, this.c);
-        this.canRedo = false;
         return true;
     }
 }
