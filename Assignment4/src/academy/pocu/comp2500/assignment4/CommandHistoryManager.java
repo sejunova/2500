@@ -35,9 +35,7 @@ public class CommandHistoryManager {
             return false;
         }
         boolean isExecuted = this.commandStack.peek().undo();
-        if (isExecuted) {
-            this.commandQueue.add(this.commandStack.pop());
-        }
+        this.commandQueue.add(this.commandStack.pop());
         return isExecuted;
     }
 
@@ -46,9 +44,7 @@ public class CommandHistoryManager {
             return false;
         }
         boolean isExecuted = this.commandQueue.peek().redo();
-        if (isExecuted) {
-            this.commandStack.add(this.commandQueue.poll());
-        }
+        this.commandStack.add(this.commandQueue.poll());
         return isExecuted;
     }
 
