@@ -4,7 +4,8 @@ public class IncreasePixelCommand implements ICommand {
     private int x;
     private int y;
     private Canvas canvas;
-    private CommandStatus commandStatus = CommandStatus.EXECUTABLE;
+    private char beforeExecute;
+    private boolean canRedo = false;
 
     public IncreasePixelCommand(int x, int y) {
         this.x = x;
@@ -13,32 +14,37 @@ public class IncreasePixelCommand implements ICommand {
 
     @Override
     public boolean execute(Canvas canvas) {
-        if (!this.commandStatus.equals(CommandStatus.EXECUTABLE)) {
+        if (this.canvas != null) {
             return false;
         }
         this.canvas = canvas;
-        boolean isExecuted = canvas.increasePixel(this.x, this.y);
-        this.commandStatus = (isExecuted) ? CommandStatus.UNDOABLE : CommandStatus.FAILED;
-        return isExecuted;
+        this.beforeExecute = canvas.getPixel(this.x, this.y);
+        return canvas.increasePixel(this.x, this.y);
     }
 
     @Override
     public boolean undo() {
-        if (!this.commandStatus.equals(CommandStatus.UNDOABLE)) {
+        if (this.canvas == null) {
+            return false;
+        }
+        if (this.canvas.getPixel(this.x, this.y) == beforeExecute) {
             return false;
         }
         this.canvas.decreasePixel(this.x, this.y);
-        this.commandStatus = CommandStatus.REDOABLE;
+        this.canRedo = true;
         return true;
     }
 
     @Override
     public boolean redo() {
-        if (!this.commandStatus.equals(CommandStatus.REDOABLE)) {
+        if (this.canvas == null) {
+            return false;
+        }
+        if (!this.canRedo) {
             return false;
         }
         this.canvas.increasePixel(this.x, this.y);
-        this.commandStatus = CommandStatus.UNDOABLE;
+        this.canRedo = false;
         return true;
     }
 }

@@ -4,9 +4,9 @@ public class DrawPixelCommand implements ICommand {
     private int x;
     private int y;
     private char c;
-    private char existingPixel;
     private Canvas canvas;
-    private CommandStatus commandStatus = CommandStatus.EXECUTABLE;
+    private char beforeExecute;
+    private boolean canRedo = false;
 
     public DrawPixelCommand(int x, int y, char c) {
         this.x = x;
@@ -16,33 +16,38 @@ public class DrawPixelCommand implements ICommand {
 
     @Override
     public boolean execute(Canvas canvas) {
-        if (!this.commandStatus.equals(CommandStatus.EXECUTABLE)) {
+        if (this.canvas != null) {
             return false;
         }
-        this.existingPixel = canvas.getPixel(this.x, this.y);
-        canvas.drawPixel(this.x, this.y, this.c);
         this.canvas = canvas;
-        this.commandStatus = CommandStatus.UNDOABLE;
+        this.beforeExecute = canvas.getPixel(this.x, this.y);
+        canvas.drawPixel(this.x, this.y, this.c);
         return true;
     }
 
     @Override
     public boolean undo() {
-        if (!this.commandStatus.equals(CommandStatus.UNDOABLE)) {
+        if (this.canvas == null) {
             return false;
         }
-        this.canvas.drawPixel(this.x, this.y, this.existingPixel);
-        this.commandStatus = CommandStatus.REDOABLE;
+        if (this.canvas.getPixel(this.x, this.y) == beforeExecute) {
+            return false;
+        }
+        this.canvas.drawPixel(this.x, this.y, this.beforeExecute);
+        this.canRedo = true;
         return true;
     }
 
     @Override
     public boolean redo() {
-        if (!this.commandStatus.equals(CommandStatus.REDOABLE)) {
+        if (this.canvas == null) {
+            return false;
+        }
+        if (!this.canRedo) {
             return false;
         }
         this.canvas.drawPixel(this.x, this.y, this.c);
-        this.commandStatus = CommandStatus.UNDOABLE;
+        this.canRedo = false;
         return true;
     }
 }

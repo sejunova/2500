@@ -1,13 +1,11 @@
 package academy.pocu.comp2500.assignment4;
 
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Stack;
 
 public class CommandHistoryManager {
     private Canvas canvas;
     private Stack<ICommand> commandStack = new Stack<>();
-    private Queue<ICommand> commandQueue = new LinkedList<>();
+    private Stack<ICommand> undoStack = new Stack<>();
 
     public CommandHistoryManager(Canvas canvas) {
         this.canvas = canvas;
@@ -16,7 +14,7 @@ public class CommandHistoryManager {
     public boolean execute(ICommand command) {
         if (command.execute(this.canvas)) {
             this.commandStack.add(command);
-            this.commandQueue.clear();
+            this.undoStack.clear();
             return true;
         }
         return false;
@@ -27,7 +25,7 @@ public class CommandHistoryManager {
     }
 
     public boolean canRedo() {
-        return !this.commandQueue.isEmpty();
+        return !this.undoStack.isEmpty();
     }
 
     public boolean undo() {
@@ -35,16 +33,16 @@ public class CommandHistoryManager {
             return false;
         }
         boolean isExecuted = this.commandStack.peek().undo();
-        this.commandQueue.add(this.commandStack.pop());
+        this.undoStack.add(this.commandStack.pop());
         return isExecuted;
     }
 
     public boolean redo() {
-        if (this.commandQueue.isEmpty()) {
+        if (this.undoStack.isEmpty()) {
             return false;
         }
-        boolean isExecuted = this.commandQueue.peek().redo();
-        this.commandStack.add(this.commandQueue.poll());
+        boolean isExecuted = this.undoStack.peek().redo();
+        this.commandStack.add(this.undoStack.pop());
         return isExecuted;
     }
 

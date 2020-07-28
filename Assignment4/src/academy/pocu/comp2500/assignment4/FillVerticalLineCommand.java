@@ -2,10 +2,10 @@ package academy.pocu.comp2500.assignment4;
 
 public class FillVerticalLineCommand implements ICommand {
     private int x;
-    private char[] beforeVertical;
+    private char[] beforeExecute;
     private Canvas canvas;
     private char c;
-    private CommandStatus commandStatus = CommandStatus.EXECUTABLE;
+    private boolean canRedo = false;
 
     public FillVerticalLineCommand(int x, char c) {
         this.x = x;
@@ -14,38 +14,52 @@ public class FillVerticalLineCommand implements ICommand {
 
     @Override
     public boolean execute(Canvas canvas) {
-        if (!this.commandStatus.equals(CommandStatus.EXECUTABLE)) {
+        if (this.canvas != null) {
             return false;
         }
-        this.beforeVertical = new char[canvas.getHeight()];
+        this.beforeExecute = new char[canvas.getHeight()];
         for (int i = 0; i < canvas.getHeight(); i++) {
-            this.beforeVertical[i] = canvas.getPixel(this.x, i);
+            this.beforeExecute[i] = canvas.getPixel(this.x, i);
         }
         canvas.fillVerticalLine(this.x, this.c);
         this.canvas = canvas;
-        this.commandStatus = CommandStatus.UNDOABLE;
         return true;
     }
 
     @Override
     public boolean undo() {
-        if (!this.commandStatus.equals(CommandStatus.UNDOABLE)) {
+        if (this.canvas == null) {
             return false;
         }
-        for (int i = 0; i < this.canvas.getHeight(); i++) {
-            this.canvas.drawPixel(this.x, i, this.beforeVertical[i]);
+        boolean canUndo = false;
+        for (int i = 0; i < canvas.getHeight(); i++) {
+            if (this.beforeExecute[i] != canvas.getPixel(this.x, i)) {
+                canUndo = true;
+                break;
+            }
         }
-        this.commandStatus = CommandStatus.REDOABLE;
+
+        if (!canUndo) {
+            return false;
+        }
+
+        for (int i = 0; i < this.canvas.getHeight(); i++) {
+            this.canvas.drawPixel(this.x, i, this.beforeExecute[i]);
+        }
+        this.canRedo = true;
         return true;
     }
 
     @Override
     public boolean redo() {
-        if (!this.commandStatus.equals(CommandStatus.REDOABLE)) {
+        if (this.canvas == null) {
+            return false;
+        }
+        if (!this.canRedo) {
             return false;
         }
         this.canvas.fillVerticalLine(this.x, this.c);
-        this.commandStatus = CommandStatus.UNDOABLE;
+        this.canRedo = false;
         return true;
     }
 
