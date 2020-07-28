@@ -52,6 +52,7 @@ public class App {
             out.println(String.format("BALANCE: %d", wallet.getAmount()));
             ArrayList<Product> products = warehouse.getProducts();
 
+            out.println("PRODUCT_LIST:");
             for (int i = 0; i < products.size(); i++) {
                 Product product = products.get(i);
                 int numSpaces = 80 - String.format("%d", product.getPrice()).length() - product.getName().length();
@@ -75,14 +76,17 @@ public class App {
 
             if (1 <= productChosenNum && productChosenNum <= products.size()) {
                 Product productChosen = products.get(productChosenNum - 1);
-                try {
-                    if (wallet.getAmount() < productChosen.getPrice()) {
+                if (wallet.getAmount() < productChosen.getPrice()) {
+                    continue;
+                }
+                synchronized (wallet) {
+                    try {
+                        wallet.withdraw(productChosen.getPrice());
+                        warehouse.removeProduct(productChosen.getId());
+                    } catch (ProductNotFoundException e) {
+                        wallet.deposit(productChosen.getPrice());
                         continue;
                     }
-                    warehouse.removeProduct(productChosen.getId());
-                    wallet.withdraw(productChosen.getPrice());
-                } catch (ProductNotFoundException e) {
-                    continue;
                 }
             }
         }
