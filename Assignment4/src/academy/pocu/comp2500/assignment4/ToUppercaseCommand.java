@@ -6,6 +6,7 @@ public class ToUppercaseCommand implements ICommand {
     private Canvas canvas;
     private char beforeExecute;
     private char afterExecute;
+    private boolean canUndo = false;
     private boolean canRedo = false;
 
     public ToUppercaseCommand(int x, int y) {
@@ -22,6 +23,7 @@ public class ToUppercaseCommand implements ICommand {
         this.beforeExecute = canvas.getPixel(this.x, this.y);
         canvas.toUpper(this.x, this.y);
         this.afterExecute = canvas.getPixel(this.x, this.y);
+        this.canUndo = true;
         return true;
     }
 
@@ -30,10 +32,14 @@ public class ToUppercaseCommand implements ICommand {
         if (this.canvas == null) {
             return false;
         }
+        if (!this.canUndo) {
+            return false;
+        }
         if (this.canvas.getPixel(this.x, this.y) == this.beforeExecute) {
             return false;
         }
         this.canvas.drawPixel(this.x, this.y, this.beforeExecute);
+        this.canUndo = false;
         this.canRedo = true;
         return true;
     }
@@ -51,6 +57,7 @@ public class ToUppercaseCommand implements ICommand {
         }
 
         this.canvas.toUpper(this.x, this.y);
+        this.canUndo = true;
         this.canRedo = false;
         return true;
     }

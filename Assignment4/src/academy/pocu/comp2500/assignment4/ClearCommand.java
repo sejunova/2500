@@ -3,6 +3,7 @@ package academy.pocu.comp2500.assignment4;
 public class ClearCommand implements ICommand {
     private Canvas canvas;
     private char[][] beforeExecute;
+    private boolean canUndo = false;
     private boolean canRedo = false;
 
     @Override
@@ -18,12 +19,16 @@ public class ClearCommand implements ICommand {
         }
         this.canvas = canvas;
         canvas.clear();
+        this.canUndo = true;
         return true;
     }
 
     @Override
     public boolean undo() {
         if (this.canvas == null) {
+            return false;
+        }
+        if (!this.canUndo) {
             return false;
         }
         boolean canUndo = false;
@@ -47,6 +52,7 @@ public class ClearCommand implements ICommand {
                 this.canvas.drawPixel(j, i, this.beforeExecute[i][j]);
             }
         }
+        this.canUndo = false;
         this.canRedo = true;
         return true;
     }
@@ -75,6 +81,7 @@ public class ClearCommand implements ICommand {
             return false;
         }
         this.canvas.clear();
+        this.canUndo = true;
         this.canRedo = false;
         return true;
     }
