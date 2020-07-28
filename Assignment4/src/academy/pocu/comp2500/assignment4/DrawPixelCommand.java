@@ -7,6 +7,7 @@ public class DrawPixelCommand implements ICommand {
     private Canvas canvas;
     private char beforeExecute;
     private char afterExecute;
+    private boolean canRedo = false;
 
 
     public DrawPixelCommand(int x, int y, char c) {
@@ -36,6 +37,7 @@ public class DrawPixelCommand implements ICommand {
             return false;
         }
         this.canvas.drawPixel(this.x, this.y, this.beforeExecute);
+        this.canRedo = true;
         return true;
     }
 
@@ -44,10 +46,14 @@ public class DrawPixelCommand implements ICommand {
         if (this.canvas == null) {
             return false;
         }
+        if (!this.canRedo) {
+            return false;
+        }
         if (this.canvas.getPixel(this.x, this.y) == this.afterExecute) {
             return false;
         }
         this.canvas.drawPixel(this.x, this.y, this.c);
+        this.canRedo = false;
         return true;
     }
 }

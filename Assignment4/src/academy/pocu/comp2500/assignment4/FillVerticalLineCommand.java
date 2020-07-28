@@ -6,6 +6,7 @@ public class FillVerticalLineCommand implements ICommand {
     private char[] afterExecute;
     private Canvas canvas;
     private char c;
+    private boolean canRedo = false;
 
     public FillVerticalLineCommand(int x, char c) {
         this.x = x;
@@ -50,12 +51,16 @@ public class FillVerticalLineCommand implements ICommand {
         for (int i = 0; i < this.canvas.getHeight(); i++) {
             this.canvas.drawPixel(this.x, i, this.beforeExecute[i]);
         }
+        this.canRedo = true;
         return true;
     }
 
     @Override
     public boolean redo() {
         if (this.canvas == null) {
+            return false;
+        }
+        if (!this.canRedo) {
             return false;
         }
         boolean canRedo = false;
@@ -70,6 +75,7 @@ public class FillVerticalLineCommand implements ICommand {
             return false;
         }
         this.canvas.fillVerticalLine(this.x, this.c);
+        this.canRedo = false;
         return true;
     }
 

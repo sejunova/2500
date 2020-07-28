@@ -6,6 +6,7 @@ public class FillHorizontalLineCommand implements ICommand {
     private char[] afterExecute;
     private Canvas canvas;
     private char c;
+    private boolean canRedo = false;
 
     public FillHorizontalLineCommand(int y, char c) {
         this.y = y;
@@ -50,12 +51,16 @@ public class FillHorizontalLineCommand implements ICommand {
         for (int i = 0; i < this.canvas.getWidth(); i++) {
             this.canvas.drawPixel(i, this.y, this.beforeExecute[i]);
         }
+        this.canRedo = true;
         return true;
     }
 
     @Override
     public boolean redo() {
         if (this.canvas == null) {
+            return false;
+        }
+        if (!this.canRedo) {
             return false;
         }
         boolean canRedo = false;
@@ -69,6 +74,7 @@ public class FillHorizontalLineCommand implements ICommand {
             return false;
         }
         this.canvas.fillHorizontalLine(this.y, this.c);
+        this.canRedo = false;
         return true;
     }
 }
