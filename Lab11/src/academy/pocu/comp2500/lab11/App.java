@@ -76,13 +76,11 @@ public class App {
 
             if (1 <= productChosenNum && productChosenNum <= products.size()) {
                 Product productChosen = products.get(productChosenNum - 1);
-                if (wallet.getAmount() < productChosen.getPrice()) {
-                    continue;
-                }
                 synchronized (wallet) {
                     try {
-                        wallet.withdraw(productChosen.getPrice());
-                        warehouse.removeProduct(productChosen.getId());
+                        if (wallet.withdraw(productChosen.getPrice())) {
+                            warehouse.removeProduct(productChosen.getId());
+                        }
                     } catch (ProductNotFoundException e) {
                         wallet.deposit(productChosen.getPrice());
                         continue;
