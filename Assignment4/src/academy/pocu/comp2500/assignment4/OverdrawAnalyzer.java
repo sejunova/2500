@@ -9,14 +9,17 @@ public class OverdrawAnalyzer extends Canvas {
     public OverdrawAnalyzer(int width, int height) {
         super(width, height);
         this.pixelsHistory = new HashMap<>();
-        for (int x = 1; x <= width; x++) {
-            for (int y = 1; y <= height; y++) {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
                 this.pixelsHistory.put(String.format("%d,%d", x, y), new LinkedList<>());
             }
         }
     }
 
     public LinkedList<Character> getPixelHistory(int x, int y) {
+        if (!this.pixelsHistory.containsKey(String.format("%d,%d", x, y))) {
+            return new LinkedList<>();
+        }
         return this.pixelsHistory.get(String.format("%d,%d", x, y));
     }
 
@@ -31,6 +34,9 @@ public class OverdrawAnalyzer extends Canvas {
     }
 
     public int getOverdrawCount(int x, int y) {
+        if (!this.pixelsHistory.containsKey(String.format("%d,%d", x, y))) {
+            return 0;
+        }
         return this.pixelsHistory.get(String.format("%d,%d", x, y)).size();
     }
 

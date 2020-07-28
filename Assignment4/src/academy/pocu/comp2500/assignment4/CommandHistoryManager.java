@@ -31,6 +31,9 @@ public class CommandHistoryManager {
     }
 
     public boolean undo() {
+        if (this.commandStack.isEmpty()) {
+            return false;
+        }
         boolean isExecuted = this.commandStack.peek().undo();
         if (isExecuted) {
             this.commandQueue.add(this.commandStack.pop());
@@ -39,6 +42,9 @@ public class CommandHistoryManager {
     }
 
     public boolean redo() {
+        if (this.commandQueue.isEmpty()) {
+            return false;
+        }
         boolean isExecuted = this.commandQueue.peek().redo();
         if (isExecuted) {
             this.commandStack.add(this.commandQueue.poll());
