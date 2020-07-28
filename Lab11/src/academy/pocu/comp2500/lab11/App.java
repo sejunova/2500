@@ -74,7 +74,7 @@ public class App {
             }
 
             if (1 <= productChosenNum && productChosenNum <= products.size()) {
-                Product productChosen = products.get(productChosenNum);
+                Product productChosen = products.get(productChosenNum - 1);
                 try {
                     warehouse.removeProduct(productChosen.getId());
                 } catch (ProductNotFoundException e) {
