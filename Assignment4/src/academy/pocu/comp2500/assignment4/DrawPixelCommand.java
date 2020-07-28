@@ -6,8 +6,9 @@ public class DrawPixelCommand implements ICommand {
     private char c;
     private Canvas canvas;
     private char beforeExecute;
-    private char afterExecute;
     private boolean canRedo = false;
+    private boolean canUndo = false;
+
 
     public DrawPixelCommand(int x, int y, char c) {
         this.x = x;
@@ -23,7 +24,7 @@ public class DrawPixelCommand implements ICommand {
         this.canvas = canvas;
         this.beforeExecute = canvas.getPixel(this.x, this.y);
         canvas.drawPixel(this.x, this.y, this.c);
-        this.afterExecute = canvas.getPixel(this.x, this.y);
+        this.canUndo = true;
         return true;
     }
 
@@ -32,11 +33,15 @@ public class DrawPixelCommand implements ICommand {
         if (this.canvas == null) {
             return false;
         }
+        if (!this.canUndo) {
+            return false;
+        }
         if (this.canvas.getPixel(this.x, this.y) == beforeExecute) {
             return false;
         }
         this.canvas.drawPixel(this.x, this.y, this.beforeExecute);
         this.canRedo = true;
+        this.canUndo = false;
         return true;
     }
 
@@ -48,11 +53,9 @@ public class DrawPixelCommand implements ICommand {
         if (!this.canRedo) {
             return false;
         }
-        if (this.canvas.getPixel(this.x, this.y) == afterExecute) {
-            return false;
-        }
         this.canvas.drawPixel(this.x, this.y, this.c);
         this.canRedo = false;
+        this.canUndo = true;
         return true;
     }
 }
