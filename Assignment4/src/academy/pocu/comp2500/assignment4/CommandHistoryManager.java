@@ -1,11 +1,13 @@
 package academy.pocu.comp2500.assignment4;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 
 public class CommandHistoryManager {
     private Canvas canvas;
-    private ArrayList<ICommand> commands = new ArrayList<>();
-    private int curCommandIndex = -2;
+    private Stack<ICommand> commandStack = new Stack<>();
+    private Queue<ICommand> commandQueue = new LinkedList<>();
 
     public CommandHistoryManager(Canvas canvas) {
         this.canvas = canvas;
@@ -13,42 +15,33 @@ public class CommandHistoryManager {
 
     public boolean execute(ICommand command) {
         if (command.execute(this.canvas)) {
-            if (this.commands.size() - 1 != this.curCommandIndex) {
-                this.commands.subList(this.curCommandIndex, this.commands.size()).clear();
-            }
-            this.commands.add(command);
-            this.curCommandIndex = this.commands.size() - 1;
+            this.commandStack.add(command);
+            this.commandQueue.clear();
             return true;
         }
         return false;
     }
 
     public boolean canUndo() {
-        return 0 <= curCommandIndex && curCommandIndex < this.commands.size();
+        return !this.commandStack.isEmpty();
     }
 
     public boolean canRedo() {
-        return -1 <= curCommandIndex && curCommandIndex < this.commands.size() - 1;
+        return !this.commandQueue.isEmpty();
     }
 
     public boolean undo() {
-        if (!canUndo()) {
-            return false;
-        }
-        boolean isExecuted = this.commands.get(this.curCommandIndex).undo();
+        boolean isExecuted = this.commandStack.peek().undo();
         if (isExecuted) {
-            this.curCommandIndex--;
+            this.commandQueue.add(this.commandStack.pop());
         }
         return isExecuted;
     }
 
     public boolean redo() {
-        if (!canRedo()) {
-            return false;
-        }
-        boolean isExecuted = this.commands.get(this.curCommandIndex + 1).redo();
+        boolean isExecuted = this.commandQueue.peek().redo();
         if (isExecuted) {
-            this.curCommandIndex++;
+            this.commandStack.add(this.commandQueue.poll());
         }
         return isExecuted;
     }

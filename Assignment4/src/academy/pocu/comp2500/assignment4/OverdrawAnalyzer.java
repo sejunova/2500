@@ -9,8 +9,8 @@ public class OverdrawAnalyzer extends Canvas {
     public OverdrawAnalyzer(int width, int height) {
         super(width, height);
         this.pixelsHistory = new HashMap<>();
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
+        for (int x = 1; x <= width; x++) {
+            for (int y = 1; y <= height; y++) {
                 this.pixelsHistory.put(String.format("%d,%d", x, y), new LinkedList<>());
             }
         }

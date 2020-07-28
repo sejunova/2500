@@ -26,7 +26,7 @@ public class ToUppercaseCommand implements ICommand {
 
     @Override
     public boolean undo() {
-        if (!this.commandStatus.equals(CommandStatus.UNDOABLE)) {
+        if (!this.commandStatus.equals(CommandStatus.UNDOABLE) || existingPixel == canvas.getPixel(this.x, this.y)) {
             return false;
         }
         this.canvas.drawPixel(this.x, this.y, this.existingPixel);
