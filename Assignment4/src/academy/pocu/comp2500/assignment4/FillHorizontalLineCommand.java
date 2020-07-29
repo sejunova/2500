@@ -42,15 +42,15 @@ public class FillHorizontalLineCommand implements ICommand {
             return false;
         }
 
-        boolean canUndo = false;
         for (int i = 0; i < canvas.getWidth(); i++) {
-            if (this.beforeExecute[i] != canvas.getPixel(i, this.y)) {
-                canUndo = true;
-                break;
+            if (this.afterExecute[i] != canvas.getPixel(i, this.y)) {
+                return false;
             }
         }
-        if (!canUndo) {
-            return false;
+        for (int i = 0; i < canvas.getWidth(); i++) {
+            if (this.beforeExecute[i] == canvas.getPixel(i, this.y)) {
+                return false;
+            }
         }
 
         for (int i = 0; i < this.canvas.getWidth(); i++) {
@@ -69,16 +69,19 @@ public class FillHorizontalLineCommand implements ICommand {
         if (!this.canRedo) {
             return false;
         }
-        boolean canRedo = false;
+
         for (int i = 0; i < canvas.getWidth(); i++) {
-            if (this.afterExecute[i] != canvas.getPixel(i, this.y)) {
-                canRedo = true;
-                break;
+            if (this.beforeExecute[i] != canvas.getPixel(i, this.y)) {
+                return false;
             }
         }
-        if (!canRedo) {
-            return false;
+
+        for (int i = 0; i < canvas.getWidth(); i++) {
+            if (this.afterExecute[i] == canvas.getPixel(i, this.y)) {
+                return false;
+            }
         }
+
         this.canvas.fillHorizontalLine(this.y, this.c);
         this.canUndo = true;
         this.canRedo = false;

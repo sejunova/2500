@@ -41,16 +41,16 @@ public class FillVerticalLineCommand implements ICommand {
         if (!this.canUndo) {
             return false;
         }
-        boolean canUndo = false;
         for (int i = 0; i < canvas.getHeight(); i++) {
-            if (this.beforeExecute[i] != canvas.getPixel(this.x, i)) {
-                canUndo = true;
-                break;
+            if (this.afterExecute[i] != canvas.getPixel(this.x, i)) {
+                return false;
             }
         }
 
-        if (!canUndo) {
-            return false;
+        for (int i = 0; i < canvas.getHeight(); i++) {
+            if (this.beforeExecute[i] == canvas.getPixel(this.x, i)) {
+                return false;
+            }
         }
 
         for (int i = 0; i < this.canvas.getHeight(); i++) {
@@ -69,17 +69,19 @@ public class FillVerticalLineCommand implements ICommand {
         if (!this.canRedo) {
             return false;
         }
-        boolean canRedo = false;
+
         for (int i = 0; i < canvas.getHeight(); i++) {
-            if (this.afterExecute[i] != canvas.getPixel(this.x, i)) {
-                canRedo = true;
-                break;
+            if (this.beforeExecute[i] != canvas.getPixel(this.x, i)) {
+                return false;
             }
         }
 
-        if (!canRedo) {
-            return false;
+        for (int i = 0; i < canvas.getHeight(); i++) {
+            if (this.afterExecute[i] == canvas.getPixel(this.x, i)) {
+                return false;
+            }
         }
+
         this.canvas.fillVerticalLine(this.x, this.c);
         this.canUndo = true;
         this.canRedo = false;

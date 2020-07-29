@@ -35,6 +35,9 @@ public class DecreasePixelCommand implements ICommand {
         if (!this.canUndo) {
             return false;
         }
+        if (this.canvas.getPixel(this.x, this.y) != this.afterExecute) {
+            return false;
+        }
         if (this.canvas.getPixel(this.x, this.y) == this.beforeExecute) {
             return false;
         }
@@ -50,6 +53,9 @@ public class DecreasePixelCommand implements ICommand {
             return false;
         }
         if (!this.canRedo) {
+            return false;
+        }
+        if (this.canvas.getPixel(this.x, this.y) != this.beforeExecute) {
             return false;
         }
         if (this.canvas.getPixel(this.x, this.y) == this.afterExecute) {

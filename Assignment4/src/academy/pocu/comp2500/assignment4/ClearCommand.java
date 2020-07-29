@@ -31,20 +31,21 @@ public class ClearCommand implements ICommand {
         if (!this.canUndo) {
             return false;
         }
-        boolean canUndo = false;
 
-        checkIfCanUndo:
         for (int i = 0; i < canvas.getHeight(); i++) {
             for (int j = 0; j < canvas.getWidth(); j++) {
-                if (this.beforeExecute[i][j] != canvas.getPixel(j, i)) {
-                    canUndo = true;
-                    break checkIfCanUndo;
+                if (' ' != canvas.getPixel(j, i)) {
+                    return false;
                 }
             }
         }
 
-        if (!canUndo) {
-            return false;
+        for (int i = 0; i < canvas.getHeight(); i++) {
+            for (int j = 0; j < canvas.getWidth(); j++) {
+                if (this.beforeExecute[i][j] != canvas.getPixel(j, i)) {
+                    return false;
+                }
+            }
         }
 
         for (int i = 0; i < this.canvas.getHeight(); i++) {
@@ -65,21 +66,23 @@ public class ClearCommand implements ICommand {
         if (!this.canRedo) {
             return false;
         }
-        boolean canRedo = false;
 
-        checkIfCanRedo:
         for (int i = 0; i < canvas.getHeight(); i++) {
             for (int j = 0; j < canvas.getWidth(); j++) {
-                if (' ' != canvas.getPixel(j, i)) {
-                    canRedo = true;
-                    break checkIfCanRedo;
+                if (this.beforeExecute[i][j] != canvas.getPixel(j, i)) {
+                    return false;
                 }
             }
         }
 
-        if (!canRedo) {
-            return false;
+        for (int i = 0; i < canvas.getHeight(); i++) {
+            for (int j = 0; j < canvas.getWidth(); j++) {
+                if (' ' == canvas.getPixel(j, i)) {
+                    return false;
+                }
+            }
         }
+
         this.canvas.clear();
         this.canUndo = true;
         this.canRedo = false;
