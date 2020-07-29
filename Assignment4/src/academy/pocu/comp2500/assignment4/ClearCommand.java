@@ -40,14 +40,6 @@ public class ClearCommand implements ICommand {
             }
         }
 
-        for (int i = 0; i < canvas.getHeight(); i++) {
-            for (int j = 0; j < canvas.getWidth(); j++) {
-                if (this.beforeExecute[i][j] != canvas.getPixel(j, i)) {
-                    return false;
-                }
-            }
-        }
-
         for (int i = 0; i < this.canvas.getHeight(); i++) {
             for (int j = 0; j < this.canvas.getWidth(); j++) {
                 this.canvas.drawPixel(j, i, this.beforeExecute[i][j]);
@@ -70,14 +62,6 @@ public class ClearCommand implements ICommand {
         for (int i = 0; i < canvas.getHeight(); i++) {
             for (int j = 0; j < canvas.getWidth(); j++) {
                 if (this.beforeExecute[i][j] != canvas.getPixel(j, i)) {
-                    return false;
-                }
-            }
-        }
-
-        for (int i = 0; i < canvas.getHeight(); i++) {
-            for (int j = 0; j < canvas.getWidth(); j++) {
-                if (' ' == canvas.getPixel(j, i)) {
                     return false;
                 }
             }

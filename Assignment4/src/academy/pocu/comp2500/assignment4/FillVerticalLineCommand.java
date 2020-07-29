@@ -47,11 +47,11 @@ public class FillVerticalLineCommand implements ICommand {
             }
         }
 
-        for (int i = 0; i < canvas.getHeight(); i++) {
-            if (this.beforeExecute[i] == canvas.getPixel(this.x, i)) {
-                return false;
-            }
-        }
+//        for (int i = 0; i < canvas.getHeight(); i++) {
+//            if (this.beforeExecute[i] == canvas.getPixel(this.x, i)) {
+//                return false;
+//            }
+//        }
 
         for (int i = 0; i < this.canvas.getHeight(); i++) {
             this.canvas.drawPixel(this.x, i, this.beforeExecute[i]);
@@ -76,11 +76,11 @@ public class FillVerticalLineCommand implements ICommand {
             }
         }
 
-        for (int i = 0; i < canvas.getHeight(); i++) {
-            if (this.afterExecute[i] == canvas.getPixel(this.x, i)) {
-                return false;
-            }
-        }
+//        for (int i = 0; i < canvas.getHeight(); i++) {
+//            if (this.afterExecute[i] == canvas.getPixel(this.x, i)) {
+//                return false;
+//            }
+//        }
 
         this.canvas.fillVerticalLine(this.x, this.c);
         this.canUndo = true;
